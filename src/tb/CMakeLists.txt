@@ -1,14 +1,26 @@
 cmake_minimum_required(VERSION 2.8)
 
-set(LOCAL_SRCS "")
-aux_source_directory(. LOCAL_SRCS)
-aux_source_directory(image LOCAL_SRCS)
-aux_source_directory(animation LOCAL_SRCS)
-aux_source_directory(parser LOCAL_SRCS)
-aux_source_directory(renderers LOCAL_SRCS)
-aux_source_directory(tests LOCAL_SRCS)
-aux_source_directory(utf8 LOCAL_SRCS)
+include(modules)
 
+set(LOCAL_SRCS "")
+
+file(GLOB_RECURSE LOCAL_SRCS 
+	${CMAKE_CURRENT_SOURCE_DIR}/*.cpp 
+    ${CMAKE_CURRENT_SOURCE_DIR}/*.h
+	${CMAKE_CURRENT_SOURCE_DIR}/image/*.cpp 
+    ${CMAKE_CURRENT_SOURCE_DIR}/image/*.h
+	${CMAKE_CURRENT_SOURCE_DIR}/animation/*.cpp 
+    ${CMAKE_CURRENT_SOURCE_DIR}/animation/*.h
+	${CMAKE_CURRENT_SOURCE_DIR}/parser/*.cpp 
+    ${CMAKE_CURRENT_SOURCE_DIR}/parser/*.h
+	${CMAKE_CURRENT_SOURCE_DIR}/renderers/*.cpp 
+    ${CMAKE_CURRENT_SOURCE_DIR}/renderers/*.h
+	${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp 
+    ${CMAKE_CURRENT_SOURCE_DIR}/tests/*.h
+	${CMAKE_CURRENT_SOURCE_DIR}/utf8/*.cpp 
+    ${CMAKE_CURRENT_SOURCE_DIR}/utf8/*.h)
+
+assign_source_group(${LOCAL_SRCS})
 add_library(TurboBadgerLib ${LOCAL_SRCS})
 
 install(TARGETS TurboBadgerLib

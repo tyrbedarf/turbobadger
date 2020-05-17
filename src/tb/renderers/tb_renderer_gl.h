@@ -28,23 +28,6 @@
 
 namespace tb {
 
-class TBRendererGL;
-
-class TBBitmapGL : public TBBitmap
-{
-public:
-	TBBitmapGL(TBRendererGL *renderer);
-	~TBBitmapGL();
-	bool Init(int width, int height, uint32 *data);
-	virtual int Width() { return m_w; }
-	virtual int Height() { return m_h; }
-	virtual void SetData(uint32 *data);
-public:
-	TBRendererGL *m_renderer;
-	int m_w, m_h;
-	GLuint m_texture;
-};
-
 class TBRendererGL : public TBRendererBatcher
 {
 public:
@@ -61,6 +44,25 @@ public:
 
 	virtual void RenderBatch(Batch *batch);
 	virtual void SetClipRect(const TBRect &rect);
+};
+
+class TBBitmapGL : public TBBitmap
+{
+public:
+	TBBitmapGL(TBRendererGL *renderer);
+	~TBBitmapGL();
+	bool Init(int width, int height, uint32 *data);
+	virtual int Width() {
+		return m_w;
+	}
+	virtual int Height() {
+		return m_h;
+	}
+	virtual void SetData(uint32 *data);
+public:
+	TBRendererGL *m_renderer;
+	int m_w, m_h;
+	GLuint m_texture;
 };
 
 } // namespace tb

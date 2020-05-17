@@ -288,7 +288,7 @@ void TBParser::OnLine(char *line, TBParserTarget *target)
 		// Read line while consuming it and copy over to token buf
 		while (!is_white_space(line) && *line != 0)
 			line++;
-		int token_len = line - token;
+		int token_len = (int) (line - token);
 		// Consume any white space after the token
 		while (is_white_space(line))
 			line++;

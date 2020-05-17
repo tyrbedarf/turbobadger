@@ -1,9 +1,12 @@
 project(TurboBadger)
 cmake_minimum_required(VERSION 2.8)
 
-option(TB_BUILD_DEMO "Build the Demo application. Depends on glfw." ON)
-option(TB_DEMO_IN_SRC "Build the demo application to the source directory" ON)
-option(TB_DEBUG_POSTFIX "Add _d postfix for debug builds" OFF)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
+include(modules)
+
+option(TB_BUILD_GFLW_DEMO "Build the Demo application. Depends on glfw." OFF)
+option(TB_BUILD_SDL_DEMO "Build the Demo application. Depends on sdl." ON)
+option(TB_DEBUG_POSTFIX "Add _d postfix for debug builds" ON)
 option(TB_GENERATE_CONFIG "Generate the tb_config.h file from provided parameters in cmake. Default Off" OFF)
 
 # Configure file options
@@ -15,12 +18,6 @@ option(TB_RENDERER_BATCHER "Enable to get TBRendererBatcher" ON)
 option(TB_RENDERER_GL "Enable renderer using OpenGL. This renderer depends on TB_RENDERER_BATCHER." ON)
 option(TB_RENDERER_GLES_1 "Enable renderer using OpenGL ES. This renderer depends on TB_RENDERER_GL." OFF)
 option(TB_IMAGE "Enable support for TBImage, TBImageManager, TBImageWidget." ON)
-
-# Runtime/subsystem configurations
-# Needs further work
-#option(TB_FILE_POSIX "" ON)
-#option(TB_SYSTEM "" OFF)
-#option(TB_TARGET "" OFF)
 
 
 if(TB_DEBUG_POSTFIX)
@@ -79,9 +76,13 @@ include_directories("${PROJECT_SOURCE_DIR}/src/tb")
 add_subdirectory(src/tb)
 
 # Add Demo project
-if(TB_BUILD_DEMO)
- add_subdirectory(Demo)
-endif(TB_BUILD_DEMO)
+if(TB_BUILD_GFLW_DEMO)
+ add_subdirectory(Demo/glfw)
+endif(TB_BUILD_GFLW_DEMO)
+
+if(TB_BUILD_SDL_DEMO)
+ add_subdirectory(Demo/sdl)
+endif(TB_BUILD_SDL_DEMO)
 
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/src/tb
     DESTINATION include
