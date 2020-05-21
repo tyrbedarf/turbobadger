@@ -10,6 +10,19 @@
 #include "tb_msg.h"
 #include "tb_system.h"
 
+#include "AppBackendSDL.h"
+
+const char* gPointerName = "SDL Demo";
+void SetBackend(SDL_Window* window, AppBackendSDL *backend)
+{
+	SDL_SetWindowData(window, gPointerName, backend);
+}
+
+AppBackendSDL *GetBackend(SDL_Window *window)
+{
+	return static_cast<AppBackendSDL*>(SDL_GetWindowData(window, gPointerName));
+}
+
 SDL_TimerID gTimer = -1;
 static Uint32 sdl_timer_callback(Uint32 interval, void *param)
 {

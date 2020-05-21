@@ -9,7 +9,6 @@
 #include <stdio.h>
 
 // == ResourceItem ====================================================================================
-
 ResourceItem::ResourceItem(TBWidget *widget, const char *str)
 	: TBGenericStringItem(str)
 	, m_widget(widget)
@@ -17,7 +16,6 @@ ResourceItem::ResourceItem(TBWidget *widget, const char *str)
 }
 
 // == ResourceEditWindow ==============================================================================
-
 ResourceEditWindow::ResourceEditWindow()
 	: m_widget_list(nullptr)
 	, m_scroll_container(nullptr)
@@ -27,7 +25,7 @@ ResourceEditWindow::ResourceEditWindow()
 	// Register as global listener to intercept events in the build container
 	TBWidgetListener::AddGlobalListener(this);
 
-	g_widgets_reader->LoadFile(this, "Demo/demo01/ui_resources/resource_edit_window.tb.txt");
+	g_widgets_reader->LoadFile(this, "Demo/resources/ui_resources/resource_edit_window.tb.txt");
 
 	m_scroll_container = GetWidgetByIDAndType<TBScrollContainer>(TBIDC("scroll_container"));
 	m_build_container = m_scroll_container->GetContentRoot();

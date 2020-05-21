@@ -46,7 +46,7 @@ namespace SDL_Demo {
 
 		SDL_Event m_evt_cache;
 
-		tb::TBRendererGL* m_renderer;
+		SdlAppRootWidget m_root;
 
 		bool m_running;
 
@@ -62,12 +62,25 @@ namespace SDL_Demo {
 			m_height(height),
 			m_window(nullptr),
 			m_running(false),
-			m_renderer(false) {
+			m_root(this) {
+			m_root.SetRect(TBRect(0, 0, m_widht, m_height));
+		}
 
+		tb::TBWidget *GetRoot() {
+			return &m_root;
+		}
+
+		void OnResized(int width, int height) {
+			m_widht = width;
+			m_height = height;
+
+			m_root.SetRect(TBRect(0, 0, width, height));
 		}
 
 		bool Init();
 		void Run();
+		void Process();
+		void Render();
 		void Shutdown();
 	};
 }

@@ -19,13 +19,13 @@ set(GLFW_INSTALL OFF)
 
 # Add sources
 set(LOCAL_SRCS "")
-file(GLOB_RECURSE LOCAL_SRCS 
+file(GLOB LOCAL_SRCS 
 	${CMAKE_CURRENT_SOURCE_DIR}/*.cpp 
     ${CMAKE_CURRENT_SOURCE_DIR}/*.h
-	${CMAKE_CURRENT_SOURCE_DIR}/demo01/*.cpp 
-    ${CMAKE_CURRENT_SOURCE_DIR}/demo01/*.h
-	${CMAKE_CURRENT_SOURCE_DIR}/platform/*.cpp 
-    ${CMAKE_CURRENT_SOURCE_DIR}/platform/*.h)
+	${CMAKE_SOURCE_DIR}/Demo/*.cpp 
+    ${CMAKE_SOURCE_DIR}/Demo/*.h
+	${CMAKE_CURRENT_SOURCE_DIR}/*.cpp 
+    ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
 
 assign_source_group(${LOCAL_SRCS})
 include_directories(".")
@@ -47,3 +47,5 @@ install(TARGETS TurboBadgerGLFWDemo
     RUNTIME DESTINATION bin
     LIBRARY DESTINATION lib
     ARCHIVE DESTINATION lib)
+	
+set_target_properties(TurboBadgerGLFWDemo PROPERTIES LINK_FLAGS /SUBSYSTEM:CONSOLE)

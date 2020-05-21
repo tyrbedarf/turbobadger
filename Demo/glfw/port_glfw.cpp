@@ -3,13 +3,8 @@
 #include <stdio.h>
 #include <stddef.h>
 #include <string.h>
-#include "tb_skin.h"
-#include "tb_system.h"
-#include "tb_msg.h"
-#include "tb_editfield.h"
-#include "renderers/tb_renderer_gl.h"
-#include "tb_font_renderer.h"
-#include "Application.h"
+
+#include "AppBackendGLFW.h"
 
 #ifdef TB_TARGET_MACOSX
 #include <unistd.h>
@@ -25,8 +20,6 @@ bool key_ctrl = false;
 bool key_shift = false;
 bool key_super = false;
 
-class AppBackendGLFW;
-
 void SetBackend(GLFWwindow *window, AppBackendGLFW *backend)
 {
 	glfwSetWindowUserPointer(window, backend);
@@ -37,32 +30,6 @@ AppBackendGLFW *GetBackend(GLFWwindow *window)
 	return static_cast<AppBackendGLFW*>(glfwGetWindowUserPointer(window));
 }
 
-class AppBackendGLFW : public AppBackend
-{
-public:
-	bool Init(App *app);
-	AppBackendGLFW()	: m_app(nullptr)
-						, m_renderer(nullptr)
-						, mainWindow(nullptr)
-						, m_cursor_i_beam(nullptr)
-						, m_has_pending_update(false)
-						, m_quit_requested(false) {}
-	~AppBackendGLFW();
-
-	virtual void OnAppEvent(const EVENT &ev);
-
-	TBWidget *GetRoot() const { return m_app->GetRoot(); }
-	int GetWidth() const { return m_app->GetWidth(); }
-	int GetHeight() const { return m_app->GetHeight(); }
-
-	App *m_app;
-	TBRendererGL *m_renderer;
-	GLFWwindow *mainWindow;
-	GLFWcursor *m_cursor_i_beam;
-	bool m_has_pending_update;
-	bool m_quit_requested;
-};
-
 MODIFIER_KEYS GetModifierKeys()
 {
 	MODIFIER_KEYS code = TB_MODIFIER_NONE;
@@ -70,6 +37,7 @@ MODIFIER_KEYS GetModifierKeys()
 	if (key_ctrl)	code |= TB_CTRL;
 	if (key_shift)	code |= TB_SHIFT;
 	if (key_super)	code |= TB_SUPER;
+
 	return code;
 }
 
@@ -80,6 +48,7 @@ MODIFIER_KEYS GetModifierKeys(int glfwmod)
 	if (glfwmod & GLFW_MOD_CONTROL)		code |= TB_CTRL;
 	if (glfwmod & GLFW_MOD_SHIFT)		code |= TB_SHIFT;
 	if (glfwmod & GLFW_MOD_SUPER)		code |= TB_SUPER;
+
 	return code;
 }
 
@@ -143,6 +112,7 @@ static bool InvokeShortcut(int key, SPECIAL_KEY special_key, MODIFIER_KEYS modif
 	TBWidgetEvent ev(EVENT_TYPE_SHORTCUT);
 	ev.modifierkeys = modifierkeys;
 	ev.ref_id = id;
+
 	return TBWidget::focused_widget->InvokeEvent(ev);
 }
 
@@ -195,7 +165,7 @@ static void key_callback(GLFWwindow *window, int key, int scancode, int action, 
 	case GLFW_KEY_TAB:			InvokeKey(window, 0, TB_KEY_TAB, modifier, down); break;
 	case GLFW_KEY_DELETE:		InvokeKey(window, 0, TB_KEY_DELETE, modifier, down); break;
 	case GLFW_KEY_BACKSPACE:	InvokeKey(window, 0, TB_KEY_BACKSPACE, modifier, down); break;
-	case GLFW_KEY_ENTER:		
+	case GLFW_KEY_ENTER:
 	case GLFW_KEY_KP_ENTER:		InvokeKey(window, 0, TB_KEY_ENTER, modifier, down); break;
 	case GLFW_KEY_ESCAPE:		InvokeKey(window, 0, TB_KEY_ESC, modifier, down); break;
 	case GLFW_KEY_MENU:
@@ -511,7 +481,7 @@ bool port_main() {
 #ifdef TB_TARGET_WINDOWS
 
 #include <mmsystem.h>
-int PASCAL WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+int main(int argc, char** argv)
 {
 	// Set the current path to the directory of the app so we find assets also when visual studio start it.
 	char modname[MAX_PATH];

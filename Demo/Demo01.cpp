@@ -46,7 +46,6 @@ void const_expr_test()
 #endif // TB_SUPPORT_CONSTEXPR
 
 // == DemoWindow ==============================================================
-
 DemoWindow::DemoWindow(TBWidget *root)
 {
 	root->AddChild(this);
@@ -127,13 +126,12 @@ bool DemoWindow::OnEvent(const TBWidgetEvent &ev)
 }
 
 // == EditWindow ==============================================================
-
 class EditWindow : public DemoWindow
 {
 public:
 	EditWindow(TBWidget *root) : DemoWindow(root)
 	{
-		LoadResourceFile("Demo/demo01/ui_resources/test_textwindow.tb.txt");
+		LoadResourceFile("Demo/resources/ui_resources/test_textwindow.tb.txt");
 	}
 	virtual void OnProcessStates()
 	{
@@ -294,7 +292,7 @@ bool LayoutWindow::OnEvent(const TBWidgetEvent &ev)
 
 TabContainerWindow::TabContainerWindow(TBWidget *root) : DemoWindow(root)
 {
-	LoadResourceFile("Demo/demo01/ui_resources/test_tabcontainer01.tb.txt");
+	LoadResourceFile("Demo/resources/ui_resources/test_tabcontainer01.tb.txt");
 }
 
 bool TabContainerWindow::OnEvent(const TBWidgetEvent &ev)
@@ -336,7 +334,7 @@ bool TabContainerWindow::OnEvent(const TBWidgetEvent &ev)
 
 ConnectionWindow::ConnectionWindow(TBWidget *root) : DemoWindow(root)
 {
-	LoadResourceFile("Demo/demo01/ui_resources/test_connections.tb.txt");
+	LoadResourceFile("Demo/resources/ui_resources/test_connections.tb.txt");
 }
 
 bool ConnectionWindow::OnEvent(const TBWidgetEvent &ev)
@@ -358,7 +356,7 @@ bool ConnectionWindow::OnEvent(const TBWidgetEvent &ev)
 
 ScrollContainerWindow::ScrollContainerWindow(TBWidget *root) : DemoWindow(root)
 {
-	LoadResourceFile("Demo/demo01/ui_resources/test_scrollcontainer.tb.txt");
+	LoadResourceFile("Demo/resources/ui_resources/test_scrollcontainer.tb.txt");
 
 	if (TBSelectDropdown *select = GetWidgetByIDAndType<TBSelectDropdown>(TBIDC("name dropdown")))
 		select->SetSource(&name_source);
@@ -447,7 +445,7 @@ void ScrollContainerWindow::OnMessageReceived(TBMessage *msg)
 
 ImageWindow::ImageWindow(TBWidget *root) : DemoWindow(root)
 {
-	LoadResourceFile("Demo/demo01/ui_resources/test_image_widget.tb.txt");
+	LoadResourceFile("Demo/resources/ui_resources/test_image_widget.tb.txt");
 }
 
 bool ImageWindow::OnEvent(const TBWidgetEvent &ev)
@@ -466,7 +464,7 @@ bool ImageWindow::OnEvent(const TBWidgetEvent &ev)
 
 PageWindow::PageWindow(TBWidget *root) : DemoWindow(root)
 {
-	LoadResourceFile("Demo/demo01/ui_resources/test_scroller_snap.tb.txt");
+	LoadResourceFile("Demo/resources/ui_resources/test_scroller_snap.tb.txt");
 
 	// Listen to the pagers scroller
 	if (TBWidget *pager = GetWidgetByID(TBIDC("page-scroller")))
@@ -489,7 +487,7 @@ void PageWindow::OnScrollSnap(TBWidget *target_widget, int &target_x, int &targe
 
 AnimationsWindow::AnimationsWindow(TBWidget *root) : DemoWindow(root)
 {
-	LoadResourceFile("Demo/demo01/ui_resources/test_animations.tb.txt");
+	LoadResourceFile("Demo/resources/ui_resources/test_animations.tb.txt");
 	Animate();
 }
 
@@ -531,7 +529,7 @@ bool AnimationsWindow::OnEvent(const TBWidgetEvent &ev)
 
 MainWindow::MainWindow(TBWidget *root) : DemoWindow(root)
 {
-	LoadResourceFile("Demo/demo01/ui_resources/test_ui.tb.txt");
+	LoadResourceFile("Demo/resources/ui_resources/test_ui.tb.txt");
 
 	SetOpacity(0.97f);
 }
@@ -644,7 +642,7 @@ bool MainWindow::OnEvent(const TBWidgetEvent &ev)
 		}
 		else if (ev.target->GetID() == TBIDC("test-layout"))
 		{
-			TBStr resource_file("Demo/demo01/ui_resources/");
+			TBStr resource_file("Demo/resources/ui_resources/");
 			resource_file.Append(ev.target->data.GetString());
 			new LayoutWindow(GetParentRoot(), resource_file);
 			return true;
@@ -681,14 +679,14 @@ bool MainWindow::OnEvent(const TBWidgetEvent &ev)
 		}
 		else if (ev.target->GetID() == TBIDC("test-skin-conditions"))
 		{
-			(new DemoWindow(GetParentRoot()))->LoadResourceFile("Demo/demo01/ui_resources/test_skin_conditions01.tb.txt");
-			(new DemoWindow(GetParentRoot()))->LoadResourceFile("Demo/demo01/ui_resources/test_skin_conditions02.tb.txt");
+			(new DemoWindow(GetParentRoot()))->LoadResourceFile("Demo/resources/ui_resources/test_skin_conditions01.tb.txt");
+			(new DemoWindow(GetParentRoot()))->LoadResourceFile("Demo/resources/ui_resources/test_skin_conditions02.tb.txt");
 			return true;
 		}
 		else if (ev.target->GetID() == TBIDC("test-resource-edit"))
 		{
 			ResourceEditWindow *res_edit_win = new ResourceEditWindow();
-			res_edit_win->Load("Demo/demo01/ui_resources/resource_edit_test.tb.txt");
+			res_edit_win->Load("Demo/resources/ui_resources/resource_edit_test.tb.txt");
 			GetParent()->AddChild(res_edit_win);
 			return true;
 		}
@@ -838,7 +836,7 @@ void DemoApplication::OnBackendAttached(AppBackend *backend, int width, int heig
 	g_tb_lng->Load("resources/language/lng_en.tb.txt");
 
 	// Load the default skin, and override skin that contains the graphics specific to the demo.
-	g_tb_skin->Load("resources/default_skin/skin.tb.txt", "Demo/demo01/skin/skin.tb.txt");
+	g_tb_skin->Load("resources/default_skin/skin.tb.txt", "Demo/resources/skin/skin.tb.txt");
 
 	// Register font renderers.
 #ifdef TB_FONT_RENDERER_TBBF
@@ -854,18 +852,18 @@ void DemoApplication::OnBackendAttached(AppBackend *backend, int width, int heig
 	register_freetype_font_renderer();
 #endif
 
-	// Add fonts we can use to the font manager.
+	// Add resources/fonts we can use to the font manager.
 #if defined(TB_FONT_RENDERER_STB) || defined(TB_FONT_RENDERER_FREETYPE)
 	g_font_manager->AddFontInfo("resources/vera.ttf", "Vera");
 #endif
 #ifdef TB_FONT_RENDERER_TBBF
 	g_font_manager->AddFontInfo("resources/default_font/segoe_white_with_shadow.tb.txt", "Segoe");
-	g_font_manager->AddFontInfo("Demo/fonts/neon.tb.txt", "Neon");
-	g_font_manager->AddFontInfo("Demo/fonts/orangutang.tb.txt", "Orangutang");
-	g_font_manager->AddFontInfo("Demo/fonts/orange.tb.txt", "Orange");
+	g_font_manager->AddFontInfo("Demo/resources/fonts/neon.tb.txt", "Neon");
+	g_font_manager->AddFontInfo("Demo/resources/fonts/orangutang.tb.txt", "Orangutang");
+	g_font_manager->AddFontInfo("Demo/resources/fonts/orange.tb.txt", "Orange");
 #endif
 
-	// Set the default font description for widgets to one of the fonts we just added
+	// Set the default font description for widgets to one of the resources/fonts we just added
 	TBFontDescription fd;
 #ifdef TB_FONT_RENDERER_TBBF
 	fd.SetID(TBIDC("Segoe"));

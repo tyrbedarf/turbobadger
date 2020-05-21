@@ -96,8 +96,10 @@ namespace SDL_Demo {
 
 		tb::TBWidgetsAnimationManager::Init();
 
-		m_renderer = new tb::TBRendererGL();
-		tb_core_init(m_renderer);
+		g_renderer = new tb::TBRendererGL();
+		tb_core_init(g_renderer);
+
+		return true;
 	}
 
 	void Application::Run() {
@@ -110,14 +112,43 @@ namespace SDL_Demo {
 				{
 					m_running = false;
 				}
+
+				Process();
+				Render();
 			}
+		}
+	}
+
+	void Application::Process()
+	{
+		TBAnimationManager::Update();
+
+		m_root.InvokeProcessStates();
+		m_root.InvokeProcess();
+	}
+
+	void Application::Render() {
+		g_renderer->BeginPaint(m_root.GetRect().w, m_root.GetRect().h);
+		m_root.InvokePaint(TBWidget::PaintProps());
+		g_renderer->EndPaint();
+
+		// If animations are running, reinvalidate immediately
+		if (TBAnimationManager::HasAnimationsRunning())
+		{
+			GetRoot()->Invalidate();
 		}
 	}
 
 	void Application::Shutdown() {
 		tb::TBWidgetsAnimationManager::Shutdown();
 
-		if (m_window != nullptr) {
+		if (g_renderer != nullptr)
+		{
+			delete g_renderer;
+		}
+
+		if (m_window != nullptr)
+		{
 			SDL_DestroyWindow(m_window);
 		}
 
