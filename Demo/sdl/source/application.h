@@ -1,6 +1,8 @@
 #pragma once
 
 #include <SDL.h>
+#include <SDL_opengl.h>
+#include <gl/GLU.h>
 
 #include "tb_widgets.h"
 #include "tb_widgets_common.h"
@@ -40,11 +42,15 @@ namespace SDL_Demo {
 		int m_height;
 
 		SDL_Window* m_window;
+		SDL_GLContext m_gl_context;
+
 		SDL_Event m_evt_cache;
 
 		tb::TBRendererGL* m_renderer;
 
 		bool m_running;
+
+		bool init_gl();
 
 		void on_application_quit() {
 			m_running = false;

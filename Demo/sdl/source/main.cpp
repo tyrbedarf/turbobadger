@@ -19,10 +19,11 @@ int main(int argc, char *argv[]) {
 	SDL_Demo::Application app(1024, 800);
 	if (app.Init()) {
 		app.Run();
-		app.Shutdown();
 
 		return 0;
 	}
+
+	app.Shutdown();
 
 	return -1;
 }

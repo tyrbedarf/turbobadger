@@ -7,6 +7,8 @@ SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR})
 SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_SOURCE_DIR})
 
 if(CMAKE_SYSTEM MATCHES "Windows")
+ add_definitions(-DGLFW_EXPOSE_NATIVE_WIN32)
+ add_definitions(-DGLFW_EXPOSE_NATIVE_WGL)
  set(EXTRA_LIBS ${EXTRA_LIBS} winmm)
 endif(CMAKE_SYSTEM MATCHES "Windows")
 
@@ -24,9 +26,14 @@ include_directories(".")
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS})
 
+find_package(OpenGL REQUIRED)
+include_directories(${OPENGL_INCLUDE_DIR})
+
 add_executable(TurboBadgerSDLDemo WIN32 ${LOCAL_SRCS})
-target_link_libraries(TurboBadgerSDLDemo TurboBadgerLib ${SDL2_LIBRARIES})
+target_link_libraries(TurboBadgerSDLDemo TurboBadgerLib ${SDL2_LIBRARIES} ${OPENGL_LIBRARIES} ${EXTRA_LIBS})
 install(TARGETS TurboBadgerSDLDemo
     RUNTIME DESTINATION bin
     LIBRARY DESTINATION lib
     ARCHIVE DESTINATION lib)
+	
+set_target_properties(TurboBadgerSDLDemo PROPERTIES LINK_FLAGS /SUBSYSTEM:CONSOLE)

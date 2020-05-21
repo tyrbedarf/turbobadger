@@ -34,14 +34,12 @@ public:
 	TBRendererGL();
 
 	// == TBRenderer ====================================================================
-
 	virtual void BeginPaint(int render_target_w, int render_target_h);
 	virtual void EndPaint();
 
 	virtual TBBitmap *CreateBitmap(int width, int height, uint32 *data);
 
 	// == TBRendererBatcher ===============================================================
-
 	virtual void RenderBatch(Batch *batch);
 	virtual void SetClipRect(const TBRect &rect);
 };

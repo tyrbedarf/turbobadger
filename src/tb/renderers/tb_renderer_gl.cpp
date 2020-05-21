@@ -18,7 +18,6 @@ uint32 dbg_bitmap_validations = 0;
 #endif // TB_RUNTIME_DEBUG_INFO
 
 // == Utilities ===================================================================================
-
 static void Ortho2D(GLfloat left, GLfloat right, GLfloat bottom, GLfloat top)
 {
 #ifdef TB_RENDERER_GLES_1
@@ -29,7 +28,6 @@ static void Ortho2D(GLfloat left, GLfloat right, GLfloat bottom, GLfloat top)
 }
 
 // == Batching ====================================================================================
-
 GLuint g_current_texture = (GLuint)-1;
 TBRendererBatcher::Batch *g_current_batch = nullptr;
 
@@ -44,7 +42,6 @@ void BindBitmap(TBBitmap *bitmap)
 }
 
 // == TBBitmapGL ==================================================================================
-
 TBBitmapGL::TBBitmapGL(TBRendererGL *renderer)
 	: m_renderer(renderer), m_w(0), m_h(0), m_texture(0)
 {
@@ -87,7 +84,6 @@ void TBBitmapGL::SetData(uint32 *data)
 }
 
 // == TBRendererGL ================================================================================
-
 TBRendererGL::TBRendererGL()
 {
 }
