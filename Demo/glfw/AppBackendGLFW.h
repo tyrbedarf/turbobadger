@@ -22,12 +22,16 @@ public:
 	AppBackendGLFW() : m_app(nullptr)
 		, m_renderer(nullptr)
 		, mainWindow(nullptr)
-		, m_cursor_i_beam(nullptr)
-		, m_has_pending_update(false)
-		, m_quit_requested(false) {}
+		, m_cursor_i_beam(nullptr) {
+		m_has_pending_update = false;
+		m_quit_requested = false;
+	}
 	~AppBackendGLFW();
 
 	virtual void OnAppEvent(const EVENT &ev);
+	virtual void Update() {
+		m_has_pending_update = false;
+	}
 
 	tb::TBWidget *GetRoot() const {
 		return m_app->GetRoot();
@@ -44,7 +48,4 @@ public:
 
 	GLFWwindow *mainWindow;
 	GLFWcursor *m_cursor_i_beam;
-
-	bool m_has_pending_update;
-	bool m_quit_requested;
 };

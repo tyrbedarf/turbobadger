@@ -60,7 +60,7 @@ TBNode *TBNode::GetNode(const char *request, GET_MISS_POLICY mp)
 	while (*request && n)
 	{
 		const char *nextend = GetNextNodeSeparator(request);
-		int name_len = nextend - request;
+		int name_len = (int) (nextend - request);
 		TBNode *n_child = n->GetNodeInternal(request, name_len);
 		if (!n_child && mp == GET_MISS_POLICY_CREATE)
 		{
@@ -167,7 +167,7 @@ public:
 	}
 	virtual int GetMoreData(char *buf, int buf_len)
 	{
-		return f->Read(buf, 1, buf_len);
+		return (int) f->Read(buf, (size_t) 1, (size_t) buf_len);
 	}
 private:
 	TBFile *f;
@@ -320,7 +320,7 @@ bool TBNode::ReadFile(const char *filename, TB_NODE_READ_FLAGS flags)
 
 bool TBNode::ReadData(const char *data, TB_NODE_READ_FLAGS flags)
 {
-	return ReadData(data, strlen(data), flags);
+	return ReadData(data, (int) strlen(data), flags);
 }
 
 bool TBNode::ReadData(const char *data, int data_len, TB_NODE_READ_FLAGS flags)

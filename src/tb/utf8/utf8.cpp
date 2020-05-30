@@ -113,7 +113,7 @@ UCS4 decode_next(const char *str, int *i, int i_max)
 	if (ch == 0xFFFF) // Invalid character!
 		(*i)++;
 	else
-		*i += str - old_str;
+		*i += (int) (str - old_str);
 	return ch;
 }
 

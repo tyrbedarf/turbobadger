@@ -45,7 +45,7 @@ TBTestGroup *g_test_groups = nullptr;
 TBStr tb_get_test_file_name(const char *testpath, const char *filename)
 {
 	TBStr str;
-	int test_path_len = strlen(testpath);
+	int test_path_len = (int) strlen(testpath);
 	for (int i = test_path_len - 1; i > 0 && testpath[i] != '/' && testpath[i] != '\\'; i--)
 		test_path_len = i;
 	str.Set(testpath, test_path_len);

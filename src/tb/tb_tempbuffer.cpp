@@ -75,7 +75,7 @@ bool TBTempBuffer::AppendSpace(int size)
 bool TBTempBuffer::AppendString(const char *str)
 {
 	// Add 1 to include the null termination in the data.
-	if (Append(str, strlen(str) + 1))
+	if (Append(str, (int) strlen(str) + 1))
 	{
 		// Now remove the null termination from the append position
 		// again, so another call will append to the same string (instead of
@@ -98,7 +98,7 @@ bool TBTempBuffer::AppendPath(const char *full_path_and_filename)
 		full_path_and_filename = str_start + 2;
 	}
 
-	const int len = full_path_and_filename - str_start;
+	const int len = (int) (full_path_and_filename - str_start);
 	if (Reserve(m_append_pos + len + 1))
 	{
 		// Add the string, and nulltermination.
@@ -116,10 +116,10 @@ bool TBTempBuffer::AppendFile(const char *filename)
 	if (TBFile *file = TBFile::Open(filename, TBFile::MODE_READ))
 	{
 		const size_t file_size = file->Size();
-		if (Reserve(m_append_pos + file_size + 1) && file->Read(m_data + m_append_pos, 1, file_size) == file_size)
+		if (Reserve(m_append_pos + (int) file_size + 1) && file->Read(m_data + m_append_pos, 1, file_size) == file_size)
 		{
 			// Increase append position and null terminate
-			m_append_pos += file_size;
+			m_append_pos += (int) file_size;
 			m_data[m_append_pos] = 0;
 			delete file;
 			return true;

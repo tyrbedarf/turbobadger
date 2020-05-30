@@ -318,8 +318,8 @@ static void window_refresh_callback(GLFWwindow *window)
 	AppBackendGLFW *backend = GetBackend(window);
 
 	backend->m_app->Process();
+	backend->Update();
 
-	backend->m_has_pending_update = false;
 	// Bail out if we get here with invalid dimensions.
 	// This may happen when minimizing windows (GLFW 3.0.4, Windows 8.1).
 	if (backend->GetWidth() == 0 || backend->GetHeight() == 0)
@@ -360,8 +360,10 @@ bool AppBackendGLFW::Init(App *app)
 {
 	if (!glfwInit())
 		return false;
+
 	const int width = app->GetWidth() > 0 ? app->GetWidth() : 1920;
 	const int height = app->GetHeight() > 0 ? app->GetHeight() : 1080;
+
 	mainWindow = glfwCreateWindow(width, height, app->GetTitle(), nullptr, nullptr);
 	if (!mainWindow)
 	{
@@ -463,10 +465,13 @@ bool port_main() {
 		// Main loop
 		do
 		{
-			if (backend->m_has_pending_update)
+			if (backend->HasPendingUpdate())
 				window_refresh_callback(backend->mainWindow);
+
+			backend->Update();
 			glfwWaitMsgLoop(backend->mainWindow);
-		} while (!backend->m_quit_requested && !glfwWindowShouldClose(backend->mainWindow));
+
+		} while (!backend->IsQuitRequested() && !glfwWindowShouldClose(backend->mainWindow));
 
 		app->ShutDown();
 	}

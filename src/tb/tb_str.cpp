@@ -71,7 +71,7 @@ bool TBStr::Set(const char* str, int len)
 {
 	safe_delete(s);
 	if (len == TB_ALL_TO_TERMINATION)
-		len = strlen(str);
+		len = (int) strlen(str);
 	if (char *new_s = (char *) malloc(len + 1))
 	{
 		s = new_s;
@@ -139,9 +139,9 @@ void TBStr::Remove(int ofs, int len)
 
 bool TBStr::Insert(int ofs, const char *ins, int ins_len)
 {
-	int len1 = strlen(s);
+	int len1 = (int) strlen(s);
 	if (ins_len == TB_ALL_TO_TERMINATION)
-		ins_len = strlen(ins);
+		ins_len = (int) strlen(ins);
 	int newlen = len1 + ins_len;
 	if (char *news = (char *) malloc(newlen + 1))
 	{

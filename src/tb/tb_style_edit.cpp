@@ -18,7 +18,7 @@ namespace tb {
 #define TMPDEBUG(expr) expr
 #define nTMPDEBUG(expr)
 #else
-#define TMPDEBUG(expr) 
+#define TMPDEBUG(expr)
 #define nTMPDEBUG(expr) expr
 #endif
 
@@ -1658,7 +1658,7 @@ void TBStyleEdit::InsertBreak()
 void TBStyleEdit::InsertText(const char *text, int32 len, bool after_last, bool clear_undo_redo)
 {
 	if (len == TB_ALL_TO_TERMINATION)
-		len = strlen(text);
+		len = (int) strlen(text);
 
 	selection.RemoveContent();
 
@@ -1932,7 +1932,7 @@ void TBStyleEdit::Focus(bool focus)
 
 bool TBStyleEdit::SetText(const char *text, TB_CARET_POS pos)
 {
-	return SetText(text, strlen(text), pos);
+	return SetText(text, (int) strlen(text), pos);
 }
 
 bool TBStyleEdit::SetText(const char *text, int text_len, TB_CARET_POS pos)

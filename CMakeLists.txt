@@ -54,6 +54,7 @@ configure_file(tb_config.h.in src/tb/config.h)
  
 if(${CMAKE_CXX_COMPILER_ID} MATCHES "GNU" OR ${CMAKE_CXX_COMPILER_ID} MATCHES "Clang")
  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++0x -fno-exceptions -fno-rtti -Wall -Wextra -Wno-unused-parameter")
+ add_definitions(-DGCC)
 endif()
 
 if(APPLE)

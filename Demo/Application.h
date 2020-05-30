@@ -37,6 +37,19 @@ public:
 	};
 	virtual ~AppBackend() {}
 	virtual void OnAppEvent(const EVENT &ev) = 0;
+	virtual void Update() = 0;
+
+	bool IsQuitRequested() {
+		return m_quit_requested;
+	}
+
+	bool HasPendingUpdate() {
+		return m_has_pending_update;
+	}
+
+protected:
+	bool m_quit_requested;
+	bool m_has_pending_update;
 };
 
 /** Application interface, for setting up the application using turbo badger. */
@@ -61,6 +74,7 @@ public:
 	virtual void ShutDown();
 	virtual void Process();
 	virtual void RenderFrame();
+
 protected:
 	AppBackend *m_backend;
 	AppRootWidget m_root;
