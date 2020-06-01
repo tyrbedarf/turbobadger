@@ -34,48 +34,6 @@ AppBackendSDL::~AppBackendSDL() {
 	delete tb::g_renderer;
 }
 
-// https://lazyfoo.net/tutorials/SDL/50_SDL_and_opengl_2/index.php
-bool AppBackendSDL::InitGL() {
-	GLenum error = GL_NO_ERROR;
-
-	// Initialize Projection Matrix
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-
-	// Check for error
-	error = glGetError();
-	if (error != GL_NO_ERROR)
-	{
-		printf("Error initializing OpenGL! %s\n", gluErrorString(error));
-		return false;
-	}
-
-	// Initialize Modelview Matrix
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-
-	// Check for error
-	error = glGetError();
-	if (error != GL_NO_ERROR)
-	{
-		printf("Error initializing OpenGL! %s\n", gluErrorString(error));
-		return false;
-	}
-
-	// Initialize clear color
-	glClearColor(0.f, 0.f, 0.f, 1.f);
-
-	// Check for error
-	error = glGetError();
-	if (error != GL_NO_ERROR)
-	{
-		printf("Error initializing OpenGL! %s\n", gluErrorString(error));
-		return false;
-	}
-
-	return true;
-}
-
 bool AppBackendSDL::Init(App *app) {
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
 		printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
@@ -110,13 +68,6 @@ bool AppBackendSDL::Init(App *app) {
 	{
 		printf("Warning: Unable to set VSync! SDL Error: %s\n", SDL_GetError());
 	}
-
-	//Initialize OpenGL
-	/*if (!init_gl())
-	{
-		printf("Unable to initialize OpenGL!\n");
-		return false;
-	}*/
 
 	m_cursor_arrow = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_ARROW);
 	SDL_SetCursor(m_cursor_arrow);
@@ -227,85 +178,59 @@ bool AppBackendSDL::InvokeKey(unsigned int key, tb::SPECIAL_KEY special_key, tb:
 void AppBackendSDL::HandleWindowEvent(const SDL_Event &evt) {
 	switch (evt.window.event) {
 	case SDL_WINDOWEVENT_SHOWN:
-		SDL_Log("Window %d shown", evt.window.windowID);
 		// Trigger repaint
 		m_has_pending_update = true;
 		m_pause = false;
 		break;
 	case SDL_WINDOWEVENT_HIDDEN:
-		SDL_Log("Window %d hidden", evt.window.windowID);
 		// Trigger stop updating
 		m_pause = true;
 		m_has_pending_update = false;
 		break;
 	case SDL_WINDOWEVENT_EXPOSED:
-		SDL_Log("Window %d exposed", evt.window.windowID);
 		// Trigger repaint
 		m_has_pending_update = true;
 		m_pause = false;
 		break;
 	case SDL_WINDOWEVENT_MOVED:
-		SDL_Log("Window %d moved to %d,%d",
-			evt.window.windowID, evt.window.data1,
-			evt.window.data2);
 		break;
 	case SDL_WINDOWEVENT_RESIZED:
-		SDL_Log("Window %d resized to %dx%d",
-			evt.window.windowID,
-			evt.window.data1,
-			evt.window.data2);
 		m_app->OnResized(evt.window.data1, evt.window.data2);
 		break;
 	case SDL_WINDOWEVENT_SIZE_CHANGED:
-		SDL_Log("Window %d size changed to %dx%d",
-			evt.window.windowID, evt.window.data1,
-			evt.window.data2);
 		m_app->OnResized(evt.window.data1, evt.window.data2);
 		break;
 	case SDL_WINDOWEVENT_MINIMIZED:
-		SDL_Log("Window %d minimized", evt.window.windowID);
 		m_pause = true;
 		m_has_pending_update = false;
 		break;
 	case SDL_WINDOWEVENT_MAXIMIZED:
-		SDL_Log("Window %d maximized", evt.window.windowID);
 		m_pause = false;
 		m_has_pending_update = true;
 		break;
 	case SDL_WINDOWEVENT_RESTORED:
-		SDL_Log("Window %d restored", evt.window.windowID);
 		m_pause = false;
 		m_has_pending_update = true;
 		break;
 	case SDL_WINDOWEVENT_ENTER:
-		SDL_Log("Mouse entered window %d", evt.window.windowID);
 		break;
 	case SDL_WINDOWEVENT_LEAVE:
-		SDL_Log("Mouse left window %d", evt.window.windowID);
 		break;
 	case SDL_WINDOWEVENT_FOCUS_GAINED:
-		SDL_Log("Window %d gained keyboard focus",
-			evt.window.windowID);
 		break;
 	case SDL_WINDOWEVENT_FOCUS_LOST:
-		SDL_Log("Window %d lost keyboard focus",
-			evt.window.windowID);
 		break;
 	case SDL_WINDOWEVENT_CLOSE:
-		SDL_Log("Window %d closed", evt.window.windowID);
 		m_quit_requested = true;
 		break;
 #if SDL_VERSION_ATLEAST(2, 0, 5)
 	case SDL_WINDOWEVENT_TAKE_FOCUS:
-		SDL_Log("Window %d is offered a focus", evt.window.windowID);
 		break;
 	case SDL_WINDOWEVENT_HIT_TEST:
-		SDL_Log("Window %d has a special hit test", evt.window.windowID);
 		break;
 #endif
 	default:
-		SDL_Log("Window %d got unknown event %d",
-			evt.window.windowID, evt.window.event);
+		SDL_Log("Window %d got unknown event %d", evt.window.windowID, evt.window.event);
 		break;
 	}
 }

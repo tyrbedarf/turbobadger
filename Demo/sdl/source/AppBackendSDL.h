@@ -56,7 +56,6 @@ private:
 
 	bool m_pause;
 
-	bool InitGL();
 	tb::MODIFIER_KEYS GetModifierKeys();
 	tb::MODIFIER_KEYS GetModifierKeys(Uint16 glfwmod);
 	bool InvokeShortcut(int key, tb::SPECIAL_KEY special_key, tb::MODIFIER_KEYS modifierkeys, bool down);
