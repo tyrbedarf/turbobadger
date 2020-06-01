@@ -32,35 +32,35 @@
 //#define TB_PREMULTIPLIED_ALPHA
 
 /** Enable to support TBBF fonts (Turbo Badger Bitmap Fonts) */
-${TB_FONT_RENDERER_TBBF_CONFIG}
+#define TB_FONT_RENDERER_TBBF
 
 /** Enable to support truetype fonts using freetype. */
-${TB_FONT_RENDERER_FREETYPE_CONFIG}
+//#define TB_FONT_RENDERER_FREETYPE
 
 /** Enable to support truetype fonts using stb_truetype.h (http://nothings.org/).
 	It's a *very unsafe* font library. Use only with fonts distributed with your
 	app, that you know work! Freetype generates much prettier glyphs (using
 	hinting) but is a lot larger. This implementation is kept here as alternative
 	as long as it compiles. */
-${TB_FONT_RENDERER_STB_CONFIG}
+//#define TB_FONT_RENDERER_STB
 
 /** Enable to support image loading using stb_image.c (http://nothings.org/).
 	It's a *very unsafe* image library. Use only with images distributed with
 	your app, that you know work! */
-${TB_IMAGE_LOADER_STB_CONFIG}
+#define TB_IMAGE_LOADER_STB
 
 /** Enable to get TBRendererBatcher, an helper class for renderers that
 	implements batching of draw operations. Subclasses of TBRendererBatcher
 	can be done super easily, and still do batching. */
-${TB_RENDERER_BATCHER_CONFIG}
+#define TB_RENDERER_BATCHER
 
 /** Enable renderer using OpenGL. This renderer depends on TB_RENDERER_BATCHER.
 	It is using GL version 1.1, */
-${TB_RENDERER_GL_CONFIG}
+#define TB_RENDERER_GL
 
 /** Enable renderer using OpenGL ES. This renderer depends on TB_RENDERER_GL.
 	It is using GL ES version 1. */
-${TB_RENDERER_GLES_1_CONFIG}
+//#define TB_RENDERER_GLES_1
 
 /** The width of the font glyph cache. Must be a power of two. */
 #define TB_GLYPH_CACHE_WIDTH 512
@@ -68,14 +68,13 @@ ${TB_RENDERER_GLES_1_CONFIG}
 /** The height of the font glyph cache. Must be a power of two. */
 #define TB_GLYPH_CACHE_HEIGHT 512
 
-/** CMake is supposed to reconfigure files if they change. */
-${TB_FORCE_REBUILD}
-
 // == Optional features ===========================================================
+
 /** Enable support for TBImage, TBImageManager, TBImageWidget. */
-${TB_IMAGE_CONFIG}
+#define TB_IMAGE
 
 // == Additional configuration of platform implementations ========================
+
 /** Define for posix implementation of TBFile. */
 //#define TB_FILE_POSIX
 
@@ -95,28 +94,25 @@ ${TB_IMAGE_CONFIG}
 //#define TB_TARGET_LINUX
 
 // == Setting some defaults for platform implementations ==========================
-// Updated to only define a platform if a target is defined
-// This allows us to build for different targets than the host compiling OS
-#if !defined(TB_TARGET_WINDOWS) && !defined(TB_TARGET_LINUX) && !defined(TB_TARGET_MACOSX)
-    #if defined(ANDROID) || defined(__ANDROID__)
-    #define TB_SYSTEM_ANDROID
-    #define TB_CLIPBOARD_DUMMY
-    #elif defined(__linux) || defined(__linux__)
-    #define TB_FILE_POSIX
-    #define TB_TARGET_LINUX
-    #define TB_SYSTEM_LINUX
-    #define TB_CLIPBOARD_GLFW
-    #elif MACOSX
-    #define TB_FILE_POSIX
-    #define TB_TARGET_MACOSX
-    #define TB_SYSTEM_LINUX
-    #define TB_CLIPBOARD_GLFW
-    #elif defined(_WIN32) || defined(__WIN32__) || defined(__WINDOWS__)
-    #define TB_FILE_POSIX
-    #define TB_TARGET_WINDOWS
-    #define TB_CLIPBOARD_WINDOWS
-    #define TB_SYSTEM_WINDOWS
-    #endif
+
+#if defined(ANDROID) || defined(__ANDROID__)
+#define TB_SYSTEM_ANDROID
+#define TB_CLIPBOARD_DUMMY
+#elif defined(__linux) || defined(__linux__)
+#define TB_FILE_POSIX
+#define TB_TARGET_LINUX
+#define TB_SYSTEM_LINUX
+#define TB_CLIPBOARD_GLFW
+#elif MACOSX
+#define TB_FILE_POSIX
+#define TB_TARGET_MACOSX
+#define TB_SYSTEM_LINUX
+#define TB_CLIPBOARD_GLFW
+#elif defined(_WIN32) || defined(__WIN32__) || defined(__WINDOWS__)
+#define TB_FILE_POSIX
+#define TB_TARGET_WINDOWS
+#define TB_CLIPBOARD_WINDOWS
+#define TB_SYSTEM_WINDOWS
 #endif
 
 #endif // TB_CONFIG_H
