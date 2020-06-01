@@ -15,10 +15,8 @@ endif(CMAKE_SYSTEM MATCHES "Windows")
 # Add sources
 set(LOCAL_SRCS "")
 file(GLOB LOCAL_SRCS 
-	${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp 
-    ${CMAKE_CURRENT_SOURCE_DIR}/source/*.h
-	${CMAKE_CURRENT_SOURCE_DIR}/source/events/*.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/source/events/*.h
+	${CMAKE_CURRENT_SOURCE_DIR}/*.cpp 
+    ${CMAKE_CURRENT_SOURCE_DIR}/*.h
 	${CMAKE_SOURCE_DIR}/Demo/*.cpp 
     ${CMAKE_SOURCE_DIR}/Demo/*.h)
 
