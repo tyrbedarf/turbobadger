@@ -19,7 +19,7 @@ renderer, font system etc.
 BETA notice
 -----------------------------------------------------------------------------------
 
-APIs are changed, features improved & added. Be aware that if you use this right
+APIs are changing, features improved & added. Be aware that if you use this right
 now, you'll probably have to adjust your code to API changes sometimes after
 pulling master. Documentation about API changes take place in the git commit
 changelog for now ;)
@@ -121,25 +121,25 @@ Custom widgets can be inflated from UI resources too. See the use of the
 this.
 
 
-Building the demo
+Building the demos
 -----------------------------------------------------------------------------------
+GLFW
 
-The demo use GLFW as a submodule for some platform window & input handling.
-After the first git clone, you need to run:
+Turbobadger comes with example Application showing how to use the library. One
+runs with GFLW as backend to handle windowing, input and providing a render context.
+
+If you want to build the glfw demo you first have to clone glfw from github. To do
+this run
 
 	git submodule init
 	git submodule update
 
-This will clone GLFW into the right directory.
+Inside the GLFW demo directory. This will clone GLFW into the right directory.
 
-There is project files for Visual Studio 2012 in Demo/VisualStudio.
-For other platforms/compilers, you need to first run cmake to generate makefile or
-projects for your favorite IDE.
-
-There's a Sublime Text project for a small Android test app in DemoAndroid with a
-custom build & deploy script (Windows .bat file. There's currently no Linux/Mac
-scripts).
-
+SDL
+In order to be able to build the sdl based demo, SDL must be present on the computer.
+A good guide on how to use sdl for development can be found here:
+https://trenki2.github.io/blog/2017/06/02/using-sdl2-with-cmake/
 
 Author
 -----------------------------------------------------------------------------------
