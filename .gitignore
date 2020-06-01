@@ -39,3 +39,6 @@ DemoAndroid/assets/font
 DemoAndroid/assets/language
 DemoAndroid/assets/skin
 Demo.exe
+SDL2.dll
+TurboBadgerGLFWDemo.exe
+TurboBadgerSDLDemo.exe
