@@ -12,14 +12,6 @@ if(CMAKE_SYSTEM MATCHES "Windows")
  set(EXTRA_LIBS ${EXTRA_LIBS} winmm)
 endif(CMAKE_SYSTEM MATCHES "Windows")
 
-# Add sources
-set(LOCAL_SRCS "")
-file(GLOB LOCAL_SRCS 
-	${CMAKE_CURRENT_SOURCE_DIR}/*.cpp 
-    ${CMAKE_CURRENT_SOURCE_DIR}/*.h
-	${CMAKE_SOURCE_DIR}/Demo/*.cpp 
-    ${CMAKE_SOURCE_DIR}/Demo/*.h)
-
 assign_source_group(${LOCAL_SRCS})
 include_directories(".")
 
@@ -29,11 +21,40 @@ include_directories(${SDL2_INCLUDE_DIRS})
 find_package(OpenGL REQUIRED)
 include_directories(${OPENGL_INCLUDE_DIR})
 
-add_executable(TurboBadgerSDLDemo WIN32 ${LOCAL_SRCS})
-target_link_libraries(TurboBadgerSDLDemo TurboBadgerLib ${SDL2_LIBRARIES} ${OPENGL_LIBRARIES} ${EXTRA_LIBS})
-install(TARGETS TurboBadgerSDLDemo
+# Demo 01
+set(LOCAL_SRCS_01 "")
+file(GLOB LOCAL_SRCS_01 
+	${CMAKE_CURRENT_SOURCE_DIR}/*.cpp 
+    ${CMAKE_CURRENT_SOURCE_DIR}/*.h
+	${CMAKE_SOURCE_DIR}/Demo/*.cpp 
+    ${CMAKE_SOURCE_DIR}/Demo/*.h
+	${CMAKE_SOURCE_DIR}/Demo/Demo_01/*.cpp 
+    ${CMAKE_SOURCE_DIR}/Demo/Demo_01/*.h)
+	
+add_executable(TurboBadgerSDLDemo_01 WIN32 ${LOCAL_SRCS_01})
+target_link_libraries(TurboBadgerSDLDemo_01 TurboBadgerLib ${SDL2_LIBRARIES} ${OPENGL_LIBRARIES} ${EXTRA_LIBS})
+install(TARGETS TurboBadgerSDLDemo_01
     RUNTIME DESTINATION bin
     LIBRARY DESTINATION lib
     ARCHIVE DESTINATION lib)
 	
-set_target_properties(TurboBadgerSDLDemo PROPERTIES LINK_FLAGS /SUBSYSTEM:CONSOLE)
+set_target_properties(TurboBadgerSDLDemo_01 PROPERTIES LINK_FLAGS /SUBSYSTEM:CONSOLE)
+
+# Demo 02
+set(LOCAL_SRCS_02 "")
+file(GLOB LOCAL_SRCS_02 
+	${CMAKE_CURRENT_SOURCE_DIR}/*.cpp 
+    ${CMAKE_CURRENT_SOURCE_DIR}/*.h
+	${CMAKE_SOURCE_DIR}/Demo/*.cpp 
+    ${CMAKE_SOURCE_DIR}/Demo/*.h
+	${CMAKE_SOURCE_DIR}/Demo/Demo_02/*.cpp 
+    ${CMAKE_SOURCE_DIR}/Demo/Demo_02/*.h)
+	
+add_executable(TurboBadgerSDLDemo_02 WIN32 ${LOCAL_SRCS_02})
+target_link_libraries(TurboBadgerSDLDemo_02 TurboBadgerLib ${SDL2_LIBRARIES} ${OPENGL_LIBRARIES} ${EXTRA_LIBS})
+install(TARGETS TurboBadgerSDLDemo_02
+    RUNTIME DESTINATION bin
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib)
+
+set_target_properties(TurboBadgerSDLDemo_02 PROPERTIES LINK_FLAGS /SUBSYSTEM:CONSOLE)

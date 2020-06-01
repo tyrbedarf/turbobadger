@@ -12,12 +12,12 @@
 
 using namespace tb;
 
-class DemoApplication : public App
+class DemoApplication_02 : public App
 {
 public:
-	DemoApplication() : App(1280, 700) {}
+	DemoApplication_02() : App(1280, 700) {}
 
-	virtual const char *GetTitle() const { return "Demo"; }
+	virtual const char *GetTitle() const { return "Demo 01"; }
 	virtual void OnBackendAttached(AppBackend *backend, int width, int height);
 	virtual bool Init();
 	virtual void RenderFrame();

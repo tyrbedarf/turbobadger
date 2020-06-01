@@ -24,6 +24,8 @@ file(GLOB LOCAL_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/*.h
 	${CMAKE_SOURCE_DIR}/Demo/*.cpp 
     ${CMAKE_SOURCE_DIR}/Demo/*.h
+	${CMAKE_SOURCE_DIR}/Demo/Demo_01/*.cpp 
+    ${CMAKE_SOURCE_DIR}/Demo/Demo_01/*.h
 	${CMAKE_CURRENT_SOURCE_DIR}/*.cpp 
     ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
 
@@ -41,11 +43,44 @@ if(CMAKE_COMPILER_IS_MINGW)
  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static-libgcc -static-libstdc++ -static")
 endif(CMAKE_COMPILER_IS_MINGW)
 
-add_executable(TurboBadgerGLFWDemo WIN32 ${LOCAL_SRCS})
-target_link_libraries(TurboBadgerGLFWDemo TurboBadgerLib ${EXTRA_LIBS} glfw ${GLFW_LIBRARIES})
-install(TARGETS TurboBadgerGLFWDemo
+# Demo 01
+set(LOCAL_SRCS_01 "")	
+file(GLOB LOCAL_SRCS_01 
+	${CMAKE_CURRENT_SOURCE_DIR}/*.cpp 
+    ${CMAKE_CURRENT_SOURCE_DIR}/*.h
+	${CMAKE_SOURCE_DIR}/Demo/*.cpp 
+    ${CMAKE_SOURCE_DIR}/Demo/*.h
+	${CMAKE_SOURCE_DIR}/Demo/Demo_01/*.cpp 
+    ${CMAKE_SOURCE_DIR}/Demo/Demo_01/*.h
+	${CMAKE_CURRENT_SOURCE_DIR}/*.cpp 
+    ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
+	
+add_executable(TurboBadgerGLFWDemo_01 WIN32 ${LOCAL_SRCS_01})
+target_link_libraries(TurboBadgerGLFWDemo_01 TurboBadgerLib ${EXTRA_LIBS} glfw ${GLFW_LIBRARIES})
+install(TARGETS TurboBadgerGLFWDemo_01
     RUNTIME DESTINATION bin
     LIBRARY DESTINATION lib
     ARCHIVE DESTINATION lib)
 	
-set_target_properties(TurboBadgerGLFWDemo PROPERTIES LINK_FLAGS /SUBSYSTEM:CONSOLE)
+set_target_properties(TurboBadgerGLFWDemo_01 PROPERTIES LINK_FLAGS /SUBSYSTEM:CONSOLE)
+
+# Demo 02
+set(LOCAL_SRCS_02 "")	
+file(GLOB LOCAL_SRCS_02 
+	${CMAKE_CURRENT_SOURCE_DIR}/*.cpp 
+    ${CMAKE_CURRENT_SOURCE_DIR}/*.h
+	${CMAKE_SOURCE_DIR}/Demo/*.cpp 
+    ${CMAKE_SOURCE_DIR}/Demo/*.h
+	${CMAKE_SOURCE_DIR}/Demo/Demo_02/*.cpp 
+    ${CMAKE_SOURCE_DIR}/Demo/Demo_02/*.h
+	${CMAKE_CURRENT_SOURCE_DIR}/*.cpp 
+    ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
+	
+add_executable(TurboBadgerGLFWDemo_02 WIN32 ${LOCAL_SRCS_02})
+target_link_libraries(TurboBadgerGLFWDemo_02 TurboBadgerLib ${EXTRA_LIBS} glfw ${GLFW_LIBRARIES})
+install(TARGETS TurboBadgerGLFWDemo_02
+    RUNTIME DESTINATION bin
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib)
+	
+set_target_properties(TurboBadgerGLFWDemo_02 PROPERTIES LINK_FLAGS /SUBSYSTEM:CONSOLE)

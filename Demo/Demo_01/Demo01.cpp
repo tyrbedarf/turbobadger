@@ -732,7 +732,7 @@ const char *boy_names[] = {
 	"Loke", "Elis", "August", "John", "Hannes", "Sam", "Frank", "Svante", "Marcus", "Mio", "Otto", "Ali", "Johannes", "Fabian",
 	"Ebbe", "Aron", "Julian", "Elvin", "Ivar", nullptr };
 
-bool DemoApplication::Init()
+bool DemoApplication_02::Init()
 {
 	if (!App::Init())
 		return false;
@@ -765,6 +765,7 @@ bool DemoApplication::Init()
 	popup_menu_source.AddItem(new TBGenericStringItem("-"));
 	popup_menu_source.AddItem(new TBGenericStringItem("Same submenu", &popup_menu_source));
 	popup_menu_source.AddItem(new TBGenericStringItem("Long submenu", &name_source));
+
 	// Give the first item a skin image
 	popup_menu_source.GetItem(0)->SetSkinImage(TBIDC("Icon16"));
 
@@ -788,7 +789,7 @@ bool DemoApplication::Init()
 	return true;
 }
 
-void DemoApplication::RenderFrame()
+void DemoApplication_02::RenderFrame()
 {
 	// Override RenderFrame without calling super, since we want
 	// to inject code between BeginPaint/EndPaint.
@@ -828,7 +829,7 @@ void DemoApplication::RenderFrame()
 		m_root.Invalidate();
 }
 
-void DemoApplication::OnBackendAttached(AppBackend *backend, int width, int height)
+void DemoApplication_02::OnBackendAttached(AppBackend *backend, int width, int height)
 {
 	App::OnBackendAttached(backend, width, height);
 
@@ -886,5 +887,5 @@ void DemoApplication::OnBackendAttached(AppBackend *backend, int width, int heig
 }
 
 App *app_create() {
-	return new DemoApplication();
+	return new DemoApplication_02();
 }
