@@ -156,4 +156,4 @@ Screenshot
 
 Some of the windows in the Demo application for desktop, using the default skin.
 
-![Default skin](Demo/screenshot/screenshot_01.png)
+![Default skin](images/DemoApplication.jpg)
