@@ -137,6 +137,7 @@ this run
 Inside the GLFW demo directory. This will clone GLFW into the right directory.
 
 SDL
+
 In order to be able to build the sdl based demo, SDL must be present on the computer.
 A good guide on how to use sdl for development can be found here:
 https://trenki2.github.io/blog/2017/06/02/using-sdl2-with-cmake/
