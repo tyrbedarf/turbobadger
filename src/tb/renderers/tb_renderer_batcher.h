@@ -15,7 +15,7 @@ namespace tb {
 #define VERTEX_BATCH_SIZE 6 * 2048
 
 /** TBRendererBatcher is a helper class that implements batching of draw operations for a TBRenderer.
-	If you do not want to do your own batching you can subclass this class instead of TBRenderer.
+	If you do want to do your own batching you can subclass this class instead of TBRenderer.
 	If overriding any function in this class, make sure to call the base class too. */
 class TBRendererBatcher : public TBRenderer
 {
@@ -30,6 +30,7 @@ public:
 			uint32 col;
 		};
 	};
+
 	/** A batch which should be rendered. */
 	class Batch
 	{
@@ -77,6 +78,7 @@ public:
 	virtual TBBitmap *CreateBitmap(int width, int height, uint32 *data) = 0;
 	virtual void RenderBatch(Batch *batch) = 0;
 	virtual void SetClipRect(const TBRect &rect) = 0;
+
 protected:
 	uint8 m_opacity;
 	TBRect m_screen_rect;

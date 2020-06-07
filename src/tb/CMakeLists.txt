@@ -19,12 +19,27 @@ file(GLOB_RECURSE LOCAL_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/tests/*.h
 	${CMAKE_CURRENT_SOURCE_DIR}/utf8/*.cpp 
     ${CMAKE_CURRENT_SOURCE_DIR}/utf8/*.h)
+	
+file(GLOB_RECURSE HEADER 
+    ${CMAKE_CURRENT_SOURCE_DIR}/*.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/image/*.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/animation/*.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/parser/*.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/renderers/*.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/tests/*.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/utf8/*.h)
 
 assign_source_group(${LOCAL_SRCS})
 add_library(TurboBadgerLib ${LOCAL_SRCS})
+
+if(TB_FONT_RENDERER_FREETYPE)
+	add_subdirectory("thirdparty/freetype2")
+	target_link_libraries (TurboBadgerLib freetype)
+endif()
 
 install(TARGETS TurboBadgerLib
     RUNTIME DESTINATION bin
     LIBRARY DESTINATION lib
     ARCHIVE DESTINATION lib)
-    
+	
+install(FILES ${HEADER} DESTINATION include)

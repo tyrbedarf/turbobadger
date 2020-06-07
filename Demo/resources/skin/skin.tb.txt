@@ -12,7 +12,7 @@ elements
 	Icon128
 		bitmap icon128.png
 	background
-		bitmap bg_tile.png
+		bitmap bg_tile_02.png
 		type Tile
 	background_solid
 		background-color #3b3b3b

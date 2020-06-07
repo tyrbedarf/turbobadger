@@ -1,4 +1,4 @@
-#include "Demo.h"
+#include "Demo02.h"
 #include <stdio.h>
 #include <stdarg.h>
 #include "tests/tb_test.h"
@@ -121,19 +121,17 @@ void DemoApplication_02::OnBackendAttached(AppBackend *backend, int width, int h
 	void register_tbbf_font_renderer();
 	register_tbbf_font_renderer();
 #endif
-#ifdef TB_FONT_RENDERER_STB
-	void register_stb_font_renderer();
-	register_stb_font_renderer();
-#endif
+
 #ifdef TB_FONT_RENDERER_FREETYPE
 	void register_freetype_font_renderer();
 	register_freetype_font_renderer();
 #endif
 
 	// Add resources/fonts we can use to the font manager.
-#if defined(TB_FONT_RENDERER_STB) || defined(TB_FONT_RENDERER_FREETYPE)
+#if defined(TB_FONT_RENDERER_FREETYPE)
 	g_font_manager->AddFontInfo("resources/vera.ttf", "Vera");
 #endif
+
 #ifdef TB_FONT_RENDERER_TBBF
 	g_font_manager->AddFontInfo("resources/default_font/segoe_white_with_shadow.tb.txt", "Segoe");
 	g_font_manager->AddFontInfo("Demo/resources/fonts/neon.tb.txt", "Neon");

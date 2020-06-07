@@ -265,7 +265,7 @@ void TBScrollContainer::OnInflate(const INFLATE_INFO &info)
 	{
 		if (!strcmp(mode, "xy"))			SetScrollMode(SCROLL_MODE_X_Y);
 		if (!strcmp(mode, "y"))				SetScrollMode(SCROLL_MODE_Y);
-		if (!strcmp(mode, "y-auto"))			SetScrollMode(SCROLL_MODE_Y_AUTO);
+		if (!strcmp(mode, "y-auto"))		SetScrollMode(SCROLL_MODE_Y_AUTO);
 		if (!strcmp(mode, "auto"))			SetScrollMode(SCROLL_MODE_X_AUTO_Y_AUTO);
 		if (!strcmp(mode, "off"))			SetScrollMode(SCROLL_MODE_OFF);
 	}
@@ -295,11 +295,13 @@ void TBTabContainer::OnInflate(const INFLATE_INFO &info)
 		INFLATE_INFO inflate_info(info.reader, tab_layout->GetContentRoot(), tabs, TBValue::TYPE_NULL);
 		tab_layout->OnInflate(inflate_info);
 	}
+
 	if (TBNode *tabs = info.node->GetNode("content"))
 	{
 		INFLATE_INFO inflate_info(info.reader, GetContentRoot(), tabs, TBValue::TYPE_NULL);
 		GetContentRoot()->OnInflate(inflate_info);
 	}
+
 	if (TBNode *tabs = info.node->GetNode("root"))
 	{
 		INFLATE_INFO inflate_info(info.reader, &m_root_layout, tabs, TBValue::TYPE_NULL);
@@ -418,7 +420,6 @@ void TBImageWidget::OnInflate(const INFLATE_INFO &info)
 #endif // TB_IMAGE
 
 // == TBWidgetFactory ===================================
-
 // We can't use a linked list object since we don't know if its constructor
 // would run before of after any widget factory constructor that add itself
 // to it. Using a manual one way link list is very simple.
@@ -438,7 +439,6 @@ void TBWidgetFactory::Register()
 }
 
 // == TBWidgetsReader ===================================
-
 TBWidgetsReader *TBWidgetsReader::Create()
 {
 	TBWidgetsReader *w_reader = new TBWidgetsReader;

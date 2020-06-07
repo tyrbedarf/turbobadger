@@ -1,3 +1,6 @@
 [submodule "Demo/thirdparty/glfw"]
 	path = Demo/thirdparty/glfw
 	url = https://github.com/glfw/glfw.git
+[submodule "src/tb/thirdparty/freetype2"]
+	path = src/tb/thirdparty/freetype2
+	url = https://github.com/aseprite/freetype2.git

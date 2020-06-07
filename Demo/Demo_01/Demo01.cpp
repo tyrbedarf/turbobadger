@@ -1,4 +1,4 @@
-#include "Demo.h"
+#include "Demo01.h"
 #include "ListWindow.h"
 #include "ResourceEditWindow.h"
 #include <stdio.h>
@@ -57,7 +57,10 @@ bool DemoWindow::LoadResourceFile(const char *filename)
 	// some extra data we store under "WindowInfo", so read into node tree.
 	TBNode node;
 	if (!node.ReadFile(filename))
+	{
 		return false;
+	}
+
 	LoadResource(node);
 	return true;
 }
@@ -71,6 +74,9 @@ void DemoWindow::LoadResourceData(const char *data)
 	LoadResource(node);
 }
 
+/**
+	Demonstrates how to a new elements to the layout DSL.
+*/
 void DemoWindow::LoadResource(TBNode &node)
 {
 	g_widgets_reader->LoadNodeTree(this, &node);
@@ -133,6 +139,7 @@ public:
 	{
 		LoadResourceFile("Demo/resources/ui_resources/test_textwindow.tb.txt");
 	}
+
 	virtual void OnProcessStates()
 	{
 		// Update the disabled state of undo/redo buttons, and caret info.
@@ -151,6 +158,7 @@ public:
 			}
 		}
 	}
+
 	virtual bool OnEvent(const TBWidgetEvent &ev)
 	{
 		if (ev.type == EVENT_TYPE_CLICK)
@@ -250,12 +258,12 @@ public:
 				return true;
 			}
 		}
+
 		return DemoWindow::OnEvent(ev);
 	}
 };
 
 // == LayoutWindow ============================================================
-
 LayoutWindow::LayoutWindow(TBWidget *root, const char *filename) : DemoWindow(root)
 {
 	LoadResourceFile(filename);
@@ -289,7 +297,6 @@ bool LayoutWindow::OnEvent(const TBWidgetEvent &ev)
 }
 
 // == TabContainerWindow ============================================================
-
 TabContainerWindow::TabContainerWindow(TBWidget *root) : DemoWindow(root)
 {
 	LoadResourceFile("Demo/resources/ui_resources/test_tabcontainer01.tb.txt");
@@ -331,7 +338,6 @@ bool TabContainerWindow::OnEvent(const TBWidgetEvent &ev)
 }
 
 // == ConnectionWindow =========================================================
-
 ConnectionWindow::ConnectionWindow(TBWidget *root) : DemoWindow(root)
 {
 	LoadResourceFile("Demo/resources/ui_resources/test_connections.tb.txt");
@@ -353,7 +359,6 @@ bool ConnectionWindow::OnEvent(const TBWidgetEvent &ev)
 }
 
 // == ScrollContainerWindow ===================================================
-
 ScrollContainerWindow::ScrollContainerWindow(TBWidget *root) : DemoWindow(root)
 {
 	LoadResourceFile("Demo/resources/ui_resources/test_scrollcontainer.tb.txt");
@@ -442,7 +447,6 @@ void ScrollContainerWindow::OnMessageReceived(TBMessage *msg)
 }
 
 // == ImageWindow =============================================================
-
 ImageWindow::ImageWindow(TBWidget *root) : DemoWindow(root)
 {
 	LoadResourceFile("Demo/resources/ui_resources/test_image_widget.tb.txt");
@@ -461,7 +465,6 @@ bool ImageWindow::OnEvent(const TBWidgetEvent &ev)
 }
 
 // == PageWindow =============================================================
-
 PageWindow::PageWindow(TBWidget *root) : DemoWindow(root)
 {
 	LoadResourceFile("Demo/resources/ui_resources/test_scroller_snap.tb.txt");
@@ -484,7 +487,6 @@ void PageWindow::OnScrollSnap(TBWidget *target_widget, int &target_x, int &targe
 }
 
 // == AnimationsWindow ========================================================
-
 AnimationsWindow::AnimationsWindow(TBWidget *root) : DemoWindow(root)
 {
 	LoadResourceFile("Demo/resources/ui_resources/test_animations.tb.txt");
@@ -526,7 +528,6 @@ bool AnimationsWindow::OnEvent(const TBWidgetEvent &ev)
 }
 
 // == MainWindow ==============================================================
-
 MainWindow::MainWindow(TBWidget *root) : DemoWindow(root)
 {
 	LoadResourceFile("Demo/resources/ui_resources/test_ui.tb.txt");
@@ -708,7 +709,6 @@ bool MainWindow::OnEvent(const TBWidgetEvent &ev)
 }
 
 // ======================================================
-
 int fps = 0;
 uint32 frame_counter_total = 0;
 uint32 frame_counter = 0;
@@ -844,17 +844,13 @@ void DemoApplication_02::OnBackendAttached(AppBackend *backend, int width, int h
 	void register_tbbf_font_renderer();
 	register_tbbf_font_renderer();
 #endif
-#ifdef TB_FONT_RENDERER_STB
-	void register_stb_font_renderer();
-	register_stb_font_renderer();
-#endif
 #ifdef TB_FONT_RENDERER_FREETYPE
 	void register_freetype_font_renderer();
 	register_freetype_font_renderer();
 #endif
 
 	// Add resources/fonts we can use to the font manager.
-#if defined(TB_FONT_RENDERER_STB) || defined(TB_FONT_RENDERER_FREETYPE)
+#if defined(TB_FONT_RENDERER_FREETYPE)
 	g_font_manager->AddFontInfo("resources/vera.ttf", "Vera");
 #endif
 #ifdef TB_FONT_RENDERER_TBBF
@@ -880,7 +876,9 @@ void DemoApplication_02::OnBackendAttached(AppBackend *backend, int width, int h
 	// Render some glyphs in one go now since we know we are going to use them. It would work fine
 	// without this since glyphs are rendered when needed, but with some extra updating of the glyph bitmap.
 	if (font)
+	{
 		font->RenderGlyphs(" !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~•·åäöÅÄÖ");
+	}
 
 	// Give the root widget a background skin
 	m_root.SetSkinBg(TBIDC("background"));

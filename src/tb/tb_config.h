@@ -32,17 +32,10 @@
 //#define TB_PREMULTIPLIED_ALPHA
 
 /** Enable to support TBBF fonts (Turbo Badger Bitmap Fonts) */
-#define TB_FONT_RENDERER_TBBF
+//#define TB_FONT_RENDERER_TBBF
 
 /** Enable to support truetype fonts using freetype. */
-//#define TB_FONT_RENDERER_FREETYPE
-
-/** Enable to support truetype fonts using stb_truetype.h (http://nothings.org/).
-	It's a *very unsafe* font library. Use only with fonts distributed with your
-	app, that you know work! Freetype generates much prettier glyphs (using
-	hinting) but is a lot larger. This implementation is kept here as alternative
-	as long as it compiles. */
-//#define TB_FONT_RENDERER_STB
+#define TB_FONT_RENDERER_FREETYPE
 
 /** Enable to support image loading using stb_image.c (http://nothings.org/).
 	It's a *very unsafe* image library. Use only with images distributed with
