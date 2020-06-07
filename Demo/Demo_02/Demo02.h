@@ -9,10 +9,34 @@
 #include "tb_scroller.h"
 #include "../Application.h"
 
+#include "tb_window.h"
+
+#include <memory>
+
 using namespace tb;
+
+class DemoWindow : public TBWindow
+{
+public:
+	DemoWindow(TBWidget *root);
+	virtual bool OnEvent(const TBWidgetEvent &ev);
+};
+
+class MainWindow : public TBMessageHandler, public DemoWindow
+{
+public:
+	MainWindow(TBWidget *root);
+	virtual bool OnEvent(const TBWidgetEvent &ev);
+
+	// Implement TBMessageHandler
+	virtual void OnMessageReceived(TBMessage *msg);
+};
 
 class DemoApplication_02 : public App
 {
+private:
+	TBStr m_message;
+
 public:
 	DemoApplication_02() : App(1280, 700) {}
 

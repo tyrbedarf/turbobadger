@@ -609,6 +609,7 @@ bool MainWindow::OnEvent(const TBWidgetEvent &ev)
 			settings.dimmer = true;
 			settings.styling = true;
 			msg_win->Show("Are you sure?", "Really <color #0794f8>close</color> the window?", &settings);
+
 			return true;
 		}
 		else if (ev.target->GetID() == TBIDC("confirm_close_dialog"))
@@ -732,7 +733,7 @@ const char *boy_names[] = {
 	"Loke", "Elis", "August", "John", "Hannes", "Sam", "Frank", "Svante", "Marcus", "Mio", "Otto", "Ali", "Johannes", "Fabian",
 	"Ebbe", "Aron", "Julian", "Elvin", "Ivar", nullptr };
 
-bool DemoApplication_02::Init()
+bool DemoApplication_01::Init()
 {
 	if (!App::Init())
 		return false;
@@ -756,6 +757,7 @@ bool DemoApplication_02::Init()
 		name_source.AddItem(new TBGenericStringItem(girl_names[i++], TBIDC("girl_item")));
 	for (int i = 0; boy_names[i]; i++)
 		name_source.AddItem(new TBGenericStringItem(boy_names[i++], TBIDC("boy_item")));
+
 	advanced_source.SetSort(TB_SORT_ASCENDING);
 	name_source.SetSort(TB_SORT_ASCENDING);
 
@@ -789,7 +791,7 @@ bool DemoApplication_02::Init()
 	return true;
 }
 
-void DemoApplication_02::RenderFrame()
+void DemoApplication_01::RenderFrame()
 {
 	// Override RenderFrame without calling super, since we want
 	// to inject code between BeginPaint/EndPaint.
@@ -829,7 +831,7 @@ void DemoApplication_02::RenderFrame()
 		m_root.Invalidate();
 }
 
-void DemoApplication_02::OnBackendAttached(AppBackend *backend, int width, int height)
+void DemoApplication_01::OnBackendAttached(AppBackend *backend, int width, int height)
 {
 	App::OnBackendAttached(backend, width, height);
 
@@ -851,7 +853,7 @@ void DemoApplication_02::OnBackendAttached(AppBackend *backend, int width, int h
 
 	// Add resources/fonts we can use to the font manager.
 #if defined(TB_FONT_RENDERER_FREETYPE)
-	g_font_manager->AddFontInfo("resources/vera.ttf", "Vera");
+	g_font_manager->AddFontInfo("resources/fonts/vera.ttf", "Vera");
 #endif
 #ifdef TB_FONT_RENDERER_TBBF
 	g_font_manager->AddFontInfo("resources/default_font/segoe_white_with_shadow.tb.txt", "Segoe");
@@ -885,5 +887,5 @@ void DemoApplication_02::OnBackendAttached(AppBackend *backend, int width, int h
 }
 
 App *app_create() {
-	return new DemoApplication_02();
+	return new DemoApplication_01();
 }

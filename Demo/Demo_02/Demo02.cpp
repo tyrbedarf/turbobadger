@@ -45,6 +45,37 @@ uint32 frame_counter_total = 0;
 uint32 frame_counter = 0;
 double frame_counter_reset_time = 0;
 
+DemoWindow::DemoWindow(TBWidget *root)
+{
+	root->AddChild(this);
+}
+
+bool DemoWindow::OnEvent(const TBWidgetEvent &ev)
+{
+	if (ev.type == EVENT_TYPE_KEY_DOWN && ev.special_key == TB_KEY_ESC)
+	{
+		// We could call Die() to fade away and die, but click the close button instead.
+		// That way the window has a chance of intercepting the close and f.ex ask if it really should be closed.
+		TBWidgetEvent click_ev(EVENT_TYPE_CLICK);
+		m_close_button.InvokeEvent(click_ev);
+		return true;
+	}
+
+	return TBWindow::OnEvent(ev);
+}
+
+MainWindow::MainWindow(TBWidget *root) : DemoWindow(root) {
+
+}
+
+bool MainWindow::OnEvent(const TBWidgetEvent &ev) {
+	return DemoWindow::OnEvent(ev);
+}
+
+void MainWindow::OnMessageReceived(TBMessage *msg) {
+
+}
+
 bool DemoApplication_02::Init()
 {
 	if (!App::Init())
@@ -63,15 +94,26 @@ bool DemoApplication_02::Init()
 		TBMessageWindow *msg_win = new TBMessageWindow(GetRoot(), TBIDC(""));
 		msg_win->Show("Testing results", text);
 	}
+
+	// No need to keep track of the pointer.
+	// After an element has been removed from the widget tree
+	// it will be deleted.
+	// As a matter of fact, it might lead to crashes.
+	auto window = new MainWindow(&m_root);
+	window->SetText("Test Window");
+	window->SetRect(TBRect{ 20, 20, 800, 600 }); // Always add dimensions, TurboBadger will set them to 0. Which means you won´t see anything.
+
+	TBFontDescription td;
+	//td.SetID("Chalk Outline");
+	td.SetID("Leroy Lettering");
+	td.SetSize(16);
+	window->SetFontDescription(td);
+
 	return true;
 }
 
 void DemoApplication_02::RenderFrame()
 {
-	// Override RenderFrame without calling super, since we want
-	// to inject code between BeginPaint/EndPaint.
-	// Application::RenderFrame();
-
 	// Render
 	g_renderer->BeginPaint(m_root.GetRect().w, m_root.GetRect().h);
 	m_root.InvokePaint(TBWidget::PaintProps());
@@ -98,6 +140,8 @@ void DemoApplication_02::RenderFrame()
 	else
 		str.SetFormatted("Frame %d", frame_counter_total);
 	m_root.GetFont()->DrawString(5, 5, TBColor(255, 255, 255), str);
+
+	m_root.GetFont()->DrawString(5, m_root.GetRect().h - 20, TBColor(255, 255, 255), m_message);
 
 	g_renderer->EndPaint();
 
@@ -129,7 +173,8 @@ void DemoApplication_02::OnBackendAttached(AppBackend *backend, int width, int h
 
 	// Add resources/fonts we can use to the font manager.
 #if defined(TB_FONT_RENDERER_FREETYPE)
-	g_font_manager->AddFontInfo("resources/vera.ttf", "Vera");
+	g_font_manager->AddFontInfo("resources/fonts/vera.ttf", "Vera");
+	g_font_manager->AddFontInfo("resources/fonts/LeroyLetteringLightBeta01.ttf", "Leroy Lettering");
 #endif
 
 #ifdef TB_FONT_RENDERER_TBBF
@@ -152,13 +197,22 @@ void DemoApplication_02::OnBackendAttached(AppBackend *backend, int width, int h
 	// Create the font now.
 	TBFontFace *font = g_font_manager->CreateFontFace(g_font_manager->GetDefaultFontDescription());
 
+#if defined(TB_FONT_RENDERER_FREETYPE)
+	TBFontDescription fd2;
+	fd2.SetID("Leroy Lettering");
+	TBFontFace *font2 = g_font_manager->CreateFontFace(fd2);
+	if (font2)
+		font2->RenderGlyphs(" !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~•·åäöÅÄÖ");
+#endif
+
 	// Render some glyphs in one go now since we know we are going to use them. It would work fine
 	// without this since glyphs are rendered when needed, but with some extra updating of the glyph bitmap.
 	if (font)
 		font->RenderGlyphs(" !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~•·åäöÅÄÖ");
 
-	// Give the root widget a background skin
-	m_root.SetSkinBg(TBIDC("background"));
+	// Turbobadger (at least in this demos) always needs a background image.
+	// Otherwise it leads to rendering artifacts.
+	m_root.SetSkinBg(TBIDC("background_black"));
 }
 
 App *app_create() {
