@@ -6,8 +6,10 @@
 #include "tb_menu_window.h"
 
 namespace tb {
-	/** TBSelectDropdown shows a button that opens a popup with a TBSelectList with items
-	provided by a TBSelectItemSource. */
+	/** TBMenuItem shows a button that opens a popup with a TBSelectList with items
+	provided by a TBSelectItemSource. It does not swallo events, so parent widgets can
+	react if a menu item was clicked.
+	*/
 	class TBMenuItem : public TBButton, public TBSelectItemViewer
 	{
 	public:
@@ -26,12 +28,6 @@ namespace tb {
 			external item source. */
 		TBGenericStringItemSource *GetDefaultSource() {
 			return &m_default_source;
-		}
-
-		/** Set the selected item. */
-		virtual void SetValue(int value);
-		virtual int GetValue() {
-			return m_value;
 		}
 
 		/** Get the ID of the selected item, or 0 if there is no item selected. */
@@ -58,16 +54,6 @@ namespace tb {
 
 	protected:
 		TBGenericStringItemSource m_default_source;
-		int m_value;
 		TBWidgetSafePointer m_window_pointer; ///< Points to the dropdown window if opened
-	};
-
-	class TBWindowExt : public TBWindow {
-		TBOBJECT_SUBCLASS(TBWindowExt, TBWindow);
-
-	private:
-
-	public:
-
 	};
 }

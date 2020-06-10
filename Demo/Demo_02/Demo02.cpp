@@ -44,8 +44,21 @@ bool DemoWindow::OnEvent(const TBWidgetEvent &ev)
 
 MainWindow::MainWindow(TBWidget *root) :
 	DemoWindow(root),
-	m_application(nullptr) {
+	m_application(nullptr),
+	m_statusbar(nullptr) {
+	SetText("Test Window");
+	SetRect(TBRect{ 20, 20, 800, 600 }); // Always add dimensions, TurboBadger will set them to 0. Which means you won´t see anything.
 
+	TBFontDescription td;
+	//td.SetID("Chalk Outline");
+	td.SetID("Leroy Lettering");
+	td.SetSize(16);
+	SetFontDescription(td);
+
+	// test_02_main_window.tb.txt
+	g_widgets_reader->LoadFile(this, "Demo/resources/ui_resources/test_02_main_window.tb.txt");
+
+	m_statusbar = GetWidgetByIDAndType<TBTextField>("Statusbar");
 }
 
 void MainWindow::ShowConfirmationDialog() {
@@ -62,6 +75,24 @@ bool MainWindow::OnEvent(const TBWidgetEvent &ev) {
 		if (ev.ref_id == TBIDC("menu_item_quit") && m_application)
 		{
 			ShowConfirmationDialog();
+			return true;
+		}
+
+		if (ev.ref_id == TBIDC("menu_item_save") && m_application)
+		{
+			DisplayStatusMessage("Menu item save was clicked.");
+			return true;
+		}
+
+		if (ev.ref_id == TBIDC("menu_item_load") && m_application)
+		{
+			DisplayStatusMessage("Menu item load was clicked.");
+			return true;
+		}
+
+		if (ev.ref_id == TBIDC("menu_item_autor") && m_application)
+		{
+			DisplayStatusMessage("Menu item author was clicked.");
 			return true;
 		}
 
@@ -111,22 +142,11 @@ bool DemoApplication_02::Init()
 		msg_win->Show("Testing results", text);
 	}
 
-	// No need to keep track of the pointer.
+	// No need to keep track of the pointers.
 	// After an element has been removed from the widget tree
 	// it will be deleted.
-	// As a matter of fact, it might lead to crashes.
+	// As a matter of fact keeping track of the pointer might lead to crashes.
 	auto window = new MainWindow(&m_root);
-	window->SetText("Test Window");
-	window->SetRect(TBRect{ 20, 20, 800, 600 }); // Always add dimensions, TurboBadger will set them to 0. Which means you won´t see anything.
-
-	TBFontDescription td;
-	//td.SetID("Chalk Outline");
-	td.SetID("Leroy Lettering");
-	td.SetSize(16);
-	window->SetFontDescription(td);
-
-	// test_02_main_window.tb.txt
-	g_widgets_reader->LoadFile(window, "Demo/resources/ui_resources/test_02_main_window.tb.txt");
 	window->SetApplication(this);
 
 	return true;

@@ -2,13 +2,21 @@ TBLayout: distribution:gravity, axis: y
 	TBLayout: distribution: gravity, axis: x
 		TBMenuItem: text: File, id: menu_item_file
 			items
-				item: text: Test 1, id: menu_item_save
-				item: text: Test 2, id: menu_item_load
+				item: text: Save, id: menu_item_save
+				item: text: Load, id: menu_item_load
 				item: text: -
 				item: text: Quit, id: menu_item_quit
 		TBMenuItem: text: About, id: menu_item_about
 			items
-				item: text: Test 3, id: menu_item_test
+				item: text: Author, id: menu_item_autor
 		TBWidget: gravity: left right, distribution-position: right bottom
 	TBLayout: distribution: gravity, axis: x
 		TBWidget: gravity: top bottom, distribution-position: right bottom
+	TBLayout: distribution: gravity, axis: x
+		TBTextField: gravity: left bottom right, distribution-position: left bottom
+			readonly 1
+			type text
+			multiline 0
+			text-align left
+			id Statusbar
+		TBWidget: gravity: left right, distribution-position: right bottom
