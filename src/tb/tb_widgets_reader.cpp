@@ -13,6 +13,7 @@
 #include "tb_node_tree.h"
 #include "tb_font_renderer.h"
 #include "tb_toggle_container.h"
+#include "tb_window_ext.h"
 #include "image/tb_image_widget.h"
 
 namespace tb {
@@ -284,6 +285,7 @@ void TBTabContainer::OnInflate(const INFLATE_INFO &info)
 		else if (!strcmp(align, "right"))	SetAlignment(TB_ALIGN_RIGHT);
 		else if (!strcmp(align, "bottom"))	SetAlignment(TB_ALIGN_BOTTOM);
 	}
+
 	// Allow additional attributes to be specified for the "tabs", "content" and "root" layouts by
 	// calling OnInflate.
 	if (TBNode *tabs = info.node->GetNode("tabs"))
@@ -366,6 +368,14 @@ void TBSelectList::OnInflate(const INFLATE_INFO &info)
 
 TB_WIDGET_FACTORY(TBSelectDropdown, TBValue::TYPE_INT, WIDGET_Z_TOP) {}
 void TBSelectDropdown::OnInflate(const INFLATE_INFO &info)
+{
+	// Read items (if there is any) into the default source
+	ReadItems(info.node, GetDefaultSource());
+	TBWidget::OnInflate(info);
+}
+
+TB_WIDGET_FACTORY(TBMenuItem, TBValue::TYPE_INT, WIDGET_Z_TOP) {}
+void TBMenuItem::OnInflate(const INFLATE_INFO &info)
 {
 	// Read items (if there is any) into the default source
 	ReadItems(info.node, GetDefaultSource());

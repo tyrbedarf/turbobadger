@@ -123,7 +123,7 @@ bool DemoWindow::OnEvent(const TBWidgetEvent &ev)
 	if (ev.type == EVENT_TYPE_KEY_DOWN && ev.special_key == TB_KEY_ESC)
 	{
 		// We could call Die() to fade away and die, but click the close button instead.
-		// That way the window has a chance of intercepting the close and f.ex ask if it really should be closed.
+		// That way the window has a chance of intercepting the close and ask if it really should be closed.
 		TBWidgetEvent click_ev(EVENT_TYPE_CLICK);
 		m_close_button.InvokeEvent(click_ev);
 		return true;
@@ -143,7 +143,6 @@ public:
 	virtual void OnProcessStates()
 	{
 		// Update the disabled state of undo/redo buttons, and caret info.
-
 		if (TBEditField *edit = GetWidgetByIDAndType<TBEditField>(TBIDC("editfield")))
 		{
 			if (TBWidget *undo = GetWidgetByID("undo"))
@@ -204,6 +203,7 @@ public:
 
 				if (TBMenuWindow *menu = new TBMenuWindow(ev.target, TBIDC("popup_menu")))
 					menu->Show(&source, TBPopupAlignment());
+
 				return true;
 			}
 			else if (ev.target->GetID() == TBIDC("popup_menu"))

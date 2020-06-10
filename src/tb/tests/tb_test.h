@@ -14,11 +14,10 @@
 	application.
 
 	I've chosen to not use any other framework for internal testing of
-	Turbo Badger to minimize dependences.
+	Turbo Badger to minimize dependencies.
 
 	Test groups and tests:
 	---------------------
-
 	Tests are specified in named groups, that can contain multiple named tests
 	that are run in the order specified, except for special tests.
 
@@ -32,7 +31,6 @@
 
 	How to define a single test:
 	---------------------------
-
 	TB_TEST_GROUP(groupname)
 	{
 		TB_TEST(testname)
@@ -45,7 +43,6 @@
 
 	How to define multiple tests, with data, setup and cleanup:
 	----------------------------------------------------------
-
 	TB_TEST_GROUP(groupname)
 	{
 		// Here goes the data for this group

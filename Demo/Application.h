@@ -39,12 +39,16 @@ public:
 	virtual void OnAppEvent(const EVENT &ev) = 0;
 	virtual void Update() = 0;
 
-	bool IsQuitRequested() {
+	bool IsQuitRequested() const {
 		return m_quit_requested;
 	}
 
 	bool HasPendingUpdate() {
 		return m_has_pending_update;
+	}
+
+	void RequestQuit() {
+		m_quit_requested = true;
 	}
 
 protected:
@@ -74,6 +78,12 @@ public:
 	virtual void ShutDown();
 	virtual void Process();
 	virtual void RenderFrame();
+
+	void RequestQuit() {
+		if (m_backend) {
+			m_backend->RequestQuit();
+		}
+	}
 
 protected:
 	AppBackend *m_backend;

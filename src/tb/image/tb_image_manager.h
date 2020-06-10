@@ -66,6 +66,7 @@ public:
 	const TBImage& operator = (const TBImage &image) { SetImageRep(image.m_image_rep); return *this; }
 	bool operator == (const TBImage &image) const { return m_image_rep == image.m_image_rep; }
 	bool operator != (const TBImage &image) const { return m_image_rep != image.m_image_rep; }
+
 private:
 	void SetImageRep(TBImageRep *image_rep);
 	TBImageRep *m_image_rep;

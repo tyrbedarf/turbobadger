@@ -107,7 +107,6 @@ private:
 
 /** TBSelectDropdown shows a button that opens a popup with a TBSelectList with items
 	provided by a TBSelectItemSource. */
-
 class TBSelectDropdown : public TBButton, public TBSelectItemViewer
 {
 public:

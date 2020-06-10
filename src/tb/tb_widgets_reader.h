@@ -155,6 +155,7 @@ public:
 	bool LoadData(TBWidget *target, const char *data);
 	bool LoadData(TBWidget *target, const char *data, int data_len);
 	void LoadNodeTree(TBWidget *target, TBNode *node);
+
 private:
 	bool Init();
 	bool CreateWidget(TBWidget *target, TBNode *node);

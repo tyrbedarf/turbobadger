@@ -24,9 +24,19 @@ public:
 
 class MainWindow : public TBMessageHandler, public DemoWindow
 {
+private:
+	App* m_application;
+
+	/** Show confirmation dialog before shuting down the application. */
+	void ShowDialog();
+
 public:
 	MainWindow(TBWidget *root);
 	virtual bool OnEvent(const TBWidgetEvent &ev);
+
+	void SetApplication(App* app) {
+		m_application = app;
+	}
 
 	// Implement TBMessageHandler
 	virtual void OnMessageReceived(TBMessage *msg);

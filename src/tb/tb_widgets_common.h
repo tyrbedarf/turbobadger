@@ -50,7 +50,6 @@ private:
 };
 
 /** TBTextField is a one line text field that is not editable. */
-
 class TBTextField : public TBWidget
 {
 public:
@@ -89,7 +88,6 @@ protected:
 /** TBButton is a regular button widget with auto repeat, toggle and group capabilities.
 	Has a text field in its internal layout by default. Other widgets can be added
 	under GetContentRoot(). */
-
 class TBButton : public TBWidget, protected TBMessageHandler
 {
 public:
@@ -153,7 +151,6 @@ protected:
 /** TBClickLabel has a text field in its internal layout by default. Pointer input on the
 	text field will be redirected to another child widget (that you add) to it.
 	Typically useful for creating check boxes, radio buttons with labels. */
-
 class TBClickLabel : public TBWidget
 {
 public:
@@ -185,7 +182,6 @@ protected:
 /** TBSkinImage is a widget showing a skin element, constrained in size to its skin.
 	If you need to load and show images dynamically (i.e. not always loaded as the skin),
 	you can use TBImageWidget. */
-
 class TBSkinImage : public TBWidget
 {
 public:

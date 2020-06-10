@@ -17,28 +17,6 @@
 #include "image/tb_image_manager.h"
 #include "utf8/utf8.h"
 
-#ifdef TB_SUPPORT_CONSTEXPR
-
-void const_expr_test()
-{
-	// Some code here just to see if the compiler really did
-	// implement constexpr (and not just ignored it)
-	// Should obviosly only compile if it really works. If not,
-	// disable TB_SUPPORT_CONSTEXPR in tb_hash.h for your compiler.
-	TBID id("foo");
-	switch(id)
-	{
-		case TBIDC("foo"):
-			break;
-		case TBIDC("baar"):
-			break;
-		default:
-			break;
-	}
-}
-
-#endif // TB_SUPPORT_CONSTEXPR
-
 // ======================================================
 int fps = 0;
 uint32 frame_counter_total = 0;
@@ -64,11 +42,49 @@ bool DemoWindow::OnEvent(const TBWidgetEvent &ev)
 	return TBWindow::OnEvent(ev);
 }
 
-MainWindow::MainWindow(TBWidget *root) : DemoWindow(root) {
+MainWindow::MainWindow(TBWidget *root) :
+	DemoWindow(root),
+	m_application(nullptr) {
 
 }
 
+void MainWindow::ShowDialog() {
+	TBMessageWindow *msg_win = new TBMessageWindow(this, TBIDC("confirm_close_dialog"));
+	TBMessageWindowSettings settings(TB_MSG_YES_NO);
+	settings.dimmer = true;
+	settings.styling = true;
+	msg_win->Show("Are you sure?", "Do you really want to close the application?", &settings);
+}
+
 bool MainWindow::OnEvent(const TBWidgetEvent &ev) {
+	if (ev.type == EVENT_TYPE_CLICK)
+	{
+		if (ev.ref_id == TBIDC("menu_item_quit") && m_application)
+		{
+			ShowDialog();
+			return true;
+		}
+
+		if (ev.target->GetID() == TBIDC("TBWindow.close"))
+		{
+			// Intercept the TBWindow.close message and stop it from bubbling
+			// to TBWindow (prevent the window from closing)
+			ShowDialog();
+			return true;
+		}
+
+		if (ev.target->GetID() == TBIDC("confirm_close_dialog") && m_application)
+		{
+			if (ev.ref_id == TBIDC("TBMessageWindow.yes"))
+			{
+				m_application->RequestQuit();
+				Close();
+			}
+
+			return true;
+		}
+	}
+
 	return DemoWindow::OnEvent(ev);
 }
 
@@ -108,6 +124,10 @@ bool DemoApplication_02::Init()
 	td.SetID("Leroy Lettering");
 	td.SetSize(16);
 	window->SetFontDescription(td);
+
+	// test_02_main_window.tb.txt
+	g_widgets_reader->LoadFile(window, "Demo/resources/ui_resources/test_02_main_window.tb.txt");
+	window->SetApplication(this);
 
 	return true;
 }

@@ -108,6 +108,7 @@ public:
 
 	/** Get the capacity of the list number of items it can hold without allocating more memory) */
 	int GetCapacity() const					{ return m_list.GetCapacity(); }
+
 private:
 	TBListBackend m_list;
 };

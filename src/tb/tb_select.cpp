@@ -13,7 +13,6 @@
 namespace tb {
 
 // == Sort callback for sorting items ===================================================
-
 int select_list_sort_cb(TBSelectItemSource *source, const int *a, const int *b)
 {
 	int value = strcmp(source->GetItemString(*a), source->GetItemString(*b));

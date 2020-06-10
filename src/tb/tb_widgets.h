@@ -472,14 +472,14 @@ public:
 
 	/** Add the child to this widget. The child widget will automatically be deleted when
 		this widget is deleted. (If the child isn't removed again with RemoveChild.) */
-	void AddChild(TBWidget *child, WIDGET_Z z = WIDGET_Z_TOP, WIDGET_INVOKE_INFO info = WIDGET_INVOKE_INFO_NORMAL);
+	virtual void AddChild(TBWidget *child, WIDGET_Z z = WIDGET_Z_TOP, WIDGET_INVOKE_INFO info = WIDGET_INVOKE_INFO_NORMAL);
 
 	/** Add the child to this widget. See AddChild for adding a child to the top or bottom.
 		This takes a relative Z and insert the child before or after the given reference widget.*/
-	void AddChildRelative(TBWidget *child, WIDGET_Z_REL z, TBWidget *reference, WIDGET_INVOKE_INFO info = WIDGET_INVOKE_INFO_NORMAL);
+	virtual void AddChildRelative(TBWidget *child, WIDGET_Z_REL z, TBWidget *reference, WIDGET_INVOKE_INFO info = WIDGET_INVOKE_INFO_NORMAL);
 
 	/** Remove child from this widget without deleting it. */
-	void RemoveChild(TBWidget *child, WIDGET_INVOKE_INFO info = WIDGET_INVOKE_INFO_NORMAL);
+	virtual void RemoveChild(TBWidget *child, WIDGET_INVOKE_INFO info = WIDGET_INVOKE_INFO_NORMAL);
 
 	/** Remove this widget from parent if it has one. */
 	void RemoveFromParent() { if (m_parent) m_parent->RemoveChild(this); }
@@ -487,7 +487,7 @@ public:
 	/** Remove and delete all children in this widget.
 		Note: This won't invoke Die so there's no chance for widgets to survive or
 		animate. They will be instantly removed and deleted. */
-	void DeleteAllChildren();
+	virtual void DeleteAllChildren();
 
 	/** Sets the z-order of this widget related to its siblings. When a widget is added with AddChild, it will be
 		placed at the top in the parent (Above previously added widget). SetZ can be used to change the order. */

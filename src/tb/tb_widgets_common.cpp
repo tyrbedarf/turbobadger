@@ -282,7 +282,6 @@ void TBButton::ButtonLayout::OnChildRemove(TBWidget *child)
 }
 
 // == TBClickLabel ==========================================================================================
-
 TBClickLabel::TBClickLabel()
 {
 	AddChild(&m_layout);
@@ -324,6 +323,7 @@ bool TBClickLabel::OnEvent(const TBWidgetEvent &ev)
 								ev.touch, ev.modifierkeys);
 		return click_target->InvokeEvent(target_ev);
 	}
+
 	return false;
 }
 

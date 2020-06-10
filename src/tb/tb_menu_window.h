@@ -11,12 +11,14 @@
 
 namespace tb {
 
-/** TBMenuWindow is a popup window that shows a list of items (TBSelectList).
+/**
+	TBMenuWindow is a popup window that shows a list of items (TBSelectList).
 
 	When selected it will invoke a click with the id given to the menu,
 	and the id of the clicked item as ref_id, and then close itself.
 
-	It may open sub items as new windows at the same time as this window is open.*/
+	It may open sub items as new windows at the same time as this window is open.
+*/
 
 class TBMenuWindow : public TBPopupWindow
 {
@@ -32,6 +34,7 @@ public:
 	TBSelectList *GetList() { return &m_select_list; }
 
 	virtual bool OnEvent(const TBWidgetEvent &ev);
+
 private:
 	TBSelectList m_select_list;
 };
