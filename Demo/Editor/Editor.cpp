@@ -1,4 +1,4 @@
-#include "Demo02.h"
+#include "Editor.h"
 #include <stdio.h>
 #include <stdarg.h>
 #include "tests/tb_test.h"
@@ -23,12 +23,12 @@ uint32 frame_counter_total = 0;
 uint32 frame_counter = 0;
 double frame_counter_reset_time = 0;
 
-DemoWindow::DemoWindow(TBWidget *root)
+EditorWindow::EditorWindow(TBWidget *root)
 {
 	root->AddChild(this);
 }
 
-bool DemoWindow::OnEvent(const TBWidgetEvent &ev)
+bool EditorWindow::OnEvent(const TBWidgetEvent &ev)
 {
 	if (ev.type == EVENT_TYPE_KEY_DOWN && ev.special_key == TB_KEY_ESC)
 	{
@@ -43,7 +43,7 @@ bool DemoWindow::OnEvent(const TBWidgetEvent &ev)
 }
 
 MainWindow::MainWindow(TBWidget *root) :
-	DemoWindow(root),
+	EditorWindow(root),
 	m_application(nullptr) {
 
 }
@@ -85,14 +85,14 @@ bool MainWindow::OnEvent(const TBWidgetEvent &ev) {
 		}
 	}
 
-	return DemoWindow::OnEvent(ev);
+	return EditorWindow::OnEvent(ev);
 }
 
 void MainWindow::OnMessageReceived(TBMessage *msg) {
 
 }
 
-bool DemoApplication_02::Init()
+bool TBEditor::Init()
 {
 	if (!App::Init())
 		return false;
@@ -132,7 +132,7 @@ bool DemoApplication_02::Init()
 	return true;
 }
 
-void DemoApplication_02::RenderFrame()
+void TBEditor::RenderFrame()
 {
 	// Render
 	g_renderer->BeginPaint(m_root.GetRect().w, m_root.GetRect().h);
@@ -170,7 +170,7 @@ void DemoApplication_02::RenderFrame()
 		m_root.Invalidate();
 }
 
-void DemoApplication_02::OnBackendAttached(AppBackend *backend, int width, int height)
+void TBEditor::OnBackendAttached(AppBackend *backend, int width, int height)
 {
 	App::OnBackendAttached(backend, width, height);
 
@@ -236,5 +236,5 @@ void DemoApplication_02::OnBackendAttached(AppBackend *backend, int width, int h
 }
 
 App *app_create() {
-	return new DemoApplication_02();
+	return new TBEditor();
 }

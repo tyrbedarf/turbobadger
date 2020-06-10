@@ -84,3 +84,24 @@ install(TARGETS TurboBadgerGLFWDemo_02
     ARCHIVE DESTINATION lib)
 	
 set_target_properties(TurboBadgerGLFWDemo_02 PROPERTIES LINK_FLAGS /SUBSYSTEM:CONSOLE)
+
+# Editor
+set(EDITOR_SRCS "")	
+file(GLOB EDITOR_SRCS 
+	${CMAKE_CURRENT_SOURCE_DIR}/*.cpp 
+    ${CMAKE_CURRENT_SOURCE_DIR}/*.h
+	${CMAKE_SOURCE_DIR}/Demo/*.cpp 
+    ${CMAKE_SOURCE_DIR}/Demo/*.h
+	${CMAKE_SOURCE_DIR}/Demo/Demo_02/*.cpp 
+    ${CMAKE_SOURCE_DIR}/Demo/Demo_02/*.h
+	${CMAKE_CURRENT_SOURCE_DIR}/*.cpp 
+    ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
+	
+add_executable(EditorGLFW WIN32 ${EDITOR_SRCS})
+target_link_libraries(EditorGLFW TurboBadgerLib ${EXTRA_LIBS} glfw ${GLFW_LIBRARIES})
+install(TARGETS EditorGLFW
+    RUNTIME DESTINATION bin
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib)
+	
+set_target_properties(EditorGLFW PROPERTIES LINK_FLAGS /SUBSYSTEM:CONSOLE)

@@ -15,14 +15,14 @@
 
 using namespace tb;
 
-class DemoWindow : public TBWindow
+class EditorWindow : public TBWindow
 {
 public:
-	DemoWindow(TBWidget *root);
+	EditorWindow(TBWidget *root);
 	virtual bool OnEvent(const TBWidgetEvent &ev);
 };
 
-class MainWindow : public TBMessageHandler, public DemoWindow
+class MainWindow : public TBMessageHandler, public EditorWindow
 {
 private:
 	App* m_application;
@@ -42,13 +42,13 @@ public:
 	virtual void OnMessageReceived(TBMessage *msg);
 };
 
-class DemoApplication_02 : public App
+class TBEditor : public App
 {
 private:
 	TBStr m_message;
 
 public:
-	DemoApplication_02() : App(1280, 700) {}
+	TBEditor() : App(1280, 700) {}
 
 	virtual const char *GetTitle() const { return "Demo 02"; }
 	virtual void OnBackendAttached(AppBackend *backend, int width, int height);
