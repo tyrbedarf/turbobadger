@@ -42,8 +42,8 @@ bool TBMessageWindow::Show(const char *title, const char *message, TBMessageWind
 
 	TBWidget *root = target->GetParentRoot();
 
-	const char *source =	"TBLayout: axis: y, distribution: available\n"
-							"	TBLayout: distribution: available, size: available\n"
+	const char *source =	"TBLayout: axis: y, distribution: gravity\n"
+							"	TBLayout: distribution: gravity, size: available\n"
 							"		TBSkinImage: id: 2\n"
 							"		TBEditField: multiline: 1, readonly: 1, id: 1, adapt-to-content: 1\n"
 							"		TBWidget: gravity: left right, distribution-position: right bottom\n"
@@ -76,6 +76,9 @@ bool TBMessageWindow::Show(const char *title, const char *message, TBMessageWind
 		AddButton("TBMessageWindow.yes", true);
 		AddButton("TBMessageWindow.no", false);
 	}
+
+	m_resizer.SetVisibility(WIDGET_VISIBILITY::WIDGET_VISIBILITY_INVISIBLE);
+	m_close_button.SetVisibility(WIDGET_VISIBILITY::WIDGET_VISIBILITY_INVISIBLE);
 
 	// Size to fit content. This will use the default size of the textfield.
 	ResizeToFitContent();

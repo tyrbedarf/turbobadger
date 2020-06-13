@@ -36,6 +36,7 @@ bool DemoWindow::OnEvent(const TBWidgetEvent &ev)
 		// That way the window has a chance of intercepting the close and f.ex ask if it really should be closed.
 		TBWidgetEvent click_ev(EVENT_TYPE_CLICK);
 		m_close_button.InvokeEvent(click_ev);
+
 		return true;
 	}
 
