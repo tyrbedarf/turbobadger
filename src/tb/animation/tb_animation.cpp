@@ -9,7 +9,6 @@
 namespace tb {
 
 // == Helpers =======================================================
-
 #define SMOOTHSTEP(x) ((x) * (x) * (3.0f - 2.0f * (x)))
 
 static float sc(float x)
@@ -29,7 +28,6 @@ static float SmoothCurve(float x, float a)
 }
 
 // == TBAnimationObject ===============================================
-
 void TBAnimationObject::InvokeOnAnimationStart()
 {
 	TBLinkListOf<TBAnimationListener>::Iterator li = m_listeners.IterateForward();
@@ -55,7 +53,6 @@ void TBAnimationObject::InvokeOnAnimationStop(bool aborted)
 }
 
 // == TBAnimationManager ==============================================
-
 TBLinkListOf<TBAnimationObject> TBAnimationManager::animating_objects;
 static int block_animations_counter = 0;
 
@@ -119,6 +116,7 @@ void TBAnimationManager::Update()
 		{
 			animating_objects.Remove(obj);
 			obj->InvokeOnAnimationStop(false);
+
 			delete obj;
 		}
 	}
@@ -135,8 +133,10 @@ void TBAnimationManager::StartAnimation(TBAnimationObject *obj, ANIMATION_CURVE 
 {
 	if (obj->IsAnimating())
 		AbortAnimation(obj, false);
+
 	if (IsAnimationsBlocked())
 		animation_duration = 0;
+
 	obj->adjust_start_time = (animation_time == ANIMATION_TIME_FIRST_UPDATE ? true : false);
 	obj->animation_start_time = TBSystem::GetTimeMS();
 	obj->animation_duration = MAX(animation_duration, 0.0);

@@ -48,7 +48,6 @@ enum ANIMATION_TIME {
 #define ANIMATION_DEFAULT_DURATION		200
 
 /** TBAnimationListener - Listens to the progress of TBAnimationObject. */
-
 class TBAnimationListener : public TBLinkOf<TBAnimationListener>
 {
 public:
@@ -68,7 +67,6 @@ public:
 };
 
 /** TBAnimationObject - Base class for all animated object */
-
 class TBAnimationObject : public TBTypedObject, public TBLinkOf<TBAnimationObject>
 {
 public:
@@ -112,7 +110,6 @@ private:
 };
 
 /** TBAnimationManager - System class that manages all animated object */
-
 class TBAnimationManager
 {
 private:

@@ -29,7 +29,6 @@ MAKE_ENUM_FLAG_COMBO(WINDOW_SETTINGS);
 
 	It will activate and deactivate other windows on click (which will restore
 	focus to the last focused child widget). */
-
 class TBWindow : public TBWidget
 {
 public:

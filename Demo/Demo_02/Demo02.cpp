@@ -58,7 +58,7 @@ MainWindow::MainWindow(TBWidget *root) :
 	// test_02_main_window.tb.txt
 	g_widgets_reader->LoadFile(this, "Demo/resources/ui_resources/test_02_main_window.tb.txt");
 
-	m_statusbar = GetWidgetByIDAndType<TBTextField>("Statusbar");
+	m_statusbar = GetWidgetByIDAndType<TBStatusbar>("Statusbar");
 }
 
 void MainWindow::ShowConfirmationDialog() {
@@ -174,13 +174,6 @@ void DemoApplication_02::RenderFrame()
 	TBWidgetValue *continuous_repaint_val = g_value_group.GetValue(TBIDC("continous-repaint"));
 	bool continuous_repaint = continuous_repaint_val ? !!continuous_repaint_val->GetInt() : 0;
 
-	TBStr str;
-	if (continuous_repaint)
-		str.SetFormatted("FPS: %d Frame %d", fps, frame_counter_total);
-	else
-		str.SetFormatted("Frame %d", frame_counter_total);
-	m_root.GetFont()->DrawString(5, 5, TBColor(255, 255, 255), str);
-
 	m_root.GetFont()->DrawString(5, m_root.GetRect().h - 20, TBColor(255, 255, 255), m_message);
 
 	g_renderer->EndPaint();
@@ -213,7 +206,7 @@ void DemoApplication_02::OnBackendAttached(AppBackend *backend, int width, int h
 
 	// Add resources/fonts we can use to the font manager.
 #if defined(TB_FONT_RENDERER_FREETYPE)
-	g_font_manager->AddFontInfo("resources/fonts/vera.ttf", "Vera");
+	//g_font_manager->AddFontInfo("resources/fonts/vera.ttf", "Vera");
 	g_font_manager->AddFontInfo("resources/fonts/LeroyLetteringLightBeta01.ttf", "Leroy Lettering");
 #endif
 
@@ -229,21 +222,14 @@ void DemoApplication_02::OnBackendAttached(AppBackend *backend, int width, int h
 #ifdef TB_FONT_RENDERER_TBBF
 	fd.SetID(TBIDC("Segoe"));
 #else
-	fd.SetID(TBIDC("Vera"));
+	//fd.SetID(TBIDC("Vera"));
+	fd.SetID(TBIDC("Leroy Lettering"));
 #endif
-	fd.SetSize(g_tb_skin->GetDimensionConverter()->DpToPx(14));
+	fd.SetSize(g_tb_skin->GetDimensionConverter()->DpToPx(12));
 	g_font_manager->SetDefaultFontDescription(fd);
 
 	// Create the font now.
 	TBFontFace *font = g_font_manager->CreateFontFace(g_font_manager->GetDefaultFontDescription());
-
-#if defined(TB_FONT_RENDERER_FREETYPE)
-	TBFontDescription fd2;
-	fd2.SetID("Leroy Lettering");
-	TBFontFace *font2 = g_font_manager->CreateFontFace(fd2);
-	if (font2)
-		font2->RenderGlyphs(" !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~•·åäöÅÄÖ");
-#endif
 
 	// Render some glyphs in one go now since we know we are going to use them. It would work fine
 	// without this since glyphs are rendered when needed, but with some extra updating of the glyph bitmap.

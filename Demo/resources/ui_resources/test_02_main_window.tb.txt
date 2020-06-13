@@ -11,12 +11,7 @@ TBLayout: distribution:gravity, axis: y
 				item: text: Author, id: menu_item_autor
 		TBWidget: gravity: left right, distribution-position: right bottom
 	TBLayout: distribution: gravity, axis: x
-		TBWidget: gravity: top bottom, distribution-position: right bottom
+		TBWidget: gravity: top bottom, distribution-position: right bottom	
 	TBLayout: distribution: gravity, axis: x
-		TBTextField: gravity: left bottom right, distribution-position: left bottom
-			readonly 1
-			type text
-			multiline 0
-			text-align left
-			id Statusbar
+		TBStatusbar: id: Statusbar, animation-duration: 2500
 		TBWidget: gravity: left right, distribution-position: right bottom

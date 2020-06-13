@@ -14,6 +14,7 @@
 #include "tb_font_renderer.h"
 #include "tb_toggle_container.h"
 #include "tb_menu_item.h"
+#include "tb_statusbar.h"
 #include "image/tb_image_widget.h"
 
 namespace tb {
@@ -414,6 +415,13 @@ void TBToggleContainer::OnInflate(const INFLATE_INFO &info)
 		else if (stristr(toggle, "expanded"))	SetToggle(TBToggleContainer::TOGGLE_EXPANDED);
 	}
 	SetInvert(info.node->GetValueInt("invert", GetInvert()) ? true : false);
+	TBWidget::OnInflate(info);
+}
+
+TB_WIDGET_FACTORY(TBStatusbar, TBValue::TYPE_STRING, WIDGET_Z_TOP) {}
+void TBStatusbar::OnInflate(const INFLATE_INFO &info)
+{
+	m_anim_duration = info.node->GetValueFloat("animation-duration", 3500.0f);
 	TBWidget::OnInflate(info);
 }
 

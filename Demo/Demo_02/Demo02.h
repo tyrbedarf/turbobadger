@@ -9,6 +9,7 @@
 #include "animation/tb_widget_animation.h"
 #include "tb_scroller.h"
 #include "../Application.h"
+#include "tb_statusbar.h"
 
 #include "tb_window.h"
 
@@ -27,26 +28,15 @@ class MainWindow : public TBMessageHandler, public DemoWindow
 {
 private:
 	App* m_application;
-	TBTextField* m_statusbar;
+	TBStatusbar* m_statusbar;
 
 	/** Show confirmation dialog before shuting down the application. */
 	void ShowConfirmationDialog();
 
 	/** Display text in status bar and fade it out. */
 	void DisplayStatusMessage(const char* msg) {
-		if (!m_statusbar) {
-			return;
-		}
-
-		double duration = 3500;
-
-		m_statusbar->SetOpacity(1.0f);
-		m_statusbar->SetText(msg);
-
-		if (TBAnimationObject *anim = new TBWidgetAnimationOpacity(m_statusbar, 1, TB_ALMOST_ZERO_OPACITY, false))
-		{
-			TBAnimationManager::StartAnimation(anim, ANIMATION_CURVE_SLOW_DOWN, duration);
-		}
+		if (!m_statusbar) { return; }
+		m_statusbar->DisplayMessage(msg);
 	}
 
 public:

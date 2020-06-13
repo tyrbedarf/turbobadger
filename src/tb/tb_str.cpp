@@ -36,7 +36,6 @@ const char *stristr(const char *arg1, const char *arg2)
 }
 
 // == TBStr ==========================================================
-
 TBStr::TBStr()
 	: TBStrC(empty)
 {

@@ -68,7 +68,6 @@ private:
 	Delayed message are delivered as close as possible to the time they should fire.
 	Immediate messages are put on a queue and delivered as soon as possible, after any delayed
 	messages that has passed their delivery time. This queue is global (among all TBMessageHandlers) */
-
 class TBMessageHandler
 {
 public:

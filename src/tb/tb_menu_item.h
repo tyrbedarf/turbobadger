@@ -6,9 +6,10 @@
 #include "tb_menu_window.h"
 
 namespace tb {
-	/** TBMenuItem shows a button that opens a popup with a TBSelectList with items
-	provided by a TBSelectItemSource. It does not swallo events, so parent widgets can
-	react if a menu item was clicked.
+	/**
+		TBMenuItem shows a button that opens a popup with a TBSelectList with items
+		provided by a TBSelectItemSource. It does not swallo events, so parent widgets can
+		react if a menu item was clicked.
 	*/
 	class TBMenuItem : public TBButton, public TBSelectItemViewer
 	{
@@ -19,19 +20,18 @@ namespace tb {
 		TBMenuItem();
 		~TBMenuItem();
 
-		/** Get the default item source for this widget. This source can be used to add
+		/**
+			Get the default item source for this widget. This source can be used to add
 			items of type TBGenericStringItem to this widget.
 			It is the item source that is fed from resource files.
 
 			If you need to add other types of items, or if you want to share item sources
 			between several TBSelectDropDown/TBSelectList widgets, use SetSource using a
-			external item source. */
+			external item source.
+		*/
 		TBGenericStringItemSource *GetDefaultSource() {
 			return &m_default_source;
 		}
-
-		/** Get the ID of the selected item, or 0 if there is no item selected. */
-		TBID GetSelectedItemID();
 
 		/** Open the window if the model has items. */
 		void OpenWindow();
