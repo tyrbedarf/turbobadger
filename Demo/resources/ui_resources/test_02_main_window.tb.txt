@@ -1,5 +1,5 @@
 TBLayout: distribution:gravity, axis: y
-	TBLayout: distribution: gravity, axis: x
+	TBLayout: distribution: gravity, axis: x, id: menu_bar
 		TBMenuItem: text: File, id: menu_item_file
 			items
 				item: text: Save, id: menu_item_save
@@ -8,10 +8,14 @@ TBLayout: distribution:gravity, axis: y
 				item: text: Quit, id: menu_item_quit
 		TBMenuItem: text: About, id: menu_item_about
 			items
-				item: text: Author, id: menu_item_autor
+				item: text: Company, id: menu_item_company
+				item: text: Info, id: menu_item_info
+					items
+						item: text: Program, id: menu_item_sub_program
+						item: text: Author, id: menu_item_sub_author
 		TBWidget: gravity: left right, distribution-position: right bottom
 	TBLayout: distribution: gravity, axis: x
-		TBWidget: gravity: top bottom, distribution-position: right bottom	
+		TBWidget: gravity: top bottom, distribution-position: right bottom
 	TBLayout: distribution: gravity, axis: x
 		TBStatusbar: id: Statusbar, animation-duration: 2500
 		TBWidget: gravity: left right, distribution-position: right bottom

@@ -84,9 +84,21 @@ bool MainWindow::OnEvent(const TBWidgetEvent &ev) {
 			return true;
 		}
 
-		if (ev.ref_id == TBIDC("menu_item_autor") && m_application)
+		if (ev.ref_id == TBIDC("menu_item_sub_program") && m_application)
+		{
+			DisplayStatusMessage("Menu item program was clicked.");
+			return true;
+		}
+
+		if (ev.ref_id == TBIDC("menu_item_sub_author") && m_application)
 		{
 			DisplayStatusMessage("Menu item author was clicked.");
+			return true;
+		}
+
+		if (ev.ref_id == TBIDC("menu_item_company") && m_application)
+		{
+			DisplayStatusMessage("Menu item company was clicked.");
 			return true;
 		}
 

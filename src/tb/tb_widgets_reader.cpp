@@ -337,22 +337,38 @@ void ReadItems(TBNode *node, TBGenericStringItemSource *target_source)
 {
 	// If there is a items node, loop through all its children and add
 	// items to the target item source.
+	TBGenericStringItem* current_item = nullptr;
 	if (TBNode *items = node->GetNode("items"))
 	{
 		for (TBNode *n = items->GetFirstChild(); n; n = n->GetNext())
 		{
 			if (strcmp(n->GetName(), "item") != 0)
 				continue;
+
 			const char *item_str = n->GetValueString("text", "");
 			TBID item_id;
 			if (TBNode *n_id = n->GetNode("id"))
+			{
 				TBWidgetsReader::SetIDFromNode(item_id, n_id);
+			}
 
-			TBGenericStringItem *item = new TBGenericStringItem(item_str, item_id);
-			if (!item || !target_source->AddItem(item))
+			auto peek = n->GetNode("items");
+			if (peek)
+			{
+				// Parse sub-menu.
+				auto sub_menu = new TBGenericStringItemSource();
+				ReadItems(n, sub_menu);
+				current_item = new TBGenericStringItem(item_str, sub_menu);
+			}
+			else
+			{
+				current_item = new TBGenericStringItem(item_str, item_id);
+			}
+
+			if (!current_item || !target_source->AddItem(current_item))
 			{
 				// Out of memory
-				delete item;
+				delete current_item;
 				break;
 			}
 		}
