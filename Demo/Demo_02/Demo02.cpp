@@ -52,8 +52,7 @@ MainWindow::MainWindow(TBWidget *root) :
 
 	// test_02_main_window.tb.txt
 	g_widgets_reader->LoadFile(this, "Demo/resources/ui_resources/test_02_main_window.tb.txt");
-
-	m_statusbar = GetWidgetByIDAndType<TBStatusbar>("Statusbar");
+	m_statusbar = GetWidgetByIDAndType<TBStatusbar>(TBIDC("Statusbar"));
 }
 
 void MainWindow::ShowConfirmationDialog() {

@@ -7,6 +7,7 @@
 #include "tb_message_window.h"
 #include "tb_msg.h"
 #include "animation/tb_widget_animation.h"
+#include "tb_window_desktop.h"
 #include "tb_scroller.h"
 #include "../Application.h"
 #include "tb_statusbar.h"
@@ -19,6 +20,9 @@ using namespace tb;
 
 class DemoWindow : public TBWindow
 {
+protected:
+	TBWindow* m_main_window;
+
 public:
 	DemoWindow(TBWidget *root);
 	virtual bool OnEvent(const TBWidgetEvent &ev);

@@ -4,6 +4,7 @@
 // ================================================================================
 #include "tb_window.h"
 #include <assert.h>
+#include "tb_window_desktop.h"
 
 namespace tb {
 
@@ -33,6 +34,11 @@ TBWindow::TBWindow()
 	m_textfield.SetTextAlign(TB_TEXT_ALIGN_LEFT);
 
 	SetIsGroupRoot(true);
+
+	if (g_window_desktop == nullptr) {
+		m_settings |= ~WINDOW_SETTINGS_MINIMIZE;
+		SetSettings(m_settings);
+	}
 }
 
 TBWindow::~TBWindow()
@@ -188,7 +194,7 @@ void TBWindow::SetSettings(WINDOW_SETTINGS settings)
 		m_close_button.RemoveFromParent();
 	}
 
-	if (settings & WINDOW_SETTINGS_MINIMIZE)
+	if (settings & WINDOW_SETTINGS_MINIMIZE && g_window_desktop)
 	{
 		if (!m_minimize_button.GetParent())
 			m_mover.AddChild(&m_minimize_button);
@@ -246,7 +252,7 @@ bool TBWindow::OnEvent(const TBWidgetEvent &ev)
 		return true;
 	}
 
-	if (ev.target == &m_minimize_button)
+	if (ev.target == &m_minimize_button && g_window_desktop != nullptr)
 	{
 		if (ev.type == EVENT_TYPE_CLICK && m_minimized)
 		{
@@ -255,6 +261,8 @@ bool TBWindow::OnEvent(const TBWidgetEvent &ev)
 
 			m_close_button.SetVisibility(WIDGET_VISIBILITY_VISIBLE);
 			m_resizer.SetVisibility(WIDGET_VISIBILITY_VISIBLE);
+
+			g_window_desktop->RemoveMinimized(this);
 
 			return true;
 		}
@@ -272,6 +280,8 @@ bool TBWindow::OnEvent(const TBWidgetEvent &ev)
 
 			SetRect(TBRect(m_saved_rect.x, m_saved_rect.y, width, height));
 
+			g_window_desktop->AddMinimized(this);
+
 			return true;
 		}
 
@@ -283,6 +293,18 @@ bool TBWindow::OnEvent(const TBWidgetEvent &ev)
 
 void TBWindow::OnAdded()
 {
+	if (GetParent()->IsOfType<TBWindowDesktop>()) {
+		m_settings |= WINDOW_SETTINGS_MINIMIZE;
+		m_minimize_button.SetVisibility(WIDGET_VISIBILITY_VISIBLE);
+		SetSettings(m_settings);
+	}
+	else
+	{
+		m_settings |= ~WINDOW_SETTINGS_MINIMIZE;
+		m_minimize_button.SetVisibility(WIDGET_VISIBILITY_INVISIBLE);
+		SetSettings(m_settings);
+	}
+
 	// If we was added last, call Activate to update status etc.
 	if (GetParent()->GetLastChild() == this)
 		Activate();
