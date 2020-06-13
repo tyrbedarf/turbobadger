@@ -23,6 +23,9 @@ TBWindow::TBWindow()
 	m_close_button.SetSkinBg(TBIDC("TBWindow.close"));
 	m_close_button.SetIsFocusable(false);
 	m_close_button.SetID(TBIDC("TBWindow.close"));
+
+	m_textfield.SetTextAlign(TB_TEXT_ALIGN_LEFT);
+
 	SetIsGroupRoot(true);
 }
 

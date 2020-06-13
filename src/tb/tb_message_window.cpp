@@ -45,8 +45,10 @@ bool TBMessageWindow::Show(const char *title, const char *message, TBMessageWind
 	const char *source =	"TBLayout: axis: y, distribution: available\n"
 							"	TBLayout: distribution: available, size: available\n"
 							"		TBSkinImage: id: 2\n"
-							"		TBEditField: multiline: 1, readonly: 1, id: 1\n"
+							"		TBEditField: multiline: 1, readonly: 1, id: 1, adapt-to-content: 1\n"
+							"		TBWidget: gravity: left right, distribution-position: right bottom\n"
 							"	TBLayout: distribution-position: right bottom, id: 3\n";
+
 	if (!g_widgets_reader->LoadData(GetContentRoot(), source))
 		return false;
 

@@ -84,7 +84,7 @@ TBRect TBEditField::GetVisibleRect()
 void TBEditField::UpdateScrollbarVisibility(bool multiline)
 {
 	bool enable_vertical = multiline && !m_adapt_to_content_size;
-	m_scrollbar_y.SetOpacity(enable_vertical ? 1.f : 0.f);
+	m_scrollbar_y.SetOpacity(enable_vertical ? 1.0f : 0.0f);
 	m_root.SetRect(GetVisibleRect());
 }
 

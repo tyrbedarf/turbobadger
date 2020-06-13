@@ -60,7 +60,7 @@ public:
 	Example:
 
 	TB_WIDGET_FACTORY(MyWidget, TBValue::TYPE_INT, WIDGET_Z_TOP) {}
-	*/
+*/
 #define TB_WIDGET_FACTORY(classname, sync_type, add_child_z) \
 	class classname##WidgetFactory : public tb::TBWidgetFactory \
 	{ \
