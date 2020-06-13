@@ -428,8 +428,8 @@ public:
 	int32 GetContentWidth();
 	int32 GetContentHeight() const;
 
-	int32 GetOverflowX() const { return MAX(content_width - layout_width, 0); }
-	int32 GetOverflowY() const { return MAX(content_height - layout_height, 0); }
+	int32 GetOverflowX() const { return Max(content_width - layout_width, 0); }
+	int32 GetOverflowY() const { return Max(content_height - layout_height, 0); }
 public:
 	TBStyleEditListener *listener;
 	TBTextFragmentContentFactory default_content_factory;

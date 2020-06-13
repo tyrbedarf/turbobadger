@@ -334,6 +334,11 @@ elements
 		type Image
 		min-width 20
 		min-height 20
+	TBWindow.minimize
+		bitmap arrow_down.png
+		type Image
+		min-width 20
+		min-height 20		
 	TBWindow.mover
 		text-color #b8b8b8
 		bitmap window_mover_bg_tile.png

@@ -2,7 +2,6 @@
 // ==      This file is a part of Turbo Badger. (C) 2011-2014, Emil Segerås      ==
 // ==                     See tb_core.h for more information.                    ==
 // ================================================================================
-
 #include "tb_window.h"
 #include <assert.h>
 
@@ -11,7 +10,8 @@ namespace tb {
 // == TBWindow ==========================================================================
 
 TBWindow::TBWindow()
-	: m_settings(WINDOW_SETTINGS_DEFAULT)
+	: m_settings(WINDOW_SETTINGS_DEFAULT),
+	  m_minimized(false)
 {
 	SetSkinBg(TBIDC("TBWindow"), WIDGET_INVOKE_INFO_NO_CALLBACKS);
 	AddChild(&m_mover);
@@ -19,10 +19,16 @@ TBWindow::TBWindow()
 	m_mover.SetSkinBg(TBIDC("TBWindow.mover"));
 	m_mover.AddChild(&m_textfield);
 	m_textfield.SetIgnoreInput(true);
+	m_mover.AddChild(&m_minimize_button);
 	m_mover.AddChild(&m_close_button);
+
 	m_close_button.SetSkinBg(TBIDC("TBWindow.close"));
 	m_close_button.SetIsFocusable(false);
 	m_close_button.SetID(TBIDC("TBWindow.close"));
+
+	m_minimize_button.SetSkinBg(TBIDC("TBWindow.minimize"));
+	m_minimize_button.SetIsFocusable(false);
+	m_minimize_button.SetID(TBIDC("TBWindow.minimize"));
 
 	m_textfield.SetTextAlign(TB_TEXT_ALIGN_LEFT);
 
@@ -35,6 +41,7 @@ TBWindow::~TBWindow()
 	m_mover.RemoveFromParent();
 	m_close_button.RemoveFromParent();
 	m_textfield.RemoveFromParent();
+	m_minimize_button.RemoveFromParent();
 }
 
 TBRect TBWindow::GetResizeToFitContentRect(RESIZE_FIT fit)
@@ -49,13 +56,13 @@ TBRect TBWindow::GetResizeToFitContentRect(RESIZE_FIT fit)
 	}
 	else if (fit == RESIZE_FIT_CURRENT_OR_NEEDED)
 	{
-		new_w = CLAMP(GetRect().w, ps.min_w, ps.max_w);
-		new_h = CLAMP(GetRect().h, ps.min_h, ps.max_h);
+		new_w = Clamp(GetRect().w, ps.min_w, ps.max_w);
+		new_h = Clamp(GetRect().h, ps.min_h, ps.max_h);
 	}
 	if (GetParent())
 	{
-		new_w = MIN(new_w, GetParent()->GetRect().w);
-		new_h = MIN(new_h, GetParent()->GetRect().h);
+		new_w = Min(new_w, GetParent()->GetRect().w);
+		new_h = Min(new_h, GetParent()->GetRect().h);
 	}
 	return TBRect(GetRect().x, GetRect().y, new_w, new_h);
 }
@@ -160,6 +167,7 @@ void TBWindow::SetSettings(WINDOW_SETTINGS settings)
 	{
 		m_mover.RemoveFromParent();
 	}
+
 	if (settings & WINDOW_SETTINGS_RESIZABLE)
 	{
 		if (!m_resizer.GetParent())
@@ -169,6 +177,7 @@ void TBWindow::SetSettings(WINDOW_SETTINGS settings)
 	{
 		m_resizer.RemoveFromParent();
 	}
+
 	if (settings & WINDOW_SETTINGS_CLOSE_BUTTON)
 	{
 		if (!m_close_button.GetParent())
@@ -177,6 +186,16 @@ void TBWindow::SetSettings(WINDOW_SETTINGS settings)
 	else if (!(settings & WINDOW_SETTINGS_CLOSE_BUTTON))
 	{
 		m_close_button.RemoveFromParent();
+	}
+
+	if (settings & WINDOW_SETTINGS_MINIMIZE)
+	{
+		if (!m_minimize_button.GetParent())
+			m_mover.AddChild(&m_minimize_button);
+	}
+	else if (!(settings & WINDOW_SETTINGS_MINIMIZE))
+	{
+		m_minimize_button.RemoveFromParent();
 	}
 
 	// FIX: invalidate layout / resize window!
@@ -226,6 +245,39 @@ bool TBWindow::OnEvent(const TBWidgetEvent &ev)
 			Close();
 		return true;
 	}
+
+	if (ev.target == &m_minimize_button)
+	{
+		if (ev.type == EVENT_TYPE_CLICK && m_minimized)
+		{
+			m_minimized = false;
+			SetRect(m_saved_rect);
+
+			m_close_button.SetVisibility(WIDGET_VISIBILITY_VISIBLE);
+			m_resizer.SetVisibility(WIDGET_VISIBILITY_VISIBLE);
+
+			return true;
+		}
+
+		if (ev.type == EVENT_TYPE_CLICK && !m_minimized)
+		{
+			m_minimized = true;
+
+			m_saved_rect = GetRect();
+			auto height = GetTitleHeight();
+			auto width = 250;
+
+			m_close_button.SetVisibility(WIDGET_VISIBILITY_INVISIBLE);
+			m_resizer.SetVisibility(WIDGET_VISIBILITY_INVISIBLE);
+
+			SetRect(TBRect(m_saved_rect.x, m_saved_rect.y, width, height));
+
+			return true;
+		}
+
+		return true;
+	}
+
 	return false;
 }
 
@@ -267,7 +319,19 @@ void TBWindow::OnResized(int old_w, int old_h)
 	const int mover_padding_right = mover_rect.x + mover_rect.w - (mover_padding_rect.x + mover_padding_rect.w);
 	const int button_w = m_close_button.GetPreferredSize().pref_w;
 	const int button_h = Max(m_close_button.GetPreferredSize().pref_h, mover_padding_rect.h);
-	m_close_button.SetRect(TBRect(mover_padding_rect.x + mover_padding_rect.w - button_w, mover_padding_rect.y, button_w, button_h));
+
+	if (!m_minimized)
+	{
+		m_close_button.SetRect(TBRect(mover_padding_rect.x + mover_padding_rect.w - button_w, mover_padding_rect.y, button_w, button_h));
+
+		// Position relative to the close button.
+		m_minimize_button.SetRect(TBRect(mover_padding_rect.x + mover_padding_rect.w - button_w - button_w - 5, mover_padding_rect.y, button_w, button_h));
+	}
+	else
+	{
+		m_minimize_button.SetRect(TBRect(mover_padding_rect.x + mover_padding_rect.w - button_w, mover_padding_rect.y, button_w, button_h));
+	}
+
 
 	TBRect title_rect = mover_padding_rect;
 	if (m_settings & WINDOW_SETTINGS_CLOSE_BUTTON)

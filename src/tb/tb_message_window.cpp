@@ -79,6 +79,7 @@ bool TBMessageWindow::Show(const char *title, const char *message, TBMessageWind
 
 	m_resizer.SetVisibility(WIDGET_VISIBILITY::WIDGET_VISIBILITY_INVISIBLE);
 	m_close_button.SetVisibility(WIDGET_VISIBILITY::WIDGET_VISIBILITY_INVISIBLE);
+	m_minimize_button.SetVisibility(WIDGET_VISIBILITY::WIDGET_VISIBILITY_INVISIBLE);
 
 	// Size to fit content. This will use the default size of the textfield.
 	ResizeToFitContent();
