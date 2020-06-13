@@ -49,12 +49,6 @@ MainWindow::MainWindow(TBWidget *root) :
 	SetText("Test Window");
 	SetRect(TBRect{ 20, 20, 800, 600 }); // Always add dimensions, TurboBadger will set them to 0. Which means you won´t see anything.
 
-	TBFontDescription td;
-	//td.SetID("Chalk Outline");
-	td.SetID("Leroy Lettering");
-	td.SetSize(16);
-	SetFontDescription(td);
-
 	// test_02_main_window.tb.txt
 	g_widgets_reader->LoadFile(this, "Demo/resources/ui_resources/test_02_main_window.tb.txt");
 
@@ -170,7 +164,6 @@ void DemoApplication_02::RenderFrame()
 		frame_counter = 0;
 	}
 
-	// Draw FPS
 	TBWidgetValue *continuous_repaint_val = g_value_group.GetValue(TBIDC("continous-repaint"));
 	bool continuous_repaint = continuous_repaint_val ? !!continuous_repaint_val->GetInt() : 0;
 
