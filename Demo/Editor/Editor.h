@@ -6,8 +6,11 @@
 #include "tb_widgets_listener.h"
 #include "tb_message_window.h"
 #include "tb_msg.h"
+#include "animation/tb_widget_animation.h"
+#include "tb_window_desktop.h"
 #include "tb_scroller.h"
 #include "../Application.h"
+#include "tb_statusbar.h"
 
 #include "tb_window.h"
 
@@ -15,23 +18,33 @@
 
 using namespace tb;
 
-class EditorWindow : public TBWindow
+class ApplicationWindow : public TBWindow
 {
+protected:
+	TBWindow* m_main_window;
+
 public:
-	EditorWindow(TBWidget *root);
+	ApplicationWindow(TBWidget *root);
 	virtual bool OnEvent(const TBWidgetEvent &ev);
 };
 
-class MainWindow : public TBMessageHandler, public EditorWindow
+class EditorWindow : public TBMessageHandler, public ApplicationWindow
 {
 private:
 	App* m_application;
+	TBStatusbar* m_statusbar;
 
 	/** Show confirmation dialog before shuting down the application. */
 	void ShowConfirmationDialog();
 
+	/** Display text in status bar and fade it out. */
+	void DisplayStatusMessage(const char* msg) {
+		if (!m_statusbar) { return; }
+		m_statusbar->DisplayMessage(msg);
+	}
+
 public:
-	MainWindow(TBWidget *root);
+	EditorWindow(TBWidget *root);
 	virtual bool OnEvent(const TBWidgetEvent &ev);
 
 	void SetApplication(App* app) {
@@ -42,15 +55,15 @@ public:
 	virtual void OnMessageReceived(TBMessage *msg);
 };
 
-class TBEditor : public App
+class TurboBadgerEditor : public App
 {
 private:
 	TBStr m_message;
 
 public:
-	TBEditor() : App(1280, 700) {}
+	TurboBadgerEditor() : App(1280, 700) {}
 
-	virtual const char *GetTitle() const { return "Demo 02"; }
+	virtual const char *GetTitle() const { return "Turbobadger - Editor"; }
 	virtual void OnBackendAttached(AppBackend *backend, int width, int height);
 	virtual bool Init();
 	virtual void RenderFrame();

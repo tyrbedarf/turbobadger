@@ -74,7 +74,6 @@ enum LAYOUT_OVERFLOW {
 
 	Each widget is also separated by the specified spacing (See SetSpacing).
 */
-
 class TBLayout : public TBWidget
 {
 public:

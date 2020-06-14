@@ -23,12 +23,12 @@ uint32 frame_counter_total = 0;
 uint32 frame_counter = 0;
 double frame_counter_reset_time = 0;
 
-DemoWindow::DemoWindow(TBWidget *root)
+ApplicationWindow::ApplicationWindow(TBWidget *root)
 {
 	root->AddChild(this);
 }
 
-bool DemoWindow::OnEvent(const TBWidgetEvent &ev)
+bool ApplicationWindow::OnEvent(const TBWidgetEvent &ev)
 {
 	if (ev.type == EVENT_TYPE_KEY_DOWN && ev.special_key == TB_KEY_ESC)
 	{
@@ -43,8 +43,8 @@ bool DemoWindow::OnEvent(const TBWidgetEvent &ev)
 	return TBWindow::OnEvent(ev);
 }
 
-MainWindow::MainWindow(TBWidget *root) :
-	DemoWindow(root),
+EditorWindow::EditorWindow(TBWidget *root) :
+	ApplicationWindow(root),
 	m_application(nullptr),
 	m_statusbar(nullptr) {
 	SetText("Test Window");
@@ -55,7 +55,7 @@ MainWindow::MainWindow(TBWidget *root) :
 	m_statusbar = GetWidgetByIDAndType<TBStatusbar>(TBIDC("Statusbar"));
 }
 
-void MainWindow::ShowConfirmationDialog() {
+void EditorWindow::ShowConfirmationDialog() {
 	TBMessageWindow *msg_win = new TBMessageWindow(this, TBIDC("confirm_close_dialog"));
 	TBMessageWindowSettings settings(TB_MSG_YES_NO);
 	settings.dimmer = true;
@@ -63,7 +63,7 @@ void MainWindow::ShowConfirmationDialog() {
 	msg_win->Show("Are you sure?", "Do you really want to close the application?", &settings);
 }
 
-bool MainWindow::OnEvent(const TBWidgetEvent &ev) {
+bool EditorWindow::OnEvent(const TBWidgetEvent &ev) {
 	if (ev.type == EVENT_TYPE_CLICK)
 	{
 		if (ev.ref_id == TBIDC("menu_item_quit") && m_application)
@@ -122,14 +122,14 @@ bool MainWindow::OnEvent(const TBWidgetEvent &ev) {
 		}
 	}
 
-	return DemoWindow::OnEvent(ev);
+	return ApplicationWindow::OnEvent(ev);
 }
 
-void MainWindow::OnMessageReceived(TBMessage *msg) {
+void EditorWindow::OnMessageReceived(TBMessage *msg) {
 
 }
 
-bool DemoApplication_02::Init()
+bool TurboBadgerEditor::Init()
 {
 	if (!App::Init())
 		return false;
@@ -152,13 +152,13 @@ bool DemoApplication_02::Init()
 	// After an element has been removed from the widget tree
 	// it will be deleted.
 	// As a matter of fact keeping track of the pointer might lead to crashes.
-	auto window = new MainWindow(&m_root);
+	auto window = new EditorWindow(&m_root);
 	window->SetApplication(this);
 
 	return true;
 }
 
-void DemoApplication_02::RenderFrame()
+void TurboBadgerEditor::RenderFrame()
 {
 	// Render
 	g_renderer->BeginPaint(m_root.GetRect().w, m_root.GetRect().h);
@@ -188,7 +188,7 @@ void DemoApplication_02::RenderFrame()
 		m_root.Invalidate();
 }
 
-void DemoApplication_02::OnBackendAttached(AppBackend *backend, int width, int height)
+void TurboBadgerEditor::OnBackendAttached(AppBackend *backend, int width, int height)
 {
 	App::OnBackendAttached(backend, width, height);
 
@@ -247,5 +247,5 @@ void DemoApplication_02::OnBackendAttached(AppBackend *backend, int width, int h
 }
 
 App *app_create() {
-	return new DemoApplication_02();
+	return new TurboBadgerEditor();
 }

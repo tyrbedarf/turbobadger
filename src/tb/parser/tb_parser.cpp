@@ -160,7 +160,6 @@ bool IsEndQuote(const char *buf_start, const char *buf, const char quote_type)
 }
 
 // == Parser ============================================================================
-
 TBParser::STATUS TBParser::Read(TBParserStream *stream, TBParserTarget *target)
 {
 	TBTempBuffer line, work;

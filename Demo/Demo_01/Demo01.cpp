@@ -46,12 +46,12 @@ void const_expr_test()
 #endif // TB_SUPPORT_CONSTEXPR
 
 // == DemoWindow ==============================================================
-DemoWindow::DemoWindow(TBWidget *root)
+ApplicationWindow::ApplicationWindow(TBWidget *root)
 {
 	root->AddChild(this);
 }
 
-bool DemoWindow::LoadResourceFile(const char *filename)
+bool ApplicationWindow::LoadResourceFile(const char *filename)
 {
 	// We could do g_widgets_reader->LoadFile(this, filename) but we want
 	// some extra data we store under "WindowInfo", so read into node tree.
@@ -65,7 +65,7 @@ bool DemoWindow::LoadResourceFile(const char *filename)
 	return true;
 }
 
-void DemoWindow::LoadResourceData(const char *data)
+void ApplicationWindow::LoadResourceData(const char *data)
 {
 	// We could do g_widgets_reader->LoadData(this, filename) but we want
 	// some extra data we store under "WindowInfo", so read into node tree.
@@ -77,7 +77,7 @@ void DemoWindow::LoadResourceData(const char *data)
 /**
 	Demonstrates how to a new elements to the layout DSL.
 */
-void DemoWindow::LoadResource(TBNode &node)
+void ApplicationWindow::LoadResource(TBNode &node)
 {
 	g_widgets_reader->LoadNodeTree(this, &node);
 
@@ -118,7 +118,7 @@ void DemoWindow::LoadResource(TBNode &node)
 	EnsureFocus();
 }
 
-bool DemoWindow::OnEvent(const TBWidgetEvent &ev)
+bool ApplicationWindow::OnEvent(const TBWidgetEvent &ev)
 {
 	if (ev.type == EVENT_TYPE_KEY_DOWN && ev.special_key == TB_KEY_ESC)
 	{
@@ -132,10 +132,10 @@ bool DemoWindow::OnEvent(const TBWidgetEvent &ev)
 }
 
 // == EditWindow ==============================================================
-class EditWindow : public DemoWindow
+class EditWindow : public ApplicationWindow
 {
 public:
-	EditWindow(TBWidget *root) : DemoWindow(root)
+	EditWindow(TBWidget *root) : ApplicationWindow(root)
 	{
 		LoadResourceFile("Demo/resources/ui_resources/test_textwindow.tb.txt");
 	}
@@ -259,12 +259,12 @@ public:
 			}
 		}
 
-		return DemoWindow::OnEvent(ev);
+		return ApplicationWindow::OnEvent(ev);
 	}
 };
 
 // == LayoutWindow ============================================================
-LayoutWindow::LayoutWindow(TBWidget *root, const char *filename) : DemoWindow(root)
+LayoutWindow::LayoutWindow(TBWidget *root, const char *filename) : ApplicationWindow(root)
 {
 	LoadResourceFile(filename);
 }
@@ -293,11 +293,11 @@ bool LayoutWindow::OnEvent(const TBWidgetEvent &ev)
 		ResizeToFitContent(RESIZE_FIT_CURRENT_OR_NEEDED);
 		return true;
 	}
-	return DemoWindow::OnEvent(ev);
+	return ApplicationWindow::OnEvent(ev);
 }
 
 // == TabContainerWindow ============================================================
-TabContainerWindow::TabContainerWindow(TBWidget *root) : DemoWindow(root)
+TabContainerWindow::TabContainerWindow(TBWidget *root) : ApplicationWindow(root)
 {
 	LoadResourceFile("Demo/resources/ui_resources/test_tabcontainer01.tb.txt");
 }
@@ -334,11 +334,11 @@ bool TabContainerWindow::OnEvent(const TBWidgetEvent &ev)
 		if (TBProgressSpinner *spinner = GetWidgetByIDAndType<TBProgressSpinner>(TBIDC("spinner")))
 			spinner->SetValue(0);
 	}
-	return DemoWindow::OnEvent(ev);
+	return ApplicationWindow::OnEvent(ev);
 }
 
 // == ConnectionWindow =========================================================
-ConnectionWindow::ConnectionWindow(TBWidget *root) : DemoWindow(root)
+ConnectionWindow::ConnectionWindow(TBWidget *root) : ApplicationWindow(root)
 {
 	LoadResourceFile("Demo/resources/ui_resources/test_connections.tb.txt");
 }
@@ -355,11 +355,11 @@ bool ConnectionWindow::OnEvent(const TBWidgetEvent &ev)
 		if (TBWidgetValue *val = g_value_group.GetValue(TBIDC("user-name")))
 			val->SetText("");
 	}
-	return DemoWindow::OnEvent(ev);
+	return ApplicationWindow::OnEvent(ev);
 }
 
 // == ScrollContainerWindow ===================================================
-ScrollContainerWindow::ScrollContainerWindow(TBWidget *root) : DemoWindow(root)
+ScrollContainerWindow::ScrollContainerWindow(TBWidget *root) : ApplicationWindow(root)
 {
 	LoadResourceFile("Demo/resources/ui_resources/test_scrollcontainer.tb.txt");
 
@@ -427,7 +427,7 @@ bool ScrollContainerWindow::OnEvent(const TBWidgetEvent &ev)
 			return true;
 		}
 	}
-	return DemoWindow::OnEvent(ev);
+	return ApplicationWindow::OnEvent(ev);
 }
 
 void ScrollContainerWindow::OnMessageReceived(TBMessage *msg)
@@ -447,7 +447,7 @@ void ScrollContainerWindow::OnMessageReceived(TBMessage *msg)
 }
 
 // == ImageWindow =============================================================
-ImageWindow::ImageWindow(TBWidget *root) : DemoWindow(root)
+ImageWindow::ImageWindow(TBWidget *root) : ApplicationWindow(root)
 {
 	LoadResourceFile("Demo/resources/ui_resources/test_image_widget.tb.txt");
 }
@@ -461,11 +461,11 @@ bool ImageWindow::OnEvent(const TBWidgetEvent &ev)
 		delete image;
 		return true;
 	}
-	return DemoWindow::OnEvent(ev);
+	return ApplicationWindow::OnEvent(ev);
 }
 
 // == PageWindow =============================================================
-PageWindow::PageWindow(TBWidget *root) : DemoWindow(root)
+PageWindow::PageWindow(TBWidget *root) : ApplicationWindow(root)
 {
 	LoadResourceFile("Demo/resources/ui_resources/test_scroller_snap.tb.txt");
 
@@ -476,7 +476,7 @@ PageWindow::PageWindow(TBWidget *root) : DemoWindow(root)
 
 bool PageWindow::OnEvent(const TBWidgetEvent &ev)
 {
-	return DemoWindow::OnEvent(ev);
+	return ApplicationWindow::OnEvent(ev);
 }
 
 void PageWindow::OnScrollSnap(TBWidget *target_widget, int &target_x, int &target_y)
@@ -487,7 +487,7 @@ void PageWindow::OnScrollSnap(TBWidget *target_widget, int &target_x, int &targe
 }
 
 // == AnimationsWindow ========================================================
-AnimationsWindow::AnimationsWindow(TBWidget *root) : DemoWindow(root)
+AnimationsWindow::AnimationsWindow(TBWidget *root) : ApplicationWindow(root)
 {
 	LoadResourceFile("Demo/resources/ui_resources/test_animations.tb.txt");
 	Animate();
@@ -524,18 +524,18 @@ bool AnimationsWindow::OnEvent(const TBWidgetEvent &ev)
 {
 	if (ev.type == EVENT_TYPE_CLICK && ev.target->GetID() == TBIDC("Animate!"))
 		Animate();
-	return DemoWindow::OnEvent(ev);
+	return ApplicationWindow::OnEvent(ev);
 }
 
 // == MainWindow ==============================================================
-MainWindow::MainWindow(TBWidget *root) : DemoWindow(root)
+EditorWindow::EditorWindow(TBWidget *root) : ApplicationWindow(root)
 {
 	LoadResourceFile("Demo/resources/ui_resources/test_ui.tb.txt");
 
 	SetOpacity(0.97f);
 }
 
-void MainWindow::OnMessageReceived(TBMessage *msg)
+void EditorWindow::OnMessageReceived(TBMessage *msg)
 {
 	if (msg->message == TBIDC("instantmsg"))
 	{
@@ -558,13 +558,13 @@ void MainWindow::OnMessageReceived(TBMessage *msg)
 	}
 }
 
-bool MainWindow::OnEvent(const TBWidgetEvent &ev)
+bool EditorWindow::OnEvent(const TBWidgetEvent &ev)
 {
 	if (ev.type == EVENT_TYPE_CLICK)
 	{
 		if (ev.target->GetID() == TBIDC("new"))
 		{
-			new MainWindow(GetParentRoot());
+			new EditorWindow(GetParentRoot());
 			return true;
 		}
 		if (ev.target->GetID() == TBIDC("msg"))
@@ -681,8 +681,8 @@ bool MainWindow::OnEvent(const TBWidgetEvent &ev)
 		}
 		else if (ev.target->GetID() == TBIDC("test-skin-conditions"))
 		{
-			(new DemoWindow(GetParentRoot()))->LoadResourceFile("Demo/resources/ui_resources/test_skin_conditions01.tb.txt");
-			(new DemoWindow(GetParentRoot()))->LoadResourceFile("Demo/resources/ui_resources/test_skin_conditions02.tb.txt");
+			(new ApplicationWindow(GetParentRoot()))->LoadResourceFile("Demo/resources/ui_resources/test_skin_conditions01.tb.txt");
+			(new ApplicationWindow(GetParentRoot()))->LoadResourceFile("Demo/resources/ui_resources/test_skin_conditions02.tb.txt");
 			return true;
 		}
 		else if (ev.target->GetID() == TBIDC("test-resource-edit"))
@@ -706,7 +706,7 @@ bool MainWindow::OnEvent(const TBWidgetEvent &ev)
 			return true;
 		}
 	}
-	return DemoWindow::OnEvent(ev);
+	return ApplicationWindow::OnEvent(ev);
 }
 
 // ======================================================
@@ -771,7 +771,7 @@ bool DemoApplication_01::Init()
 	// Give the first item a skin image
 	popup_menu_source.GetItem(0)->SetSkinImage(TBIDC("Icon16"));
 
-	new MainWindow(&m_root);
+	new EditorWindow(&m_root);
 
 	new EditWindow(&m_root);
 

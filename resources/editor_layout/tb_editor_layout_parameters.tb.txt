@@ -1,0 +1,99 @@
+TBLayout: axis: y, spacing: 2, size: preferred
+	TBLayout: axis: x, size: preferred, gravity: left
+		TBTextField: text: "Layout Axis", text-align: left, gravity: left
+			lp 
+				pref-width 180
+				pref-height: 25
+		TBSelectDropdown: id: Layout Size
+			lp 
+				pref-width 130
+				pref-height: 25
+			items
+				item: text: Axis X, id: AXIS_X
+				item: text: Axis Y, id: AXIS_Y
+	TBLayout: axis: x, size: preferred, gravity: left
+		TBTextField: text: "Layout Size", text-align: left, gravity: left
+			lp 
+				pref-width 180
+				pref-height: 25
+		TBSelectDropdown: id: Layout Size
+			lp 
+				pref-width 130
+				pref-height: 25
+			items
+				item: text: Gravity, id: LAYOUT_SIZE_GRAVITY
+				item: text: Preferred, id: LAYOUT_SIZE_PREFERRED
+				item: text: Available, id: LAYOUT_SIZE_AVAILABLE
+	TBLayout: axis: x, size: preferred, gravity: left
+		TBTextField: text: "Layout Position", text-align: left, gravity: left
+			lp 
+				pref-width 180
+				pref-height: 25
+		TBSelectDropdown: id: Layout Position
+			lp 
+				pref-width 130
+				pref-height: 25
+			items
+				item: text: Center, id: LAYOUT_POSITION_CENTER
+				item: text: Left Top, id: LAYOUT_POSITION_LEFT_TOP
+				item: text: Right Bottom, id: LAYOUT_POSITION_RIGHT_BOTTOM
+				item: text: Gravity, id: LAYOUT_POSITION_GRAVITY
+	TBLayout: axis: x, size: preferred, gravity: left
+		TBTextField: text: "Layout Distribution", text-align: left, gravity: left
+			lp 
+				pref-width 180
+				pref-height: 25
+		TBSelectDropdown: id: Layout Distribution
+			lp 
+				pref-width 130
+				pref-height: 25
+			items
+				item: text: Preferred, id: LAYOUT_DISTRIBUTION_PREFERRED
+				item: text: Available, id: LAYOUT_DISTRIBUTION_AVAILABLE
+				item: text: Gravity, id: LAYOUT_DISTRIBUTION_GRAVITY
+	TBLayout: axis: x, size: preferred, gravity: left
+		TBTextField: text: "Layout Distribution Position", text-align: left, gravity: left
+			lp 
+				pref-width 180
+				pref-height: 25
+		TBSelectDropdown: id: Layout Distribution Position
+			lp 
+				pref-width 130
+				pref-height: 25
+			items
+				item: text: Center, id: LAYOUT_DISTRIBUTION_POSITION_CENTER
+				item: text: Left Top, id: LAYOUT_DISTRIBUTION_POSITION_LEFT_TOP
+				item: text: Right Bottom, id: LAYOUT_DISTRIBUTION_POSITION_RIGHT_BOTTOM
+	TBLayout: axis: x, size: preferred, gravity: left
+		TBTextField: text: "Layout Order", text-align: left, gravity: left
+			lp 
+				pref-width 180
+				pref-height: 25
+		TBSelectDropdown: id: Layout Order
+			lp 
+				pref-width 130
+				pref-height: 25
+			items
+				item: text: Bottom to Top, id: LAYOUT_ORDER_BOTTOM_TO_TOP
+				item: text: Top to Bottom, id: LAYOUT_ORDER_TOP_TO_BOTTOM
+	TBLayout: axis: x, size: preferred, gravity: left
+		TBTextField: text: "Layout Overflow", text-align: left, gravity: left
+			lp 
+				pref-width 180
+				pref-height: 25
+		TBSelectDropdown: id: Layout Overflow
+			lp 
+				pref-width 130
+				pref-height: 25
+			items
+				item: text: Clip, id: LAYOUT_OVERFLOW_CLIP
+				item: text: Scroll to Bottom, id: LAYOUT_OVERFLOW_SCROLL
+	TBLayout: axis: x, size: preferred, gravity: left
+		TBTextField: text: "Spacing", text-align: left, gravity: left
+			lp 
+				pref-width 180
+				pref-height: 25
+		TBEditField: text-align: right, gravity: right, type: number, id: layout_spacing
+			lp 
+				pref-width 130
+				pref-height: 25

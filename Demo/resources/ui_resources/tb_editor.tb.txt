@@ -1,0 +1,2 @@
+TBLayout distribution: gravity, axis: y, id: menu_bar gravity: top right bottom
+	TBEditorLayoutParameters

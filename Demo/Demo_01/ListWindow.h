@@ -7,7 +7,7 @@
 class AdvancedItemSource;
 
 /** Shows a list of items from *any* type of source. */
-class ListWindow : public DemoWindow
+class ListWindow : public ApplicationWindow
 {
 public:
 	ListWindow(TBWidget *root, TBSelectItemSource *source);
@@ -15,7 +15,7 @@ public:
 };
 
 /** Shows a list of items from a source of type AdvancedItemSource. */
-class AdvancedListWindow : public DemoWindow
+class AdvancedListWindow : public ApplicationWindow
 {
 public:
 	AdvancedListWindow(TBWidget *root, AdvancedItemSource *source);

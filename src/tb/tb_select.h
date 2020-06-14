@@ -15,7 +15,6 @@ namespace tb {
 class TBMenuWindow;
 
 /** TBSelectList shows a scrollable list of items provided by a TBSelectItemSource. */
-
 class TBSelectList : public TBWidget, public TBSelectItemViewer
 {
 public:
@@ -92,6 +91,7 @@ public:
 	virtual void OnItemAdded(int index);
 	virtual void OnItemRemoved(int index);
 	virtual void OnAllItemsRemoved();
+
 protected:
 	TBScrollContainer m_container;
 	TBLayout m_layout;
@@ -153,6 +153,7 @@ public:
 protected:
 	TBGenericStringItemSource m_default_source;
 	TBSkinImage m_arrow;
+	TBLayout m_trailing;
 	int m_value;
 	TBWidgetSafePointer m_window_pointer; ///< Points to the dropdown window if opened
 };

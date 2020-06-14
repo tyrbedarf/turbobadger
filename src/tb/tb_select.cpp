@@ -148,6 +148,7 @@ void TBSelectList::ValidateList()
 	TBTempBuffer sort_buf;
 	if (!sort_buf.Reserve(m_source->GetNumItems() * sizeof(int)))
 		return; // Out of memory
+
 	int *sorted_index = (int *) sort_buf.GetData();
 
 	// Populate the sorted index list
@@ -355,19 +356,30 @@ bool TBSelectList::ChangeValue(SPECIAL_KEY key)
 }
 
 // == TBSelectDropdown ==========================================
-
 TBSelectDropdown::TBSelectDropdown()
 	: m_value(-1)
 {
 	SetSource(&m_default_source);
+
 	SetSkinBg(TBIDC("TBSelectDropdown"), WIDGET_INVOKE_INFO_NO_CALLBACKS);
 	m_arrow.SetSkinBg(TBIDC("TBSelectDropdown.arrow"), WIDGET_INVOKE_INFO_NO_CALLBACKS);
-	GetContentRoot()->AddChild(&m_arrow);
+
+	m_layout.SetAxis(AXIS_X);
+	m_layout.SetLayoutDistribution(LAYOUT_DISTRIBUTION_GRAVITY);
+
+	m_textfield.SetTextAlign(TB_TEXT_ALIGN_LEFT);
+
+	m_trailing.SetGravity(WIDGET_GRAVITY_LEFT_RIGHT);
+	m_trailing.SetLayoutDistributionPosition(LAYOUT_DISTRIBUTION_POSITION_RIGHT_BOTTOM);
+
+	GetContentRoot()->AddChild(&m_trailing);
+	m_trailing.AddChild(&m_arrow);
 }
 
 TBSelectDropdown::~TBSelectDropdown()
 {
-	GetContentRoot()->RemoveChild(&m_arrow);
+	m_trailing.RemoveChild(&m_arrow);
+	GetContentRoot()->RemoveChild(&m_trailing);
 	SetSource(nullptr);
 	CloseWindow();
 }
@@ -463,6 +475,7 @@ bool TBSelectDropdown::OnEvent(const TBWidgetEvent &ev)
 			return menu_window->GetList()->InvokeEvent(redirected_ev);
 		}
 	}
+
 	return false;
 }
 

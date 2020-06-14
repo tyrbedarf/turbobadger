@@ -17,6 +17,8 @@
 #include "tb_statusbar.h"
 #include "image/tb_image_widget.h"
 
+#include "editor/tb_editor_layout_parameters.h"
+
 namespace tb {
 
 TB_WIDGET_FACTORY(TBWidget, TBValue::TYPE_NULL, WIDGET_Z_TOP) {}
@@ -46,6 +48,9 @@ void TBWidget::OnInflate(const INFLATE_INFO &info)
 
 	if (const char *text = info.node->GetValueString("text", nullptr))
 		SetText(text);
+
+	if (const char *tooltip = info.node->GetValueString("tool-tip", nullptr))
+		SetTooltip(tooltip);
 
 	if (const char *connection = info.node->GetValueStringRaw("connection", nullptr))
 	{
@@ -452,6 +457,9 @@ void TBImageWidget::OnInflate(const INFLATE_INFO &info)
 }
 
 #endif // TB_IMAGE
+
+// == Editor Widgets ===================================
+TB_WIDGET_FACTORY(TBEditorLayoutParameters, TBValue::TYPE_STRING, WIDGET_Z_TOP) {}
 
 // == TBWidgetFactory ===================================
 // We can't use a linked list object since we don't know if its constructor

@@ -1707,6 +1707,8 @@ void TBWidget::SetHoveredWidget(TBWidget *widget, bool touch)
 	// We may apply hover state automatically so the widget might need to be updated.
 	if (TBWidget::hovered_widget)
 	{
+		TBWidget::hovered_widget->InvokeEvent(TBWidgetEvent(EVENT_TYPE_MOUSE_LEAVE));
+
 		TBWidget::hovered_widget->Invalidate();
 		TBWidget::hovered_widget->InvalidateSkinStates();
 	}
@@ -1715,6 +1717,8 @@ void TBWidget::SetHoveredWidget(TBWidget *widget, bool touch)
 
 	if (TBWidget::hovered_widget)
 	{
+		TBWidget::hovered_widget->InvokeEvent(TBWidgetEvent(EVENT_TYPE_MOUSE_ENTER));
+
 		TBWidget::hovered_widget->Invalidate();
 		TBWidget::hovered_widget->InvalidateSkinStates();
 

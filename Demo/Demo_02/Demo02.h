@@ -18,17 +18,17 @@
 
 using namespace tb;
 
-class DemoWindow : public TBWindow
+class ApplicationWindow : public TBWindow
 {
 protected:
 	TBWindow* m_main_window;
 
 public:
-	DemoWindow(TBWidget *root);
+	ApplicationWindow(TBWidget *root);
 	virtual bool OnEvent(const TBWidgetEvent &ev);
 };
 
-class MainWindow : public TBMessageHandler, public DemoWindow
+class EditorWindow : public TBMessageHandler, public ApplicationWindow
 {
 private:
 	App* m_application;
@@ -44,7 +44,7 @@ private:
 	}
 
 public:
-	MainWindow(TBWidget *root);
+	EditorWindow(TBWidget *root);
 	virtual bool OnEvent(const TBWidgetEvent &ev);
 
 	void SetApplication(App* app) {
@@ -55,13 +55,13 @@ public:
 	virtual void OnMessageReceived(TBMessage *msg);
 };
 
-class DemoApplication_02 : public App
+class TurboBadgerEditor : public App
 {
 private:
 	TBStr m_message;
 
 public:
-	DemoApplication_02() : App(1280, 700) {}
+	TurboBadgerEditor() : App(1280, 700) {}
 
 	virtual const char *GetTitle() const { return "Demo 02"; }
 	virtual void OnBackendAttached(AppBackend *backend, int width, int height);

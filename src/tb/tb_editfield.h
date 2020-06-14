@@ -9,6 +9,7 @@
 #include "tb_widgets_common.h"
 #include "tb_msg.h"
 #include "tb_style_edit.h"
+#include "tb_value.h"
 
 namespace tb {
 
@@ -174,6 +175,28 @@ public:
 	virtual PreferredSize OnCalculatePreferredContentSize(const SizeConstraints &constraints);
 
 	virtual void OnMessageReceived(TBMessage *msg);
+
+	/** Helpers to convert input values to numbers. */
+	virtual void SetValue(int value) {
+		/// TODO: TEST!
+		if (m_edit_type != EDIT_TYPE::EDIT_TYPE_NUMBER) { return; }
+
+		TBValue val(TBValue::TYPE::TYPE_INT);
+		val.SetInt(value);
+		SetText(val.GetString());
+	}
+
+	virtual int GetValue() {
+		if (m_edit_type != EDIT_TYPE::EDIT_TYPE_NUMBER) { return 0; }
+
+		/// TODO: TEST!
+		TBValue val(TBValue::TYPE::TYPE_STRING);
+		TBStr s;
+		GetText(s);
+		val.SetString(s, TBValue::SET::SET_AS_STATIC);
+
+		return val.GetInt();
+	}
 private:
 	TBScrollBar m_scrollbar_x;
 	TBScrollBar m_scrollbar_y;

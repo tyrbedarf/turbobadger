@@ -23,12 +23,12 @@ uint32 frame_counter_total = 0;
 uint32 frame_counter = 0;
 double frame_counter_reset_time = 0;
 
-EditorWindow::EditorWindow(TBWidget *root)
+ApplicationWindow::ApplicationWindow(TBWidget *root)
 {
 	root->AddChild(this);
 }
 
-bool EditorWindow::OnEvent(const TBWidgetEvent &ev)
+bool ApplicationWindow::OnEvent(const TBWidgetEvent &ev)
 {
 	if (ev.type == EVENT_TYPE_KEY_DOWN && ev.special_key == TB_KEY_ESC)
 	{
@@ -36,32 +36,77 @@ bool EditorWindow::OnEvent(const TBWidgetEvent &ev)
 		// That way the window has a chance of intercepting the close and f.ex ask if it really should be closed.
 		TBWidgetEvent click_ev(EVENT_TYPE_CLICK);
 		m_close_button.InvokeEvent(click_ev);
+
 		return true;
 	}
 
 	return TBWindow::OnEvent(ev);
 }
 
-MainWindow::MainWindow(TBWidget *root) :
-	EditorWindow(root),
-	m_application(nullptr) {
+EditorWindow::EditorWindow(TBWidget *root) :
+	ApplicationWindow(root),
+	m_application(nullptr),
+	m_statusbar(nullptr) {
+	SetText("Turbobadger - Editor");
+	SetRect(TBRect{ 20, 20, 800, 600 }); // Always add dimensions, TurboBadger will set them to 0. Which means you won´t see anything.
 
+	// test_02_main_window.tb.txt
+	g_widgets_reader->LoadFile(this, "Demo/resources/ui_resources/tb_editor.tb.txt");
+	m_statusbar = GetWidgetByIDAndType<TBStatusbar>(TBIDC("Statusbar"));
 }
 
-void MainWindow::ShowConfirmationDialog() {
+void EditorWindow::ShowConfirmationDialog() {
 	TBMessageWindow *msg_win = new TBMessageWindow(this, TBIDC("confirm_close_dialog"));
 	TBMessageWindowSettings settings(TB_MSG_YES_NO);
 	settings.dimmer = true;
 	settings.styling = true;
-	msg_win->Show("Are you sure?", "Do you really want to close the application?", &settings);
+	msg_win->Show("Are you sure?", "Do you really want to close the editor?", &settings);
 }
 
-bool MainWindow::OnEvent(const TBWidgetEvent &ev) {
+bool EditorWindow::OnEvent(const TBWidgetEvent &ev) {
+	if (ev.type == EVENT_TYPE_CONTEXT_MENU && m_statusbar) {
+		if (!ev.target && ev.target->GetTooltip().IsEmpty()) {
+			m_statusbar->DisplayMessage(ev.target->GetTooltip().CStr());
+
+			return true;
+		}
+	}
+
 	if (ev.type == EVENT_TYPE_CLICK)
 	{
 		if (ev.ref_id == TBIDC("menu_item_quit") && m_application)
 		{
 			ShowConfirmationDialog();
+			return true;
+		}
+
+		if (ev.ref_id == TBIDC("menu_item_save") && m_application)
+		{
+			DisplayStatusMessage("Menu item save was clicked.");
+			return true;
+		}
+
+		if (ev.ref_id == TBIDC("menu_item_load") && m_application)
+		{
+			DisplayStatusMessage("Menu item load was clicked.");
+			return true;
+		}
+
+		if (ev.ref_id == TBIDC("menu_item_sub_program") && m_application)
+		{
+			DisplayStatusMessage("Menu item program was clicked.");
+			return true;
+		}
+
+		if (ev.ref_id == TBIDC("menu_item_sub_author") && m_application)
+		{
+			DisplayStatusMessage("Menu item author was clicked.");
+			return true;
+		}
+
+		if (ev.ref_id == TBIDC("menu_item_company") && m_application)
+		{
+			DisplayStatusMessage("Menu item company was clicked.");
 			return true;
 		}
 
@@ -85,14 +130,14 @@ bool MainWindow::OnEvent(const TBWidgetEvent &ev) {
 		}
 	}
 
-	return EditorWindow::OnEvent(ev);
+	return ApplicationWindow::OnEvent(ev);
 }
 
-void MainWindow::OnMessageReceived(TBMessage *msg) {
+void EditorWindow::OnMessageReceived(TBMessage *msg) {
 
 }
 
-bool TBEditor::Init()
+bool TurboBadgerEditor::Init()
 {
 	if (!App::Init())
 		return false;
@@ -111,28 +156,17 @@ bool TBEditor::Init()
 		msg_win->Show("Testing results", text);
 	}
 
-	// No need to keep track of the pointer.
+	// No need to keep track of the pointers.
 	// After an element has been removed from the widget tree
 	// it will be deleted.
-	// As a matter of fact, it might lead to crashes.
-	auto window = new MainWindow(&m_root);
-	window->SetText("Test Window");
-	window->SetRect(TBRect{ 20, 20, 800, 600 }); // Always add dimensions, TurboBadger will set them to 0. Which means you won´t see anything.
-
-	TBFontDescription td;
-	//td.SetID("Chalk Outline");
-	td.SetID("Leroy Lettering");
-	td.SetSize(16);
-	window->SetFontDescription(td);
-
-	// test_02_main_window.tb.txt
-	g_widgets_reader->LoadFile(window, "Demo/resources/ui_resources/test_02_main_window.tb.txt");
+	// As a matter of fact keeping track of the pointer might lead to crashes.
+	auto window = new EditorWindow(&m_root);
 	window->SetApplication(this);
 
 	return true;
 }
 
-void TBEditor::RenderFrame()
+void TurboBadgerEditor::RenderFrame()
 {
 	// Render
 	g_renderer->BeginPaint(m_root.GetRect().w, m_root.GetRect().h);
@@ -150,16 +184,8 @@ void TBEditor::RenderFrame()
 		frame_counter = 0;
 	}
 
-	// Draw FPS
 	TBWidgetValue *continuous_repaint_val = g_value_group.GetValue(TBIDC("continous-repaint"));
 	bool continuous_repaint = continuous_repaint_val ? !!continuous_repaint_val->GetInt() : 0;
-
-	TBStr str;
-	if (continuous_repaint)
-		str.SetFormatted("FPS: %d Frame %d", fps, frame_counter_total);
-	else
-		str.SetFormatted("Frame %d", frame_counter_total);
-	m_root.GetFont()->DrawString(5, 5, TBColor(255, 255, 255), str);
 
 	m_root.GetFont()->DrawString(5, m_root.GetRect().h - 20, TBColor(255, 255, 255), m_message);
 
@@ -170,7 +196,7 @@ void TBEditor::RenderFrame()
 		m_root.Invalidate();
 }
 
-void TBEditor::OnBackendAttached(AppBackend *backend, int width, int height)
+void TurboBadgerEditor::OnBackendAttached(AppBackend *backend, int width, int height)
 {
 	App::OnBackendAttached(backend, width, height);
 
@@ -193,7 +219,7 @@ void TBEditor::OnBackendAttached(AppBackend *backend, int width, int height)
 
 	// Add resources/fonts we can use to the font manager.
 #if defined(TB_FONT_RENDERER_FREETYPE)
-	g_font_manager->AddFontInfo("resources/fonts/vera.ttf", "Vera");
+	//g_font_manager->AddFontInfo("resources/fonts/vera.ttf", "Vera");
 	g_font_manager->AddFontInfo("resources/fonts/LeroyLetteringLightBeta01.ttf", "Leroy Lettering");
 #endif
 
@@ -209,21 +235,14 @@ void TBEditor::OnBackendAttached(AppBackend *backend, int width, int height)
 #ifdef TB_FONT_RENDERER_TBBF
 	fd.SetID(TBIDC("Segoe"));
 #else
-	fd.SetID(TBIDC("Vera"));
+	//fd.SetID(TBIDC("Vera"));
+	fd.SetID(TBIDC("Leroy Lettering"));
 #endif
-	fd.SetSize(g_tb_skin->GetDimensionConverter()->DpToPx(14));
+	fd.SetSize(g_tb_skin->GetDimensionConverter()->DpToPx(12));
 	g_font_manager->SetDefaultFontDescription(fd);
 
 	// Create the font now.
 	TBFontFace *font = g_font_manager->CreateFontFace(g_font_manager->GetDefaultFontDescription());
-
-#if defined(TB_FONT_RENDERER_FREETYPE)
-	TBFontDescription fd2;
-	fd2.SetID("Leroy Lettering");
-	TBFontFace *font2 = g_font_manager->CreateFontFace(fd2);
-	if (font2)
-		font2->RenderGlyphs(" !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~•·åäöÅÄÖ");
-#endif
 
 	// Render some glyphs in one go now since we know we are going to use them. It would work fine
 	// without this since glyphs are rendered when needed, but with some extra updating of the glyph bitmap.
@@ -236,5 +255,5 @@ void TBEditor::OnBackendAttached(AppBackend *backend, int width, int height)
 }
 
 App *app_create() {
-	return new TBEditor();
+	return new TurboBadgerEditor();
 }

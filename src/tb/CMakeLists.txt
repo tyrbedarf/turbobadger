@@ -18,7 +18,9 @@ file(GLOB_RECURSE LOCAL_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp 
     ${CMAKE_CURRENT_SOURCE_DIR}/tests/*.h
 	${CMAKE_CURRENT_SOURCE_DIR}/utf8/*.cpp 
-    ${CMAKE_CURRENT_SOURCE_DIR}/utf8/*.h)
+    ${CMAKE_CURRENT_SOURCE_DIR}/utf8/*.h
+	${CMAKE_CURRENT_SOURCE_DIR}/editor/*.cpp 
+    ${CMAKE_CURRENT_SOURCE_DIR}/editor/*.h)
 	
 file(GLOB_RECURSE HEADER 
     ${CMAKE_CURRENT_SOURCE_DIR}/*.h
@@ -27,7 +29,8 @@ file(GLOB_RECURSE HEADER
     ${CMAKE_CURRENT_SOURCE_DIR}/parser/*.h
     ${CMAKE_CURRENT_SOURCE_DIR}/renderers/*.h
     ${CMAKE_CURRENT_SOURCE_DIR}/tests/*.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/utf8/*.h)
+    ${CMAKE_CURRENT_SOURCE_DIR}/utf8/*.h
+	${CMAKE_CURRENT_SOURCE_DIR}/editor/*.h)
 
 assign_source_group(${LOCAL_SRCS})
 add_library(TurboBadgerLib ${LOCAL_SRCS})

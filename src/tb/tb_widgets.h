@@ -34,7 +34,8 @@ enum TB_ALIGN {
 };
 
 enum EVENT_TYPE {
-	/** Click event is what should be used to trig actions in almost all cases.
+	/**
+		Click event is what should be used to trigger actions in almost all cases.
 
 		It is invoked on a widget after POINTER_UP if the pointer is still inside
 		its hit area. It can also be invoked by keyboard on some clickable widgets
@@ -44,7 +45,14 @@ enum EVENT_TYPE {
 		won't be invoked when releasing the pointer (since that should stop panning). */
 	EVENT_TYPE_CLICK,
 
-	/** Long click event is sent when the pointer has been down for some time
+	/**
+		Mouse ENTER and LEAVE events are send, when the hovered widget changes.
+	*/
+	EVENT_TYPE_MOUSE_ENTER,	///< The mouse is now over the receiving widget
+	EVENT_TYPE_MOUSE_LEAVE,	///< The mouse is no longer over the receiving widget
+
+	/**
+		Long click event is sent when the pointer has been down for some time
 		without moving much.
 
 		It is invoked on a widget that has enabled it (TBWidget::SetWantLongClick
@@ -147,8 +155,7 @@ public:
 											type == EVENT_TYPE_TOUCH_UP ||
 											type == EVENT_TYPE_TOUCH_MOVE ||
 											type == EVENT_TYPE_TOUCH_CANCEL; }
-	bool IsKeyEvent() const { return	type == EVENT_TYPE_KEY_DOWN ||
-										type == EVENT_TYPE_KEY_UP; }
+	bool IsKeyEvent() const { return type == EVENT_TYPE_KEY_DOWN || type == EVENT_TYPE_KEY_UP; }
 };
 
 /** TBWidgetEventFileDrop is a event of type EVENT_TYPE_FILE_DROP.
@@ -842,6 +849,9 @@ public:
 	/** Get the text of this widget. Implemented by most widgets (that has text). */
 	TBStr GetText() { TBStr str; GetText(str); return str; }
 
+	virtual bool SetTooltip(const char* text) {	return m_tool_tip.Set(text); }
+	const TBStr& GetTooltip() { return m_tool_tip; }
+
 	/** Connect this widget to a widget value.
 
 		When this widget invoke EVENT_TYPE_CHANGED, it will automatically update the
@@ -998,6 +1008,9 @@ private:
 	TBID m_skin_bg;					///< ID for the background skin (0 for no skin).
 	TBID m_skin_bg_expected;		///< ID for the background skin after strong override,
 									///< used to indirect skin changes because of condition changes.
+
+	TBStr m_tool_tip;				///< used to store tooltips, if we need it.
+
 	TBLinkListOf<TBWidget> m_children;///< List of child widgets
 	TBWidgetValueConnection m_connection; ///< TBWidget value connection
 	TBLinkListOf<TBWidgetListener> m_listeners;	///< List of listeners

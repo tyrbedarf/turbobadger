@@ -17,7 +17,6 @@ enum WINDOW_SETTINGS {
 	WINDOW_SETTINGS_RESIZABLE		=  2,	///< Show a widget for resizing the window.
 	WINDOW_SETTINGS_CLOSE_BUTTON	=  4,	///< Show a widget for closing the window.
 	WINDOW_SETTINGS_CAN_ACTIVATE	=  8,	///< Can be activated and deactivate other windows.
-	WINDOW_SETTINGS_MINIMIZE		= 16,	///< Show a widget for minimizing the window.
 
 	WINDOW_SETTINGS_DEFAULT = WINDOW_SETTINGS_TITLEBAR | WINDOW_SETTINGS_RESIZABLE | WINDOW_SETTINGS_CLOSE_BUTTON | WINDOW_SETTINGS_CAN_ACTIVATE
 };
@@ -100,14 +99,10 @@ public:
 	virtual void OnResized(int old_w, int old_h);
 
 protected:
-	bool m_minimized;
-	TBRect m_saved_rect;
-
 	TBMover m_mover;
 	TBResizer m_resizer;
 	TBTextField m_textfield;
 	TBWidget m_close_button;
-	TBWidget m_minimize_button;
 	WINDOW_SETTINGS m_settings;
 	TBWidgetSafePointer m_last_focus;
 	TBWindow *GetTopMostOtherWindow(bool only_activable_windows);

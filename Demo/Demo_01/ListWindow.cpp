@@ -62,7 +62,7 @@ TBWidget *AdvancedItemSource::CreateItemWidget(int index, TBSelectItemViewer *vi
 
 // == ListWindow ==============================================================
 
-ListWindow::ListWindow(TBWidget *root, TBSelectItemSource *source) : DemoWindow(root)
+ListWindow::ListWindow(TBWidget *root, TBSelectItemSource *source) : ApplicationWindow(root)
 {
 	LoadResourceFile("Demo/resources/ui_resources/test_select.tb.txt");
 	if (TBSelectList *select = GetWidgetByIDAndType<TBSelectList>("list"))
@@ -80,13 +80,13 @@ bool ListWindow::OnEvent(const TBWidgetEvent &ev)
 			select->SetFilter(ev.target->GetText());
 		return true;
 	}
-	return DemoWindow::OnEvent(ev);
+	return ApplicationWindow::OnEvent(ev);
 }
 
 // == AdvancedListWindow ==============================================================
 
 AdvancedListWindow::AdvancedListWindow(TBWidget *root, AdvancedItemSource *source)
-	: DemoWindow(root)
+	: ApplicationWindow(root)
 	, m_source(source)
 {
 	LoadResourceFile("Demo/resources/ui_resources/test_select_advanced.tb.txt");
@@ -117,5 +117,5 @@ bool AdvancedListWindow::OnEvent(const TBWidgetEvent &ev)
 		m_source->DeleteAllItems();
 		return true;
 	}
-	return DemoWindow::OnEvent(ev);
+	return ApplicationWindow::OnEvent(ev);
 }
