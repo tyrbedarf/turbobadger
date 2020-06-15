@@ -68,6 +68,9 @@ ${TB_FORCE_REBUILD}
 /** Enable support for TBImage, TBImageManager, TBImageWidget. */
 ${TB_IMAGE_CONFIG}
 
+/** Enable support for Editor Widgets. */
+${TB_BUILD_EDITOR_CONFIG}
+
 // == Additional configuration of platform implementations ========================
 /** Define for posix implementation of TBFile. */
 //#define TB_FILE_POSIX

@@ -4,3 +4,6 @@
 [submodule "src/tb/thirdparty/freetype2"]
 	path = src/tb/thirdparty/freetype2
 	url = https://github.com/aseprite/freetype2.git
+[submodule "src/tb/thirdparty/json"]
+	path = src/tb/thirdparty/json
+	url = https://github.com/nlohmann/json.git

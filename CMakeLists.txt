@@ -11,6 +11,7 @@ option(TB_BUILD_GFLW_DEMO "Build the Demo application. Depends on glfw." OFF)
 option(TB_BUILD_SDL_DEMO "Build the Demo application. Depends on sdl." ON)
 option(TB_DEBUG_POSTFIX "Add _d postfix for debug builds" ON)
 option(TB_GENERATE_CONFIG "Generate the tb_config.h file from provided parameters in cmake. Default Off" OFF)
+option(TB_BUILD_EDITOR "Build Editor Application. This means Editor Widgets will be part of the source as well. Default ON" ON)
 
 # Configure file options
 option(TB_FONT_RENDERER_TBBF "Enable to support TBBF fonts (Turbo Badger Bitmap Fonts)" ON)
@@ -45,6 +46,10 @@ if(TB_RENDERER_GLES_1)
 endif()
 if(TB_IMAGE) 
     set(TB_IMAGE_CONFIG "#define TB_IMAGE")
+endif()
+
+if(TB_BUILD_EDITOR) 
+    set(TB_BUILD_EDITOR_CONFIG "#define TB_BUILD_EDITOR")
 endif()
 
 configure_file(tb_config.h.in src/tb/config.h)

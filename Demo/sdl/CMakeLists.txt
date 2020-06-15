@@ -60,20 +60,22 @@ install(TARGETS TurboBadgerSDLDemo_02
 set_target_properties(TurboBadgerSDLDemo_02 PROPERTIES LINK_FLAGS /SUBSYSTEM:CONSOLE)
 
 # Editor
-set(EDITOR_SRCS "")
-file(GLOB EDITOR_SRCS 
-	${CMAKE_CURRENT_SOURCE_DIR}/*.cpp 
-    ${CMAKE_CURRENT_SOURCE_DIR}/*.h
-	${CMAKE_SOURCE_DIR}/Demo/*.cpp 
-    ${CMAKE_SOURCE_DIR}/Demo/*.h
-	${CMAKE_SOURCE_DIR}/Demo/Editor/*.cpp 
-    ${CMAKE_SOURCE_DIR}/Demo/Editor/*.h)
-	
-add_executable(EditorSDL WIN32 ${EDITOR_SRCS})
-target_link_libraries(EditorSDL TurboBadgerLib ${SDL2_LIBRARIES} ${OPENGL_LIBRARIES} ${EXTRA_LIBS})
-install(TARGETS EditorSDL
-    RUNTIME DESTINATION bin
-    LIBRARY DESTINATION lib
-    ARCHIVE DESTINATION lib)
+if(TB_BUILD_EDITOR) 
+	set(EDITOR_SRCS "")
+	file(GLOB EDITOR_SRCS 
+		${CMAKE_CURRENT_SOURCE_DIR}/*.cpp 
+		${CMAKE_CURRENT_SOURCE_DIR}/*.h
+		${CMAKE_SOURCE_DIR}/Demo/*.cpp 
+		${CMAKE_SOURCE_DIR}/Demo/*.h
+		${CMAKE_SOURCE_DIR}/Demo/Editor/*.cpp 
+		${CMAKE_SOURCE_DIR}/Demo/Editor/*.h)
+		
+	add_executable(EditorSDL WIN32 ${EDITOR_SRCS})
+	target_link_libraries(EditorSDL TurboBadgerLib ${SDL2_LIBRARIES} ${OPENGL_LIBRARIES} ${EXTRA_LIBS})
+	install(TARGETS EditorSDL
+		RUNTIME DESTINATION bin
+		LIBRARY DESTINATION lib
+		ARCHIVE DESTINATION lib)
 
-set_target_properties(EditorSDL PROPERTIES LINK_FLAGS /SUBSYSTEM:CONSOLE)
+	set_target_properties(EditorSDL PROPERTIES LINK_FLAGS /SUBSYSTEM:CONSOLE)
+endif()

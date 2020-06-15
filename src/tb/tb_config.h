@@ -65,6 +65,7 @@
 
 /** Enable support for TBImage, TBImageManager, TBImageWidget. */
 #define TB_IMAGE
+#define TB_BUILD_EDITOR
 
 // == Additional configuration of platform implementations ========================
 

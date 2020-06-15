@@ -459,7 +459,10 @@ void TBImageWidget::OnInflate(const INFLATE_INFO &info)
 #endif // TB_IMAGE
 
 // == Editor Widgets ===================================
-TB_WIDGET_FACTORY(TBEditorLayoutParameters, TBValue::TYPE_STRING, WIDGET_Z_TOP) {}
+#ifdef TB_BUILD_EDITOR
+TB_WIDGET_FACTORY(TBEditorLayoutParameters, TBValue::TYPE_STRING, WIDGET_Z_TOP) { }
+#endif
+
 
 // == TBWidgetFactory ===================================
 // We can't use a linked list object since we don't know if its constructor
