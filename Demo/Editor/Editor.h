@@ -20,9 +20,6 @@ using namespace tb;
 
 class ApplicationWindow : public TBWindow
 {
-protected:
-	TBWindow* m_main_window;
-
 public:
 	ApplicationWindow(TBWidget *root);
 	virtual bool OnEvent(const TBWidgetEvent &ev);

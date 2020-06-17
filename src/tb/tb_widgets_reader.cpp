@@ -15,9 +15,14 @@
 #include "tb_toggle_container.h"
 #include "tb_menu_item.h"
 #include "tb_statusbar.h"
+#include "tb_mutliselect_dropdown.h"
 #include "image/tb_image_widget.h"
 
+// == Editor Widgets ===================================
+#ifdef TB_BUILD_EDITOR
+#include "editor/tb_editor_widget.h"
 #include "editor/tb_editor_layout_parameters.h"
+#endif
 
 namespace tb {
 
@@ -404,6 +409,14 @@ void TBMenuItem::OnInflate(const INFLATE_INFO &info)
 	TBWidget::OnInflate(info);
 }
 
+TB_WIDGET_FACTORY(TBMultiselectDropdown, TBValue::TYPE_INT, WIDGET_Z_TOP) {}
+void TBMultiselectDropdown::OnInflate(const INFLATE_INFO &info)
+{
+	// Read items (if there is any) into the default source
+	ReadItems(info.node, GetDefaultSource());
+	TBWidget::OnInflate(info);
+}
+
 TB_WIDGET_FACTORY(TBCheckBox, TBValue::TYPE_INT, WIDGET_Z_TOP) {}
 TB_WIDGET_FACTORY(TBRadioButton, TBValue::TYPE_INT, WIDGET_Z_TOP) {}
 
@@ -460,7 +473,8 @@ void TBImageWidget::OnInflate(const INFLATE_INFO &info)
 
 // == Editor Widgets ===================================
 #ifdef TB_BUILD_EDITOR
-TB_WIDGET_FACTORY(TBEditorLayoutParameters, TBValue::TYPE_STRING, WIDGET_Z_TOP) { }
+TB_WIDGET_FACTORY(TBEditorWidget, TBValue::TYPE_INT, WIDGET_Z_TOP) { }
+TB_WIDGET_FACTORY(TBEditorLayoutParameters, TBValue::TYPE_INT, WIDGET_Z_TOP) { }
 #endif
 
 

@@ -164,7 +164,6 @@ static bool GetNextFragment(const char *text, TBTextFragmentContentFactory *cont
 }
 
 // == TBSelection ==================================================
-
 TBSelection::TBSelection(TBStyleEdit *styledit)
 	: styledit(styledit)
 {
@@ -602,7 +601,6 @@ void TBCaret::AvoidLineBreak()
 
 void TBCaret::Paint(int32 translate_x, int32 translate_y)
 {
-//	if (on && !(styledit->select_state && styledit->selection.IsSelected()))
 	if (on || styledit->select_state)
 	{
 		styledit->listener->DrawCaret(TBRect(translate_x + x, translate_y + y, width, height));
@@ -1845,10 +1843,6 @@ bool TBStyleEdit::MouseDown(const TBPoint &point, int button, int clicks, MODIFI
 	}
 	else if (packed.selection_on)
 	{
-		//if (modifierkeys & P_SHIFT) // Select to new caretpos
-		//{
-		//}
-		//else // Start selection
 		{
 			mousedown_point = TBPoint(point.x + scroll_x, point.y + scroll_y);
 			selection.SelectNothing();
@@ -1859,7 +1853,9 @@ bool TBStyleEdit::MouseDown(const TBPoint &point, int button, int clicks, MODIFI
 			MouseMove(point);
 
 			if (caret.pos.block)
+			{
 				mousedown_fragment = caret.pos.block->FindFragment(mousedown_point.x, mousedown_point.y - caret.pos.block->ypos);
+			}
 		}
 		caret.ResetBlink();
 	}
@@ -1920,12 +1916,16 @@ bool TBStyleEdit::MouseMove(const TBPoint &point)
 
 void TBStyleEdit::Focus(bool focus)
 {
-	if (focus)
-		listener->CaretBlinkStart();
-	else
-		listener->CaretBlinkStop();
-
 	caret.on = focus;
+	if (focus)
+	{
+		listener->CaretBlinkStart();
+	}
+	else
+	{
+		listener->CaretBlinkStop();
+	}
+
 	caret.Invalidate();
 	selection.Invalidate();
 }

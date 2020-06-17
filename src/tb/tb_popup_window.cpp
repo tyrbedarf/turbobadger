@@ -9,7 +9,6 @@
 namespace tb {
 
 // == TBPopupAlignment ======================================================================================
-
 TBRect TBPopupAlignment::GetAlignedRect(TBWidget *popup, TBWidget *target) const
 {
 	TBWidget *root = target->GetParentRoot();
@@ -71,7 +70,6 @@ TBRect TBPopupAlignment::GetAlignedRect(TBWidget *popup, TBWidget *target) const
 }
 
 // == TBPopupWindow =========================================================================================
-
 TBPopupWindow::TBPopupWindow(TBWidget *target)
 	: m_target(target)
 {

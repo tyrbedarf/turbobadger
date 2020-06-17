@@ -1,0 +1,133 @@
+TBLayout: axis: y, spacing: 2, size: preferred
+	TBLayout: axis: x, size: preferred, gravity: left
+		TBTextField: text: "Widget ID", text-align: left, gravity: left
+			lp 
+				pref-width 180
+				pref-height: 25
+		TBEditField: text-align: right, gravity: right, type: text, autofocus: 1, styling: 1, id: widget_id
+			lp 
+				pref-width 130
+				pref-height: 25
+	TBLayout: axis: x, size: preferred, gravity: left
+		TBTextField: text: "Group Id", text-align: left, gravity: left
+			lp 
+				pref-width 180
+				pref-height: 25
+		TBEditField: text-align: right, gravity: right, type: text, id: group_id
+			lp 
+				pref-width 130
+				pref-height: 25
+	TBLayout: axis: x, size: preferred, gravity: left
+		TBTextField: text: "Widget Value", text-align: left, gravity: left
+			lp 
+				pref-width 180
+				pref-height: 25
+		TBEditField: text-align: right, gravity: right, type: text, id: widget_value, type: number
+			lp 
+				pref-width 130
+				pref-height: 25
+	TBLayout: axis: x, size: preferred, gravity: left
+		TBTextField: text: "Is group root", text-align: left, gravity: left
+			lp 
+				pref-width 180
+				pref-height: 25
+		TBCheckBox: text-align: right, gravity: right, type: text, id: is_group_root
+			lp 
+				pref-width 25
+				pref-height: 25
+		TBLayout: align: right, gravity: right, type: text, id: is_group_root
+			lp 
+				pref-width 105
+				pref-height: 25
+	TBLayout: axis: x, size: preferred, gravity: left
+		TBTextField: text: "Is focusable", text-align: left, gravity: left
+			lp 
+				pref-width 180
+				pref-height: 25
+		TBCheckBox: text-align: right, gravity: right, type: text, id: is_focusable
+			lp 
+				pref-width 25
+				pref-height: 25
+		TBLayout: align: right, gravity: right, type: text, id: is_group_root
+			lp 
+				pref-width 105
+				pref-height: 25
+	TBLayout: axis: x, size: preferred, gravity: left
+		TBTextField: text: "Wants long click", text-align: left, gravity: left
+			lp 
+				pref-width 180
+				pref-height: 25
+		TBCheckBox: text-align: right, gravity: right, type: text, id: want_long_click
+			lp 
+				pref-width 25
+				pref-height: 25
+		TBLayout: align: right, gravity: right, type: text, id: is_group_root
+			lp 
+				pref-width 105
+				pref-height: 25
+	TBLayout: axis: x, size: preferred, gravity: left
+		TBTextField: text: "Ignore Input", text-align: left, gravity: left
+			lp 
+				pref-width 180
+				pref-height: 25
+		TBCheckBox: text-align: right, gravity: right, type: text, id: ignore_input
+			lp 
+				pref-width 25
+				pref-height: 25
+		TBLayout: align: right, gravity: right, type: text, id: is_group_root
+			lp 
+				pref-width 105
+				pref-height: 25
+	TBLayout: axis: x, size: preferred, gravity: left
+		TBTextField: text: "Opacity", text-align: left, gravity: left
+			lp 
+				pref-width 180
+				pref-height: 25
+		TBSlider: align: right, gravity: right, type: text, id: opacity, min: 0.0, max: 1.0
+			lp 
+				pref-width 130
+				pref-height: 25
+	TBLayout: axis: x, size: preferred, gravity: left
+		TBTextField: text: "Widget Text", text-align: left, gravity: left
+			lp 
+				pref-width 180
+				pref-height: 25
+		TBEditField: text-align: right, gravity: right, type: text, id: widget_text, type: string
+			lp 
+				pref-width 130
+				pref-height: 25
+	TBLayout: axis: x, size: preferred, gravity: left
+		TBTextField: text: "Widget Connection (TODO)", text-align: left, gravity: left
+			lp 
+				pref-width 180
+				pref-height: 25
+		TBEditField: text-align: right, gravity: right, type: text, id: widget_connection, type: string
+			lp 
+				pref-width 130
+				pref-height: 25
+	TBLayout: axis: x, size: preferred, gravity: left
+		TBTextField: text: "Widget Axis", text-align: left, gravity: left
+			lp 
+				pref-width 180
+				pref-height: 25
+		TBSelectDropdown:
+			lp 
+				pref-width 130
+				pref-height: 25
+			items
+				item: text: Axis X, id: AXIS_X
+				item: text: Axis Y, id: AXIS_Y
+	TBLayout: axis: x, size: preferred, gravity: left
+		TBTextField: text: "Widget Gravity", text-align: left, gravity: left
+			lp 
+				pref-width 180
+				pref-height: 25
+		TBMultiselectDropdown: text: "Widget Gravity"
+			lp 
+				pref-width 130
+				pref-height: 25
+			items
+				item: text: Top, id: TOP
+				item: text: Left, id: LEFT
+				item: text: Bottom, id: BOTTOM
+				item: text: Right, id: RIGHT

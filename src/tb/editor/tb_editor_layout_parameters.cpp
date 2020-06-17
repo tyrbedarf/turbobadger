@@ -16,6 +16,7 @@ namespace tb {
 	bool TBEditorLayoutParameters::OnEvent(const TBWidgetEvent &ev) {
 		if(ev.type == EVENT_TYPE_CHANGED) {
 			if (!m_widget) { return false; }
+			if (!ev.target) { return false; }
 
 			if (ev.ref_id == TBID("AXIS_X")) { m_widget->SetAxis(AXIS_X); }
 			if (ev.ref_id == TBID("AXIS_Y")) { m_widget->SetAxis(AXIS_Y); }

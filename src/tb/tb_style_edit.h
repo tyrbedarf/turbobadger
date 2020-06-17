@@ -106,7 +106,6 @@ enum TB_CARET_POS {
 };
 
 /** The caret in a TBStyleEdit. */
-
 class TBCaret
 {
 public:
@@ -140,7 +139,6 @@ public:
 };
 
 /** TBTextProps is a stack of properties used during layout & paint of TBStyleEdit. */
-
 class TBTextProps
 {
 public:

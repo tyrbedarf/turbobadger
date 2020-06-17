@@ -475,3 +475,7 @@ elements
 		bitmap focus_r4.png
 		cut 11
 		expand 4
+		
+	background_black
+		bitmap bg_tile_black.png
+		type Tile

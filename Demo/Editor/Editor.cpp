@@ -47,11 +47,11 @@ EditorWindow::EditorWindow(TBWidget *root) :
 	ApplicationWindow(root),
 	m_application(nullptr),
 	m_statusbar(nullptr) {
+	// test_02_main_window.tb.txt
+	g_widgets_reader->LoadFile(this, "resources/editor_layout/tb_editor.tb.txt");
+
 	SetText("Turbobadger - Editor");
 	SetRect(TBRect{ 20, 20, 800, 600 }); // Always add dimensions, TurboBadger will set them to 0. Which means you won´t see anything.
-
-	// test_02_main_window.tb.txt
-	g_widgets_reader->LoadFile(this, "Demo/resources/ui_resources/tb_editor.tb.txt");
 	m_statusbar = GetWidgetByIDAndType<TBStatusbar>(TBIDC("Statusbar"));
 }
 
@@ -184,15 +184,12 @@ void TurboBadgerEditor::RenderFrame()
 		frame_counter = 0;
 	}
 
-	TBWidgetValue *continuous_repaint_val = g_value_group.GetValue(TBIDC("continous-repaint"));
-	bool continuous_repaint = continuous_repaint_val ? !!continuous_repaint_val->GetInt() : 0;
-
 	m_root.GetFont()->DrawString(5, m_root.GetRect().h - 20, TBColor(255, 255, 255), m_message);
 
 	g_renderer->EndPaint();
 
 	// If we want continous updates or got animations running, reinvalidate immediately
-	if (continuous_repaint || TBAnimationManager::HasAnimationsRunning())
+	if (TBAnimationManager::HasAnimationsRunning())
 		m_root.Invalidate();
 }
 
@@ -204,7 +201,7 @@ void TurboBadgerEditor::OnBackendAttached(AppBackend *backend, int width, int he
 	g_tb_lng->Load("resources/language/lng_en.tb.txt");
 
 	// Load the default skin, and override skin that contains the graphics specific to the demo.
-	g_tb_skin->Load("resources/default_skin/skin.tb.txt", "Demo/resources/skin/skin.tb.txt");
+	g_tb_skin->Load("resources/default_skin/skin.tb.txt", nullptr);
 
 	// Register font renderers.
 #ifdef TB_FONT_RENDERER_TBBF
