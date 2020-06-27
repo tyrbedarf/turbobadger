@@ -5,8 +5,8 @@
 #include "tb_editor_widget_base.h"
 
 namespace tb {
-	class TBEditorWidget : public TBSection, public TBEditorWidgetBase<TBWidget> {
-	TBOBJECT_SUBCLASS(TBEditorWidget, TBSection);
+	class TBEditorTextField : public TBSection, public TBEditorWidgetBase<TBWidget> {
+		TBOBJECT_SUBCLASS(TBEditorTextField, TBSection);
 
 	protected:
 		virtual void HideEditor() {
@@ -17,7 +17,7 @@ namespace tb {
 		}
 
 	public:
-		TBEditorWidget();
+		TBEditorTextField();
 
 		virtual bool OnEvent(const TBWidgetEvent &ev);
 	};

@@ -5,7 +5,7 @@
 #include "tb_editor_widget_base.h"
 
 namespace tb {
-	class TBEditorWidgetRect : public TBSection, public TBEditorWidgetBase<TBLayout> {
+	class TBEditorWidgetRect : public TBSection, public TBEditorWidgetBase<TBWidget> {
 		TBOBJECT_SUBCLASS(TBEditorWidgetRect, TBSection);
 
 	protected:

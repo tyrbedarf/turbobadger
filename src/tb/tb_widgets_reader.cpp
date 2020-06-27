@@ -24,6 +24,7 @@
 #include "editor/tb_editor_layout.h"
 #include "editor/tb_editor_widget_rect.h"
 #include "editor/tb_editor_layout_parameter.h"
+#include "editor/tb_editor_widget_outline.h"
 #endif
 
 namespace tb {
@@ -481,6 +482,7 @@ TB_WIDGET_FACTORY(TBEditorWidget, TBValue::TYPE_INT, WIDGET_Z_TOP) { }
 TB_WIDGET_FACTORY(TBEditorLayoutParameters, TBValue::TYPE_INT, WIDGET_Z_TOP) { }
 TB_WIDGET_FACTORY(TBEditorWidgetRect, TBValue::TYPE_INT, WIDGET_Z_TOP) { }
 TB_WIDGET_FACTORY(TBEditorLayoutParameter, TBValue::TYPE_INT, WIDGET_Z_TOP) { }
+TB_WIDGET_FACTORY(TBEditorWidgetOutline, TBValue::TYPE_INT, WIDGET_Z_TOP) { }
 #endif
 
 

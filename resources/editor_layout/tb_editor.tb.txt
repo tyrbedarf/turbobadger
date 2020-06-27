@@ -1,5 +1,7 @@
-TBLayout: axis: y
-	TBEditorWidget
-	TBEditorWidgetRect
-	TBEditorLayoutParameter
-	TBEditorLayoutParameters
+TBLayout
+	TBEditorWidgetOutline
+	TBLayout: axis: y
+		TBEditorWidget
+		TBEditorWidgetRect
+		TBEditorLayoutParameter
+		TBEditorLayoutParameters
