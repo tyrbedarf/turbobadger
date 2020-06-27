@@ -113,7 +113,7 @@ bool EditorWindow::OnEvent(const TBWidgetEvent &ev) {
 		if (ev.target->GetID() == TBIDC("TBWindow.close"))
 		{
 			// Intercept the TBWindow.close message and stop it from bubbling
-			// to TBWindow (prevent the window from closing)
+			// to TBWindow (prevent the window from closing).
 			ShowConfirmationDialog();
 			return true;
 		}
@@ -152,6 +152,7 @@ bool TurboBadgerEditor::Init()
 	{
 		TBStr text;
 		text.SetFormatted("There is %d failed tests!\nCheck the output for details.", num_failed_tests);
+
 		TBMessageWindow *msg_win = new TBMessageWindow(GetRoot(), TBIDC(""));
 		msg_win->Show("Testing results", text);
 	}

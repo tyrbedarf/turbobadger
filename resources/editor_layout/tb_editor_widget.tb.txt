@@ -122,7 +122,7 @@ TBLayout: axis: y, spacing: 2, size: preferred
 			lp 
 				pref-width 180
 				pref-height: 25
-		TBMultiselectDropdown: text: "Widget Gravity"
+		TBMultiselectDropdown: text: "Widget Gravity", auto-close: 1, id: widget_gravity
 			lp 
 				pref-width 130
 				pref-height: 25
@@ -131,3 +131,68 @@ TBLayout: axis: y, spacing: 2, size: preferred
 				item: text: Left, id: LEFT
 				item: text: Bottom, id: BOTTOM
 				item: text: Right, id: RIGHT
+	TBLayout: axis: x, size: preferred, gravity: left
+		TBTextField: text: "Widget Visibility", text-align: left, gravity: left
+			lp 
+				pref-width 180
+				pref-height: 25
+		TBSelectDropdown:
+			lp 
+				pref-width 130
+				pref-height: 25
+			items
+				item: text: Visible, id: VISIBLE
+				item: text: Invisible, id: INVISIBLE
+				item: text: Gone, id: GONE
+	TBLayout: axis: x, size: preferred, gravity: left
+		TBTextField: text: "Widget State", text-align: left, gravity: left
+			lp 
+				pref-width 180
+				pref-height: 25
+		TBSelectDropdown:
+			lp 
+				pref-width 130
+				pref-height: 25
+			items
+				item: text: Enabled, id: ENABLED
+				item: text: Disabled, id: DISABLED
+	TBLayout: axis: x, size: preferred, gravity: left
+		TBTextField: text: "Skin BG (TODO)", text-align: left, gravity: left
+			lp 
+				pref-width 180
+				pref-height: 25
+		TBEditField: text-align: right, gravity: right, type: text, id: widget_skin, type: string
+			lp 
+				pref-width 130
+				pref-height: 25
+	TBLayout: axis: x, size: preferred, gravity: left
+		TBTextField: text: "Autofocus", text-align: left, gravity: left
+			lp 
+				pref-width 180
+				pref-height: 25
+		TBCheckBox: text-align: right, gravity: right, type: text, id: widget_auto_focus
+			lp 
+				pref-width 25
+				pref-height: 25
+		TBLayout: align: right, gravity: right, type: text, id: is_group_root
+			lp 
+				pref-width 105
+				pref-height: 25
+	TBLayout: axis: x, size: preferred, gravity: left
+		TBTextField: text: "Font Name (TODO)", text-align: left, gravity: left
+			lp 
+				pref-width 180
+				pref-height: 25
+		TBEditField: text-align: right, gravity: right, type: text, id: widget_font_name, type: string
+			lp 
+				pref-width 130
+				pref-height: 25
+	TBLayout: axis: x, size: preferred, gravity: left
+		TBTextField: text: "Font Size (TODO)", text-align: left, gravity: left
+			lp 
+				pref-width 180
+				pref-height: 25
+		TBEditField: text-align: right, gravity: right, type: number, id: widget_font_size, type: string
+			lp 
+				pref-width 130
+				pref-height: 25

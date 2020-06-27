@@ -1,4 +1,4 @@
-#include "tb_editor_layout_parameters.h"
+#include "tb_editor_layout.h"
 
 #include "tb_widgets_reader.h"
 #include "tb_editfield.h"
@@ -7,10 +7,10 @@ namespace tb {
 	TBEditorLayoutParameters::TBEditorLayoutParameters() :
 		TBSection(),
 		TBEditorWidgetBase(){
-		g_widgets_reader->LoadFile(this, "resources/editor_layout/tb_editor_layout_parameters.tb.txt");
+		g_widgets_reader->LoadFile(this, "resources/editor_layout/tb_editor_layout.tb.txt");
 
 		SetValue(1);
-		SetText("Layout Parameters");
+		SetText("Layout");
 	}
 
 	bool TBEditorLayoutParameters::OnEvent(const TBWidgetEvent &ev) {

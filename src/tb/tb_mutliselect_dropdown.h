@@ -61,6 +61,7 @@ namespace tb {
 		}
 
 	protected:
+		bool m_auto_close;
 		TBGenericStringItemSource m_default_source;
 		TBWidgetSafePointer m_window_pointer; ///< Points to the dropdown window if opened
 	};

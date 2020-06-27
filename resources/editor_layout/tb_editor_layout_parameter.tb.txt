@@ -1,0 +1,73 @@
+TBLayout: axis: y, spacing: 2, size: preferred
+	TBLayout: axis: x, size: preferred, gravity: left
+		TBTextField: text: "Width", text-align: left, gravity: left
+			lp 
+				pref-width 180
+				pref-height: 25
+		TBEditField: text-align: right, gravity: right, type: number, autofocus: 1, styling: 1, id: widget_lp_width
+			lp 
+				pref-width 130
+				pref-height: 25
+	TBLayout: axis: x, size: preferred, gravity: left
+		TBTextField: text: "Min Width", text-align: left, gravity: left
+			lp 
+				pref-width 180
+				pref-height: 25
+		TBEditField: text-align: right, gravity: right, type: number, styling: 1, id: widget_lp_min_width
+			lp 
+				pref-width 130
+				pref-height: 25
+	TBLayout: axis: x, size: preferred, gravity: left
+		TBTextField: text: "Max Width", text-align: left, gravity: left
+			lp 
+				pref-width 180
+				pref-height: 25
+		TBEditField: text-align: right, gravity: right, type: number, styling: 1, id: widget_lp_max_width
+			lp 
+				pref-width 130
+				pref-height: 25
+	TBLayout: axis: x, size: preferred, gravity: left
+		TBTextField: text: "Pref Width", text-align: left, gravity: left
+			lp 
+				pref-width 180
+				pref-height: 25
+		TBEditField: text-align: right, gravity: right, type: number, styling: 1, id: widget_lp_pref_width
+			lp 
+				pref-width 130
+				pref-height: 25
+	TBLayout: axis: x, size: preferred, gravity: left
+		TBTextField: text: "Height", text-align: left, gravity: left
+			lp 
+				pref-width 180
+				pref-height: 25
+		TBEditField: text-align: right, gravity: right, type: number, styling: 1, id: widget_lp_pref_height
+			lp 
+				pref-width 130
+				pref-height: 25				
+	TBLayout: axis: x, size: preferred, gravity: left
+		TBTextField: text: "Min Height", text-align: left, gravity: left
+			lp 
+				pref-width 180
+				pref-height: 25
+		TBEditField: text-align: right, gravity: right, type: number, styling: 1, id: widget_lp_pref_min_height
+			lp 
+				pref-width 130
+				pref-height: 25
+	TBLayout: axis: x, size: preferred, gravity: left
+		TBTextField: text: "Max Height", text-align: left, gravity: left
+			lp 
+				pref-width 180
+				pref-height: 25
+		TBEditField: text-align: right, gravity: right, type: number, styling: 1, id: widget_lp_pref_max_height
+			lp 
+				pref-width 130
+				pref-height: 25
+	TBLayout: axis: x, size: preferred, gravity: left
+		TBTextField: text: "Pref Height", text-align: left, gravity: left
+			lp 
+				pref-width 180
+				pref-height: 25
+		TBEditField: text-align: right, gravity: right, type: number, styling: 1, id: widget_lp_pref_pref_height
+			lp 
+				pref-width 130
+				pref-height: 25

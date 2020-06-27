@@ -21,7 +21,9 @@
 // == Editor Widgets ===================================
 #ifdef TB_BUILD_EDITOR
 #include "editor/tb_editor_widget.h"
-#include "editor/tb_editor_layout_parameters.h"
+#include "editor/tb_editor_layout.h"
+#include "editor/tb_editor_widget_rect.h"
+#include "editor/tb_editor_layout_parameter.h"
 #endif
 
 namespace tb {
@@ -414,6 +416,8 @@ void TBMultiselectDropdown::OnInflate(const INFLATE_INFO &info)
 {
 	// Read items (if there is any) into the default source
 	ReadItems(info.node, GetDefaultSource());
+	m_auto_close = info.node->GetValueInt("auto-close", 1) ? true : false;
+
 	TBWidget::OnInflate(info);
 }
 
@@ -475,6 +479,8 @@ void TBImageWidget::OnInflate(const INFLATE_INFO &info)
 #ifdef TB_BUILD_EDITOR
 TB_WIDGET_FACTORY(TBEditorWidget, TBValue::TYPE_INT, WIDGET_Z_TOP) { }
 TB_WIDGET_FACTORY(TBEditorLayoutParameters, TBValue::TYPE_INT, WIDGET_Z_TOP) { }
+TB_WIDGET_FACTORY(TBEditorWidgetRect, TBValue::TYPE_INT, WIDGET_Z_TOP) { }
+TB_WIDGET_FACTORY(TBEditorLayoutParameter, TBValue::TYPE_INT, WIDGET_Z_TOP) { }
 #endif
 
 

@@ -11,6 +11,7 @@ namespace tb {
 	{
 		SetSource(&m_default_source);
 		SetSkinBg(TBIDC("TBMenuItem"), WIDGET_INVOKE_INFO_NO_CALLBACKS);
+		m_auto_close = true;
 	}
 
 	TBMultiselectDropdown::~TBMultiselectDropdown()
@@ -36,8 +37,8 @@ namespace tb {
 
 		// TODO: Loading the string representation everytime the windows is opened, seems wasteful.
 		const char* layout =
-			"TBScrollContainer: gravity: all, adapt-content: 1\n"
-			"	TBLayout: gravity: all, id: layout, axis: y, position: top, distribution-position: left\n";
+			"TBScrollContainer: gravity: all, adapt-content: 1, scroll-mode: auto\n"
+			"	TBLayout: id: layout, axis: y, position: left top\n";
 
 		if (TBPopupWindow *window = new TBPopupWindow(this))
 		{
@@ -46,30 +47,23 @@ namespace tb {
 			auto layout = window->GetWidgetByIDAndType<TBLayout>(TBID("layout"));
 			if (layout) {
 				for (int i = 0; i < m_default_source.GetNumItems(); i++) {
-					TBLayout* l = new TBLayout();
+					auto l = new TBLayout();
 					l->SetLayoutDistribution(LAYOUT_DISTRIBUTION_GRAVITY);
 
-					TBTextField* text = new TBTextField();
-					text->SetText(m_default_source.GetItemString(i));
-					l->AddChild(text);
-
-					TBLayout* trail = new TBLayout();
-					// TBLayout: gravity: left right, distribution-position: right bottom
-					trail->SetGravity(WIDGET_GRAVITY_LEFT_RIGHT);
-					trail->SetLayoutDistributionPosition(LAYOUT_DISTRIBUTION_POSITION_RIGHT_BOTTOM);
-
-					TBCheckBox* cb = new TBCheckBox();
+					auto cb = new TBCheckBox();
 					cb->SetID(m_default_source.GetItemID(i));
 					cb->SetValue(m_default_source.GetItem(i)->tag.GetInt()); // Store changes in the tag field.
-					trail->AddChild(cb);
+					l->AddChild(cb);
 
-					l->AddChild(trail);
+					auto text = new TBTextField();
+					text->SetText(m_default_source.GetItemString(i));
+					l->AddChild(text);
 
 					layout->GetContentRoot()->AddChild(l);
 				}
 			}
 
-			// window->SetSkinBg(TBIDC("TBMenuItem.window"));
+			window->ResizeToFitContent();
 			window->Show(TBPopupAlignment());
 		}
 	}
@@ -92,7 +86,22 @@ namespace tb {
 			auto cb = (TBCheckBox*) ev.target;
 			for (int i = 0; i < m_default_source.GetNumItems(); i++) {
 				if (cb->GetID() == m_default_source.GetItemID(i)) {
+					auto old = m_default_source.GetItem(i)->tag.GetInt();
 					m_default_source.GetItem(i)->tag.SetInt(cb->GetValue());
+					if (old != m_default_source.GetItem(i)->tag.GetInt()) {
+						TBWidgetEvent e(EVENT_TYPE_CHANGED);
+						e.target = this;
+
+						InvokeEvent(e);
+					}
+
+					if (m_auto_close)
+					{
+						if (TBPopupWindow *window = GetMenuIfOpen())
+						{
+							window->Close();
+						}
+					}
 
 					return true;
 				}
