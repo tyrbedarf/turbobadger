@@ -65,4 +65,5 @@ private:
 	void HandlePointerMoveEvent(const SDL_Event & evt);
 	void HandleKeyPressEvent(const SDL_Event & evt, bool press);
 	void HandleMouseButtonEvent(const SDL_Event & evt, bool press);
+	void HandleFileDropEvent(const SDL_Event & evt);
 };

@@ -329,36 +329,23 @@ void AppBackendSDL::HandleMouseButtonEvent(const SDL_Event & evt, bool press) {
 	}
 }
 
+void AppBackendSDL::HandleFileDropEvent(const SDL_Event & evt) {
+	auto f = evt.drop.file;
+	auto file = new tb::TBStr(f);
+
+	tb::TBWidgetEventFileDrop ev;
+	ev.files.Add(file);
+	m_app->GetRoot()->InvokeEvent(ev);
+
+	SDL_free(f);
+}
+
 void AppBackendSDL::Update() {
 	if (m_pause) {
 		return;
 	}
 
 	while (SDL_PollEvent(&m_evt_cache)) {
-		if (m_evt_cache.type == SDL_WINDOWEVENT) {
-			HandleWindowEvent(m_evt_cache);
-		}
-
-		if (m_evt_cache.type == SDL_MOUSEMOTION) {
-			HandlePointerMoveEvent(m_evt_cache);
-		}
-
-		if (m_evt_cache.type == SDL_KEYDOWN) {
-			HandleKeyPressEvent(m_evt_cache, true);
-		}
-
-		if (m_evt_cache.type == SDL_KEYUP) {
-			HandleKeyPressEvent(m_evt_cache, false);
-		}
-
-		if (m_evt_cache.type == SDL_MOUSEBUTTONUP) {
-			HandleMouseButtonEvent(m_evt_cache, false);
-		}
-
-		if (m_evt_cache.type == SDL_MOUSEBUTTONDOWN) {
-			HandleMouseButtonEvent(m_evt_cache, true);
-		}
-
 		if (m_evt_cache.type == SDL_TEXTINPUT) {
 			auto mod = GetModifierKeys();
 			for (int i = 0; i < 32 && m_evt_cache.text.text[i] != 0; i++) {
@@ -366,12 +353,51 @@ void AppBackendSDL::Update() {
 				InvokeKey(c, tb::TB_KEY_UNDEFINED, mod, true);
 				InvokeKey(c, tb::TB_KEY_UNDEFINED, mod, false);
 			}
+
+			continue;
+		}
+
+		if (m_evt_cache.type == SDL_KEYDOWN) {
+			HandleKeyPressEvent(m_evt_cache, true);
+			continue;
+		}
+
+		if (m_evt_cache.type == SDL_KEYUP) {
+			HandleKeyPressEvent(m_evt_cache, false);
+			continue;
+		}
+
+		if (m_evt_cache.type == SDL_MOUSEMOTION) {
+			HandlePointerMoveEvent(m_evt_cache);
+			continue;
+		}
+
+		if (m_evt_cache.type == SDL_MOUSEBUTTONUP) {
+			HandleMouseButtonEvent(m_evt_cache, false);
+			continue;
+		}
+
+		if (m_evt_cache.type == SDL_MOUSEBUTTONDOWN) {
+			HandleMouseButtonEvent(m_evt_cache, true);
+			continue;
 		}
 
 		if (m_evt_cache.type == SDL_MOUSEWHEEL) {
 			int mouse_x, mouse_y;
 			SDL_GetMouseState(&mouse_x, &mouse_y);
 			m_app->GetRoot()->InvokeWheel(mouse_x, mouse_y, m_evt_cache.wheel.x, -m_evt_cache.wheel.y, GetModifierKeys());
+
+			continue;
+		}
+
+		if (m_evt_cache.type == SDL_DROPFILE) {
+			HandleFileDropEvent(m_evt_cache);
+			continue;
+		}
+
+		if (m_evt_cache.type == SDL_WINDOWEVENT) {
+			HandleWindowEvent(m_evt_cache);
+			continue;
 		}
 	}
 
